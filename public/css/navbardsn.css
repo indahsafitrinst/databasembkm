@@ -1,0 +1,79 @@
+.sidebar {
+  height: 100%;
+  width: 260px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 100px;
+}
+
+.sidebar a:hover {
+  color: #7719fa;
+}
+.sidebar .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.openbtn {
+  font-size: 30px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px 0px;
+  border: none;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  padding: 100px 5px 5px;
+
+}
+
+@keyframes mainanim {
+  0% {margin-left:0px;}
+  100% {margin-left:260px;}
+}
+.mainmargin {
+  margin-left: 260px;
+  /* transition: margin-left 0.5s; */
+  animation-name: mainanim;
+  animation-duration: 0.5s;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+.tekskecil {
+  font-size: 11px;
+}
+
+.notifscroll {
+  max-height: 300px;
+  width: 300px;
+  overflow-y:scroll;
+}
+.tombolnavbar{
+  color:black;
+}
+.tombolnavbar:hover{
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  color:#787dde;
+}
+
+.rowclickable:hover{
+  background-color:#d9cef2;
+}
