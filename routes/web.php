@@ -52,11 +52,15 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/khs', function () {
       return view('halkhs');
   });
+
+
   //End halaman khs mahasiswa
   // Halaman krsmahasiswa
   Route::get('/krs', function () {
       return view('halkrs');
   });
+
+
   //END Halaman Krs Mahasiswa
 
   Route::get('/merdekabelajar',[MerdekaBelajarController::class,'statusMBKMchecking']);
@@ -91,7 +95,10 @@ Route::get('/permohonanmbkm/proses/{key_permmbkm}', [PermohonanMBKMController::c
 Route::post('/terimapermohonanmbkm', [PermohonanMBKMController::class,'terimaPermMBKM']);
 Route::post('/hapuspermohonanmbkm', [PermohonanMBKMController::class,'hapusPermMBKM']);
 Route::post('/tolakpermohonanmbkm', [PermohonanMBKMController::class,'tolakPermMBKM']);
+
 Route::get('/mhsmbkm/{key_semester}/{key_nimmbkm}', [MahasiswaMBKMController::class,'tampilDataMhsMBKM']);
+
+
 Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
 Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
 
