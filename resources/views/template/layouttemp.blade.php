@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- <script src="js/navbarjs.js"></script> -->
-    <link href="css/navbar.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
   </head>
   <body>
     @include('template.navbartemp')
@@ -18,6 +18,6 @@
     @yield('maincontent')
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="js/navbarjs.js"></script>
+    <script src="/js/navbarjs.js"></script>
   </body>
 </html>

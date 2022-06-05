@@ -136,24 +136,44 @@
             <p class="h3">Daftar Permintaan Konversi Nilai</p>
           </div>
           <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <input type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+            @if(isset($cek))
+            <p id="cek" class="p-2 bg-warning bg-opacity-50">{{$cek}}</p>
+            @endif
             <table class="table table-bordered">
                 <tr>
                   <th width="20px">No.</th>
                   <th width="120px">NIM</th>
                   <th width="250px">NAMA</th>
-                  <th width="250px">FAKULTAS</th>
+                  <th width="250px">PROGRAM STUDI</th>
                   <th width="200px">WAKTU UPLOAD</th>
                   <th width="100px">STATUS</th>
                   <th width="150px">AKSI</th>
                 </tr>
+                @foreach($datakonvnilai as $dataknilai)
                 <tr class="rowclickable">
                   <td>1</td>
-                  <td>1234567891</td>
-                  <td>INSERT NAMA</td>
-                  <td></td>
-                  <td>Thu 30 Fev sd;nsb;n</td>
+                  <td>{{$dataknilai->nim}}</td>
+                  <td>{{$dataknilai->nama}}</td>
+                  <td>{{$dataknilai->nama_prodi}}</td>
+                  <td>{{$dataknilai->waktu_unggah}}</td>
                   <td>
-                    <span class="text-danger"><i class="bi bi-dash-circle-dotted me-2"></i>Belum diperiksa</span>
+                    @if($dataknilai->status == 1)
+                    <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
+                    @elseif($dataknilai->status == 2)
+                    <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
+                    @elseif($dataknilai->status == 3)
+                    <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
+                    @endif
                   </td>
                   <td class="text-center">
                     <a>
@@ -161,21 +181,42 @@
                         <i class="bi bi-file-earmark-arrow-down"></i>
                       </button>
                     </a>
-                    <a href="/konversinilaikhs/proses">
+                    @if($dataknilai->status==1)
+                    <!-- <a href="/konversinilaikhs/proses/{{$dataknilai->id_dokumen}}"> -->
+                    <a href="/konversinilaikhs/proses/{{$dataknilai->id_mhsmbkm}}">
                       <button class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Proses permintaan konversi nilai">
                         <i class="bi bi-caret-right-square-fill"></i>
                       </button>
                     </a>
                     <span data-bs-toggle="modal"
+                    data-bs-target="#modaltolak"
+                    dataid="{{$dataknilai->id_dokumen}}"
+                    datanamamhs="{{$dataknilai->nama}}">
+                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tolak konversi nilai">
+                        <i class="bi bi-dash-circle"></i>
+                      </button>
+                    </span>
+                    @elseif($dataknilai->status==2)
+                    <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      title="Lihat data mahasiswa MBKM">
+                      <i class="bi bi-display"></i>
+                    </a>
+                    @elseif($dataknilai->status==3)
+                    <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      title="Lihat data mahasiswa MBKM">
+                      <i class="bi bi-display"></i>
+                    </a>
+                    <span data-bs-toggle="modal"
                     data-bs-target="#modalhapus"
-                    dataid="ID DOKUMEN DISINI"
-                    datanamamhs="NAMA MHS DISINI">
-                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
+                    datahapusid="{{$dataknilai->id_dokumen}}"
+                    datanamamhshapus="{{$dataknilai->nama}}">
+                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus konversi nilai">
                         <i class="bi bi-trash3"></i></i>
                       </button>
                     </span>
-                  </td>
+                    @endif
                 </tr>
+                @endforeach
             </table>
           </div>
         </div>
@@ -186,29 +227,56 @@
 
 
 
-<!-- MODAL HAPUS PERMINTAAN KONV NILAI -->
-<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- MODAL TOLAK PERMINTAAN KONV NILAI -->
+<div class="modal fade" id="modaltolak" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form action="/tolakkonvnilai" method="POST">
+        @csrf
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Hapus permohonan konversi nilai khs ini?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Tolak permohonan konversi nilai khs ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input class="inputid" type="text" id="inputid" value="">
+          <input name="iddokumen" class="inputid" type="text" id="inputid" hidden value="">
           <p id="namamhs" class=""></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-          <button type="submit" class="btn btn-danger">Hapus</button>
+          <button type="submit" class="btn btn-danger">Ya, Tolak</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+<!-- MODAL TOLAK END -->
+<!-- MODAL HAPUS PERMINTAAN KONV NILAI -->
+<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/hapuskonvnilai" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Hapus permohonan konversi nilai khs ini?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input name="iddokumen" class="" type="text" id="inputidhapus" hidden value="">
+          <p id="namamhshapus" class=""></p>
+          <p class="text-danger">(Jika menghapus permintaan konversi nilai ini, dokumen konversi nilai tidak akan kembali.)<p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+          <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- MODAL HAPUS END -->
+
 <script>
-  var exampleModal = document.getElementById('modalhapus')
+  var exampleModal = document.getElementById('modaltolak')
   exampleModal.addEventListener('show.bs.modal', function (event) {
 
   var button = event.relatedTarget
@@ -220,9 +288,30 @@
   areainput.value = dataid
   //masukin sebgai teks biasa
   var areanama = document.getElementById("namamhs");
-  areanama.innerHTML = "Apakah anda yakin ingin menghapus permohonan konversi nilai milik : " +
+  areanama.innerHTML = "Apakah anda yakin ingin menolak permohonan konversi nilai milik : " +
                           namamhs + "?";
 
   })
+
+  var vhapusmodal = document.getElementById('modalhapus')
+  vhapusmodal.addEventListener('show.bs.modal', function (event) {
+
+  var button = event.relatedTarget
+  //ambil data dari buttonv
+  var datahapusid = button.getAttribute('datahapusid')
+  var namamhshapus = button.getAttribute('datanamamhshapus')
+  //masukin ke form di modal
+  var areainput = document.getElementById("inputidhapus")
+  areainput.value = datahapusid
+  //masukin sebgai teks biasa
+  var areanama = document.getElementById("namamhshapus");
+  areanama.innerHTML = "Apakah anda yakin ingin menolak permohonan konversi nilai milik : " +
+                          namamhshapus + "?";
+
+  })
+  $("#cek").show().delay(2000).fadeOut('slow', function(){
+    window.location.replace("/konversinilaikhs");
+  });
+
 </script>
 @endsection

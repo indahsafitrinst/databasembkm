@@ -1,7 +1,4 @@
-@extends ('template.layouttemp')
-@section('title')
-<title>Kartu Rencana Studi</title>
-@endsection
+@extends('template.layouttempdsn')
 @section('sidebar')
 <nav id="mySidebar" class=" d-lg-block sidebar bg-white">
   <div class="position-sticky">
@@ -9,21 +6,33 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="dashboard" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="khs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
-        <span>Kartu Hasil Studi</span>
+        <span>Permohonan Program MBKM</span>
       </a>
-      <a href="krs" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-postcard-fill me-3"></i>
-        <span>Kartu Rencana Studi</span>
+        <span>Konversi Nilai Kartu Hasil Studi</span>
       </a>
-      <a href="merdekabelajar" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-award-fill me-3"></i>
-        <span>Merdeka Belajar</span>
+      <a href="mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-people-fill me-3"></i>
+        <span>Mahasiswa Dibimbing</span>
+      </a>
+      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-file-earmark-check me-3"></i>
+        <span>Dokumen Dikirim</span>
+      </a>
+      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-table me-3"></i>
+        <span>Daftar Mahasiswa MBKM</span>
+      </a>
+      <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-megaphone me-3"></i>
+        <span>Daftar Pengumuman</span>
       </a>
     </div>
   </div>
@@ -36,9 +45,10 @@
     <a class="navbar-brand ms-3" href="#">
       <img src="img/hehe.jfif" alt="" width="30" height="30">
       <span><strong>Portal MBKM</strong></span>
-      <span><small>Mahasiswa</small></span>
+      <span><small>Dosen</small></span>
     </a>
     <a class="nav-link tombolnavbar" href="#">Tentang Aplikasi</a>
+    <a class="nav-link tombolnavbar" href="#"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -50,17 +60,42 @@
             <span class="badge rounded-pill badge-notification bg-danger">1</span>
           </a>
           <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
-            @foreach ($notifcatch as $notifcatch)
             <li>
               <a class="dropdown-item" href="#">
                 <div class="card small">
                   <div class="card-body">
-                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
+                    <span class="tekskecil">INI NOTIFIKASI</span>
                   </div>
                 </div>
               </a>
             </li>
-            @endforeach
+            <li>
+              <a class="dropdown-item" href="#">
+                <div class="card small">
+                  <div class="card-body">
+                    <span class="tekskecil">INI NOTIFIKASI</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <div class="card small">
+                  <div class="card-body">
+                    <span class="tekskecil">INI NOTIFIKASI</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <div class="card small">
+                  <div class="card-body">
+                    <span class="tekskecil">INI NOTIFIKASI</span>
+                  </div>
+                </div>
+              </a>
+            </li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -71,7 +106,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="profil">
+              <a class="dropdown-item" href="/profildsn">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>
@@ -91,47 +126,34 @@
 @section('maincontent')
 <div class="container-fluid">
   <!-- Title -->
-  <div class="">
-    <span class="h1">Kartu Rencana Studi</span>
+  <div class="pt-2">
+    <span class="h1">Profil</span>
   </div>
 
   <div class="container-fluid bg-info py-5 mt-3">
-    <div class="row">
-      <div class="col">
-        <div class="card mb-3">
-          <div class="card-body">
-            <p><span class="fw-bold">NAMA</span> : INSERT NAME</p>
-            <p><span class="fw-bold">NIM</span> : 201402066</p>
-            <p><span class="fw-bold">SEMESTER</span> : INSERT SEMESTER</p>
-            <p><span class="fw-bold">SKS MAKSIMUM</span> : insert sks maks</p>
-            <p><span class="fw-bold">DOSEN PEMBIMBING AKADEMIK</span> : awaa</p>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <img src="#" class="rounded" style="width:200px; height: 200px;">
+          </div>
+          <div class="col">
+            <p><span class="fw-bold">Nama : </span>{{session('nama_dosen')}}</p>
+            <p><span class="fw-bold">NIP : </span>{{session('nip')}}</p>
+            <p>
+              <span class="fw-bold">Jabatan : </span>
+              @if(session('level')==1)
+                Ketua Program Studi
+              @elseif(session('level')==2)
+                Pegawai Program Studi
+              @elseif(session('level')==3)
+                Dosen
+              @endif
+              </p>
+            <p><span class="fw-bold">Email : </span>{{session('email')}}</p>
           </div>
         </div>
       </div>
-      <div class="col">
-        <table class="table table-striped table-bordered">
-          <tr>
-            <th>No.</th>
-            <th style="width: 75px;">KODE MATAKULIAH</th>
-            <th>MATA KULIAH</th>
-            <th>SKS</th>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td colspan="3">Total</td>
-            <td>idk</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="col d-flex justify-content-end">
-      <a href="#" class="btn btn-success me-2"><i class="bi bi-pencil-square me-2"></i>Ubah</a>
-      <button class="btn btn-secondary me-2"><i class="bi bi-printer me-2"></i>Print</button>
     </div>
   </div>
 

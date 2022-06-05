@@ -92,63 +92,38 @@
 <div class="container-fluid">
   <!-- Title -->
   <div class="">
-    <span class="h1">Merdeka Belajar Kampus Merdeka</span>
+    <a href="/merdekabelajar" class="text-decoration-none">
+      <button class="btn btn-outline-primary mb-3">
+        <i class="bi bi-arrow-bar-left me-2 h3"></i>
+      </button>
+    </a>
+    <span class="h1"><a href="merdekabelajar" class="link-dark text-decoration-none">Merdeka Belajar Kampus Merdeka</a></span>
   </div>
 
   <div class="container-fluid bg-info py-5 mt-3">
     <div class="row">
       <div class="col">
         <div class="card">
-          <div class="card-header">
-            <p class="h3">Pengumuman MBKM</p>
+          <div class="card-header bg-secondary text-light">
+            <p class="h3">Pengajuan Dokumen Transkrip Nilai</p>
           </div>
           <div class="card-body">
-            <p class="text-secondary">Belum ada pengumuman</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <p class="h3">Program MBKM yang anda ikuti</p>
-          </div>
-          <div class="card-body">
-            @if($statusmbkmmhs==0)
-            <p class="text-secondary">Anda belum ada mengikuti MBKM.</p>
-            <p class="text-secondary">Untuk mengikuti program MBKM, sediakan :<br>
-              1. Bukti Kelulusan dari mitra MBKM (format pdf)<br><br>
-              2. Silabus atau program MBKM lengkap dengan topik, waktu dan Capaian pembelajaran (format pdf)<br><br>
-              3. Dokumen Konversi SKS (format excel)<br>
-            </p>
-            <a href="/merdekabelajar/pengajuanmbkm">
-              <button class="btn btn-warning"><i class="bi bi-chat-left-text me-2"></i>Kirim Dokumen</button>
-            </a>
-            @elseif($statusmbkmmhs==1)
-            <p class="text-secondary">
-              Permohonan MBKM anda sedang diproses. Silahkan kembali beberapa saat lagi.
-              Jika ada masalah terkait permohonan MBKM, silahkan hubungi +6242069696969 melalui ponsel atau WhatsApp.
-            </p>
-            @elseif($statusmbkmmhs==2)
-            <p class="text-secondary">
-              Permohonan MBKM anda telah diterima! Langkah selanjutnya adalah mengubah KRS anda sesuai dengan dokumen konversi KRS berikut.<br>
-              <span class="text-danger">Ubah KRS sebelum 15 Agustus 2027 23:59:59!</span><br>
-              Jika ada masalah terkait MBKM, silahkan hubungi +6242069696969 melalui ponsel atau WhatsApp.
-            </p>
-            <p class="text-secondary"></p>
-            <a class="btn btn-warning" href="/merdekabelajar/pengajuankonvnilai">
-              Ajukan Konversi Nilai
-            </a>
-            @elseif($statusmbkmmhs==3)
-            <p class="text-secondary">
-              Anda telah mengirim dokumen transkrip nilai. Permintaan konversi nilai anda sedang diproses. Silahkan kembali beberapa saat lagi.<br>
-              Jika ada masalah terkait permohonan MBKM, silahkan hubungi +6242069696969 melalui ponsel atau WhatsApp.
-            </p>
-            @elseif($statusmbkmmhs==4)
-            <p class="text-secondary">
-              Konversi nilai telah diterima. Silahkan cek KHS anda.<br>
-              Jika ada masalah terkait permohonan MBKM, silahkan hubungi +6242069696969 melalui ponsel atau WhatsApp.
-            </p>
-            @endif
+            <p>Silahkan masukkan dokumen-dokumen sesuai dengan formnya.</p>
+            <form class="needs-validation" novalidate method="post"  action="ajukankonvnilai" enctype="multipart/form-data">
+              @csrf
+              <div class="row mb-3">
+                <div class="col">
+                  <label class="form-label" for="transkripnilai">Transkrip nilai(.pdf) : </label>
+                  <input name="transkripnilai" id="transkripnilai" class="form-control" type="file" required>
+                  <div class="invalid-feedback">Harus ada dokumen Transkrip Nilai</div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-send-fill me-2"></i>Ajukan</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -156,6 +131,27 @@
   </div>
 
 </div>
+<script>
+  (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
   <!-- Title -->
   <!--konten-->
   <!--konten-->

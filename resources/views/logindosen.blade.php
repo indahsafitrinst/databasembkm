@@ -14,15 +14,21 @@
         <div class="card w-50">
           <div class="card-body">
             <p class="h3 text-center mb-3">Login Dosen</p>
-            <form class="needs-validation" novalidate>
+            @if(session('alert'))
+            <p class="text-danger">
+              {{session('alert')}}
+            </p>
+            @endif
+            <form method="post" action="dsnlogin" class="needs-validation" novalidate>
+              @csrf
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" class="form-control" placeholder="Masukkan username" required>
-                <div class="invalid-feedback">Harus masukkan username</div>
+                <label for="nip" class="form-label">NIP</label>
+                <input name="nip" type="text" id="nip" class="form-control" placeholder="Masukkan NIP" required>
+                <div class="invalid-feedback">Harus masukkan NIP</div>
               </div>
               <div class="mb-3">
                 <label for="password">Password</label>
-                <input type="text" class="form-control" placeholder="Masukkan password" required>
+                <input name ="password" type="password" class="form-control" placeholder="Masukkan password" required>
                 <div class="invalid-feedback">Harus masukkan password</div>
               </div>
               <div class="mb-3 text-center">
@@ -31,6 +37,9 @@
             </form>
             <div class="mb-2">
               <button class="btn btn-light w-100" type="button">Lupa Password</button>
+            </div>
+            <div class="mb-2">
+              <a href="/"><button class="btn btn-outline-dark w-100" type="button">Saya Mahasiswa</button></a>
             </div>
           </div>
         </div>

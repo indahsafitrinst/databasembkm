@@ -50,42 +50,17 @@
             <span class="badge rounded-pill badge-notification bg-danger">1</span>
           </a>
           <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
+            @foreach ($notifcatch as $notifcatch)
             <li>
               <a class="dropdown-item" href="#">
                 <div class="card small">
                   <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
                   </div>
                 </div>
               </a>
             </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+            @endforeach
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -102,7 +77,7 @@
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>

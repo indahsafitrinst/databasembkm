@@ -145,13 +145,13 @@
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">NAMA : </span>
-                  INSERT NAMA
+                  {{$datamhs->nama}}
                 </p>
               </div>
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">NIM : </span>
-                  1234567891
+                  {{$datamhs->nim}}
                 </p>
               </div>
             </div>
@@ -159,13 +159,13 @@
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">DOSEN PEMBIMBING AKADEMIK : </span>
-                  INSERT NAMA
+                  {{$datamhs->nama_dosen}}
                 </p>
               </div>
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">NIP PA : </span>
-                  1234567891
+                  {{$datamhs->nip_dosenpa}}
                 </p>
               </div>
             </div>
@@ -175,8 +175,32 @@
                 <div class="d-flex">
                   <div class="pe-5">
                     <p>
+                      <span>Bukti Kelulusan : </span>
+                      <a href="{{$datadocs->lokasi_filebuktilulus}}">
+                        <button class="btn btn-outline-danger"><i class="bi bi-filetype-pdf me-2"></i></i> Download</button>
+                      </a>
+                    </p>
+                  </div>
+                  <div class="pe-5">
+                    <p>
+                      <span>Silabus : </span>
+                      <a href="{{$datadocs->lokasi_filesilabus}}">
+                        <button class="btn btn-outline-danger"><i class="bi bi-filetype-pdf me-2"></i></i> Download</button>
+                      </a>
+                    </p>
+                  </div>
+                  <div class="pe-5">
+                    <p>
+                      <span>Konversi KRS : </span>
+                      <a href="{{$datadocs->lokasi_filekonvkrs}}">
+                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i> Download</button>
+                      </a>
+                    </p>
+                  </div>
+                  <div class="pe-5">
+                    <p>
                       <span>Transkrip Nilai : </span>
-                      <a href="#">
+                      <a href="{{$datadocs->lokasi_filekonvnilai}}">
                         <button class="btn btn-outline-danger"><i class="bi bi-filetype-pdf me-2"></i></i> Download</button>
                       </a>
                     </p>
@@ -188,34 +212,16 @@
               <div class="col">
                 <p class="fw-bold">NILAI MATAKULIAH</p>
                 <form class="">
+                  @foreach($datakrs as $datakrs)
                   <div class="mb-3 row">
                     <div class="col-sm-2">
-                      <label class="form-label" for="matkul1">NAMA MATKUL HERE : </label>
+                      <label class="form-label" for="matkul1">{{$datakrs->nama_matakuliah}}: </label>
                     </div>
                     <div class="col-sm-4">
-                      <input id="matkul1" type="text" class="form-control">
-                    </div>
-                    <div class="col-sm-2">
-                      <label class="form-label" for="matkul2">NAMA MATKUL HERE : </label>
-                    </div>
-                    <div class="col-sm-4">
-                      <input id="matkul2" type="text" class="form-control">
+                      <input name="" id="matkul1" type="text" class="form-control">
                     </div>
                   </div>
-                  <div class="mb-3 row">
-                    <div class="col-sm-2">
-                      <label class="form-label" for="matkul3">NAMA MATKUL HERE : </label>
-                    </div>
-                    <div class="col-sm-4">
-                      <input id="matkul3" type="text" class="form-control">
-                    </div>
-                    <div class="col-sm-2">
-                      <label class="form-label" for="matkul4">NAMA MATKUL HERE : </label>
-                    </div>
-                    <div class="col-sm-4">
-                      <input id="matkul4" type="text" class="form-control">
-                    </div>
-                  </div>
+                  @endforeach
                   <div class="mb-3 row">
                     <div class="col-sm">
                       <div class="d-flex flex-row-reverse">
