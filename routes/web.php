@@ -8,6 +8,17 @@ use App\Http\Controllers\PermohonanMBKMController;
 use App\Http\Controllers\MahasiswaMBKMController;
 use App\Http\Controllers\DaftarMhsMBKMController;
 use App\Http\Controllers\KonversiNilaiController;
+//controller 1
+
+//controller 2
+
+//controller 3
+
+//controller 4
+
+//controller 5
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,12 +45,18 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/profil', function () {
       return view('profil');
   });
+
+  // Halaman khs mahasiswa
   Route::get('/khs', function () {
       return view('halkhs');
   });
+  //End halaman khs mahasiswa
+  // Halaman krsmahasiswa
   Route::get('/krs', function () {
       return view('halkrs');
   });
+  //END Halaman Krs Mahasiswa
+
   Route::get('/merdekabelajar',[MerdekaBelajarController::class,'statusMBKMchecking']);
   Route::get('/merdekabelajar/pengajuanmbkm', function () {
       return view('pengajuanmbkm');
@@ -107,7 +124,21 @@ Route::get('/pengumumantampil', function () {
     return view('pengumumantampil');
 });
 
-
 Route::get('/testpage', function() {
   return view('testpage');
 });
+
+
+//DAFTAR KHS Mahasiswa
+
+//END DAFTAR KHS MAHASISWA
+
+
+//DAFTAR KRS Mahasiswa
+
+//END DAFTAR KRS MAHASISWA
+
+
+//DAFTAR MITRA
+
+//END DAFTAR MITRA
