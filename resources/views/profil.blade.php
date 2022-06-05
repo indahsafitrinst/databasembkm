@@ -47,45 +47,28 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+            @if($newnotif>0)
+            <span class="badge rounded-pill badge-notification bg-danger">{{$newnotif}}</span>
+            @endif
           </a>
           <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
+            @foreach ($notifcatch as $notifcatch)
             <li>
               <a class="dropdown-item" href="#">
                 <div class="card small">
+                  @if ($notifcatch->status==1)
                   <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
                   </div>
+                  @else
+                  <div class="card-body bg-secondary">
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
+                  </div>
+                  @endif
                 </div>
               </a>
             </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+            @endforeach
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -102,7 +85,7 @@
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>
@@ -128,13 +111,13 @@
             <img src="#" class="rounded" style="width:200px; height: 200px;">
           </div>
           <div class="col">
-            <p><span class="fw-bold">Nama : </span>asdasdasd</p>
-            <p><span class="fw-bold">NIM : </span>234234234</p>
+            <p><span class="fw-bold">Nama : </span>{{session('nama')}}</p>
+            <p><span class="fw-bold">NIM : </span>{{session('nim')}}</p>
             <p><span class="fw-bold">Fakultas : </span>asdasdasd</p>
-            <p><span class="fw-bold">Jurusan : </span>asdasdasd</p>
-            <p><span class="fw-bold">Stambuk : </span>asdasdasd</p>
+            <p><span class="fw-bold">Jurusan : </span>{{session('nama_prodi')}}</p>
+            <p><span class="fw-bold">Stambuk : </span>{{session('stambuk')}}</p>
             <p><span class="fw-bold">Semester : </span>3(Ganjil) T.A 2023/2024</p>
-            <p><span class="fw-bold">Email : </span>asdasdasd</p>
+            <p><span class="fw-bold">Email : </span>{{session('email')}}</p>
           </div>
         </div>
       </div>

@@ -106,13 +106,13 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/profildsn">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>
@@ -133,9 +133,26 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <p class="h3">Daftar Permohonan MBKM</p>
+            <p class="h3">
+              Daftar Permohonan MBKM
+            </p>
           </div>
           <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <input type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+            @if(isset($cek))
+            <p id="cek" class="p-2 bg-success bg-opacity-75 text-white">{{$cek}}</p>
+            @endif
+
+
             <table class="table table-bordered">
               <tr>
                 <th width="20px">No.</th>
@@ -146,36 +163,67 @@
                 <th width="100px">STATUS</th>
                 <th width="150px">AKSI</th>
               </tr>
+              <?php $i = 0;?>
+              @foreach($permmbkm as $datapermmbkm)
               <tr class="rowclickable">
-                <td>1asfasfad</td>
-                <td>1234567891</td>
-                <td>INSERT NAMA</td>
-                <td></td>
-                <td><small class="text-secondary">Thu 30 Feb WOASGSdsdg</small></td>
+                <td><?php echo ++$i;?></td>
+                <td>{{$datapermmbkm->nim_mhs}}</td>
+                <td>{{$datapermmbkm->nama}}</td>
+                <td>{{$datapermmbkm->nama_prodi}}</td>
+                <td><small class="text-secondary">{{$datapermmbkm->waktu_unggah}}</small></td>
                 <td>
-                  <span class="text-danger"><i class="bi bi-dash-circle-dotted me-2"></i>Belum diperiksa</span>
+                  @if($datapermmbkm->status == 1)
+                  <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
+                  @elseif($datapermmbkm->status == 2)
+                  <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
+                  @elseif($datapermmbkm->status == 3)
+                  <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
+                  @endif
+
                 </td>
                 <td class="text-center">
-                  <a href="#">
-                    <button class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download Dokumen">
+                  <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                  title="Download Dokumen">
+
                       <i class="bi bi-file-earmark-arrow-down"></i>
                     </button>
                   </a>
-                  <a href="/permohonanmbkm/proses">
-                    <button class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Proses permintaan konversi nilai">
-                      <i class="bi bi-caret-right-square-fill"></i>
-                    </button>
+                  @if($datapermmbkm->status==1)
+                  <a href="/permohonanmbkm/proses/{{$datapermmbkm->id_permohonan}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Proses permintaan konversi nilai">
+                    <i class="bi bi-caret-right-square-fill"></i>
                   </a>
                   <span data-bs-toggle="modal"
                   data-bs-target="#modalhapus"
-                  dataid="ID PERMOHONAN MBKM DISINI"
-                  datanamamhs="NAMA MHS DISINI">
+                  dataid="{{$datapermmbkm->id_permohonan}}"
+                  datanamamhs="{{$datapermmbkm->nama}}">
                     <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
                       <i class="bi bi-trash3"></i></i>
                     </button>
                   </span>
+                  @elseif($datapermmbkm->status==2)
+                  <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Lihat data mahasiswa MBKM">
+                    <i class="bi bi-display"></i>
+                  </a>
+                  @else
+                  <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Lihat data mahasiswa MBKM">
+                    <i class="bi bi-display"></i>
+                  </a>
+                  <span data-bs-toggle="modal"
+                  data-bs-target="#modalhapus"
+                  dataid="{{$datapermmbkm->id_permohonan}}"
+                  datanamamhs="{{$datapermmbkm->nama}}">
+                    <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
+                      <i class="bi bi-trash3"></i></i>
+                    </button>
+                  </span>
+                  @endif
+
                 </td>
               </tr>
+              @endforeach
             </table>
           </div>
         </div>
@@ -189,14 +237,16 @@
 <div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form action="/hapuspermohonanmbkm" method="post">
+        @csrf
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Hapus Permohonan MBKM ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input class="inputid" type="text" id="inputid" value="">
+          <input name="idpermohonan" class="inputid" type="text" id="inputid" value="" hidden>
           <p id="namamhs" class=""></p>
+          <p class="text-danger">(Mahasiswa harus memberikan lagi dokumen yang dibutuhkan untuk mengikuti MBKM kembali.)</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
@@ -222,6 +272,8 @@
   areanama.innerHTML = "Apakah anda yakin ingin menghapus permohonan mbkm milik : " +
                           namamhs + "?";
 
-  })
+  });
+  $("#cek").show().delay(2000).fadeOut();
+
 </script>
 @endsection

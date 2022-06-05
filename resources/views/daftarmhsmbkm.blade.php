@@ -6,23 +6,23 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Permohonan Program MBKM</span>
       </a>
-      <a href="konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-postcard-fill me-3"></i>
         <span>Konversi Nilai Kartu Hasil Studi</span>
       </a>
-      <a href="mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Dokumen Dikirim</span>
       </a>
@@ -153,34 +153,42 @@
                     <th width="20px">No.</th>
                     <th width="120px">NIM</th>
                     <th width="200px">NAMA</th>
-                    <th width="200px">FAKULTAS</th>
+                    <th width="200px">PROGRAM STUDI</th>
                     <th width="75px">SEMESTER</th>
                     <th wdith="250px">PROGRAM MBKM</th>
                     <th width="250px">MITRA</th>
                     <th width="100px">STATUS</th>
                     <th width="50px">AKSI</th>
                   </tr>
+                  @foreach($mhsmbkms as $mhsmbkm)
                   <tr class="rowclickable">
                     <td>1</td>
-                    <td>234567891</td>
-                    <td>jdshfjsd wieeugwg</td>
-                    <td>FGsdgsh Jsfh Dan Sa4yedfw</td>
-                    <td>2Ganjil</td>
-                    <td>MY ASSS IS THICC</td>
-                    <td>MY BALLS IS BIG</td>
+                    <td>{{$mhsmbkm->nim}}</td>
+                    <td>{{$mhsmbkm->nama}}</td>
+                    <td>{{$mhsmbkm->nama_prodi}}</td>
+                    <td>{{$mhsmbkm->semester}}</td>
+                    <td>{{$mhsmbkm->nama_program}}</td>
+                    <td>{{$mhsmbkm->nama_mitra}}</td>
+                    @if($mhsmbkm->statusmbkm==1)
                     <td>Sedang menjalani perkuliahan</td>
+                    @elseif($mhsmbkm->statusmbkm==2)
+                    <td>Menunggu konversi nilai</td>
+                    @elseif($mhsmbkm->statusmbkm==3)
+                    <td>Telah menyelesaikan program MBKM</td>
+                    @endif
                     <td class="text-center">
-                      <a class="btn btn-outline-secondary m-1" href="/mhsdibimbing/mhs" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i class="bi bi-three-dots"></i></a>
-
-
+                      <a class="btn btn-outline-secondary mb-1" href="/mhsmbkm/{{$mhsmbkm->semester}}/{{$mhsmbkm->nim}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i class="bi bi-three-dots"></i></a>
                       <span data-bs-toggle="modal"
                       data-bs-target="#modalhapus"
-                      dataid="ID MHS MBKM DISINI"
-                      datanamamhs="NAMA MHS DISINI">
-                        <button class="btn btn-outline-danger m-1" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus"><i class="bi bi-trash3"></i></button>
+                      dataid="{{$mhsmbkm->id_mhsmbkm}}"
+                      datanamamhs="{{$mhsmbkm->nama}}">
+                        <button class="btn btn-outline-danger mb-1" data-tooltip="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
+                          <i class="bi bi-trash3"></i>
+                        </button>
                       </span>
                     </td>
                   </tr>
+                  @endforeach
                 </table>
               </div>
               <div class="tab-pane fade" id="nav-mhsmbkmselesai" role="tabpanel" aria-labelledby="nav-mhsmbkmselesai-tab">
@@ -201,15 +209,15 @@
 <div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form action="/hapusmhsmbkm" method="POST">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Hapus permohonan konversi nilai khs ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input class="inputid" type="text" id="inputid" value="">
+          <input name="idmhsmbkm" class="inputid" type="text" id="inputid" value="">
           <p id="namamhs" class=""></p>
-          <p class="text-danger">(Data yang telah dihapus tidak akan kembali lagi.
+          <p class="text-danger">(Data yang telah dihapus tidak bisa diakses lagi.
             Jika mahasiswa ingin mengikuti program mbkm, mahasiswa harus memasukan kembali dokumen-dokumen dari awal.)</p>
         </div>
         <div class="modal-footer">

@@ -1,7 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\MerdekaBelajarController;
+use App\Http\Controllers\PermohonanMBKMController;
+use App\Http\Controllers\MahasiswaMBKMController;
+use App\Http\Controllers\DaftarMhsMBKMController;
+use App\Http\Controllers\KonversiNilaiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,70 +18,80 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
-Route::get('/', function () {
-    return view('loginmhs');
+Route::get('/loginmhs',[LoginController::class,'logincekmhs']);
+Route::get('/',[LoginController::class,'logincekmhs']);
+Route::post("mhslogin",[LoginController::class,'mhslogin']);
+Route::get('/logout',[LoginController::class,'logout']);
+
+Route::group(['middleware'=>['protectedPage']],function(){
+  Route::get('/dashboard', function () {
+      return view('dashboardmhs');
+  });
+  Route::get('/profil', function () {
+      return view('profil');
+  });
+  Route::get('/khs', function () {
+      return view('halkhs');
+  });
+  Route::get('/krs', function () {
+      return view('halkrs');
+  });
+  Route::get('/merdekabelajar',[MerdekaBelajarController::class,'statusMBKMchecking']);
+  Route::get('/merdekabelajar/pengajuanmbkm', function () {
+      return view('pengajuanmbkm');
+  });
+  Route::post('/merdekabelajar/ajukanpermmbkm',[PengajuanController::class,'uploadPengajuan']);
+
+  Route::get('/merdekabelajar/pengajuankonvnilai', function () {
+      return view('pengajuankonvnilai');
+  });
+  Route::post('/merdekabelajar/ajukankonvnilai',[PengajuanController::class,'uploadPengajuanKonvNilai']);
+  // UNTUK DOSEN DISINI
+
+  Route::get('/profildsn', function () {
+      return view('profildsn');
+  });
 });
-Route::get('/loginmhs', function () {
-    return view('loginmhs');
-});
-Route::get('/logindosen', function () {
-    return view('logindosen');
-});
-Route::get('/dashboard', function () {
-    return view('dashboardmhs');
-});
-Route::get('/khs', function () {
-    return view('halkhs');
-});
-Route::get('/krs', function () {
-    return view('halkrs');
-});
-Route::get('/merdekabelajar', function () {
-    return view('merdekabelajar');
-});
-Route::get('/pengajuanmbkm', function () {
-    return view('pengajuanmbkm');
-});
-Route::get('/profil', function () {
-    return view('profil');
-});
+
+
+//UNTUK DOSEN JUGA DISINI
+
+Route::get('/logindosen',[LoginController::class,'logincekdsn']);
+Route::post("dsnlogin",[LoginController::class,'dsnlogin']);
+
 Route::get('/dashboarddsn', function () {
     return view('dashboarddosen');
 });
-Route::get('/permohonanmbkm', function () {
-    return view('permohonanmbkm');
-});
-Route::get('/permohonanmbkmall', function () {
-    return view('permohonanmbkmall');
-});
-Route::get('/permohonanmbkm/proses', function () {
-    return view('prosesterimambkm');
-});
 
-Route::get('/konversinilaikhs', function () {
-    return view('konversinilaikhs');
-});
-Route::get('/konversinilaikhs/proses', function () {
-    return view('prosesterimakonvnilai');
-});
+Route::get('/permohonanmbkm', [PermohonanMBKMController::class,'tampilDataPermMBKM']);
+Route::get('/permohonanmbkm/proses/{key_permmbkm}', [PermohonanMBKMController::class,'prosesPermMBKM']);
+Route::post('/terimapermohonanmbkm', [PermohonanMBKMController::class,'terimaPermMBKM']);
+Route::post('/hapuspermohonanmbkm', [PermohonanMBKMController::class,'hapusPermMBKM']);
+Route::post('/tolakpermohonanmbkm', [PermohonanMBKMController::class,'tolakPermMBKM']);
+Route::get('/mhsmbkm/{key_semester}/{key_nimmbkm}', [MahasiswaMBKMController::class,'tampilDataMhsMBKM']);
+Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
+Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
+
+
+Route::get('/konversinilaikhs', [KonversiNilaiController::class,'daftarKonvNilai']);
+Route::get('/konversinilaikhs/proses/{key_idmhsmbkm}', [KonversiNilaiController::class,'prosesKonvNilai']);
+Route::post('/tolakkonvnilai', [KonversiNilaiController::class,'tolakKonvNilai']);
+Route::post('/hapuskonvnilai', [KonversiNilaiController::class,'hapusKonvNilai']);
 
 Route::get('/mhsdibimbing', function () {
     return view('mhsdibimbing');
 });
-Route::get('/mhsdibimbing/mhs', function () {
-    return view('detailmhsmbkm');
-});
+
 
 Route::get('/dkmndikirim', function () {
     return view('dkmndikirim');
 });
 Route::get('/dkmnall', function () {
     return view('dkmnall');
-});
-
-Route::get('/daftarmhsmbkm', function () {
-    return view('daftarmhsmbkm');
 });
 
 Route::get('/buatpengumuman', function () {
@@ -89,4 +105,9 @@ Route::get('/daftarpengumuman', function () {
 });
 Route::get('/pengumumantampil', function () {
     return view('pengumumantampil');
+});
+
+
+Route::get('/testpage', function() {
+  return view('testpage');
 });

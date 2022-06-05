@@ -145,19 +145,19 @@
               <div class="col-sm-6">
                 <p>
                   <span class="fw-bold">NAMA : </span>
-                  INSERT NAMA
+                  {{$datamhsmbkm->nama}}
                 </p>
               </div>
               <div class="col-sm-3">
                 <p>
                   <span class="fw-bold">NIM : </span>
-                  1234567891
+                  {{$datamhsmbkm->nim}}
                 </p>
               </div>
               <div class="col-sm-3">
                 <p>
                   <span class="fw-bold">SEMESTER : </span>
-                  1 GANJIL
+                  {{$datamhsmbkm->semester}}
                 </p>
               </div>
             </div>
@@ -165,13 +165,13 @@
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">DOSEN PEMBIMBING AKADEMIK : </span>
-                  INSERT NAMA
+                  {{$datamhsmbkm->nim}}
                 </p>
               </div>
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">NIP PA : </span>
-                  1234567891
+                  {{$datamhsmbkm->nim}}
                 </p>
               </div>
             </div>
@@ -179,13 +179,13 @@
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">MITRA : </span>
-                  INSERT MITRA
+                  {{$datamhsmbkm->nama_mitra}}
                 </p>
               </div>
               <div class="col-sm">
                 <p>
                   <span class="fw-bold">NAMA PROGRAM : </span>
-                  INSERT NAMA PROGRAM
+                  {{$datamhsmbkm->nama_program}}
                 </p>
               </div>
             </div>
@@ -194,10 +194,13 @@
                 <div class="col-sm">
                   <p>
                     <span class="fw-bold">STATUS MBKM : </span>
+                    @if($datamhsmbkm->statusmbkm==1)
                     <span class="p-2" style="background-color: #b5ebbf;"><i class="bi bi-book-half me-2"></i>Menjalani Perkuliahan</span>
-                    <span class="p-2" style="background-color: #e3eb94;"><i class="bi bi-hourglass-split me-2"></i>Menunggu penerimaan MBKM</span>
+                    @elseif($datamhsmbkm->statusmbkm==2)
                     <span class="p-2" style="background-color: #e3eb94;"><i class="bi bi-hourglass-split me-2"></i>Menunggu penerimaan konversi nilai</span>
+                    @elseif($datamhsmbkm->statusmbkm==3)
                     <span class="p-2" style="background-color: #749ef2;"><i class="bi bi-check-circle-fill me-2"></i>Telah selesai menjalani MBKM</span>
+                    @endif
                   </p>
                 </div>
               </div>
@@ -209,7 +212,7 @@
                   <div class="pe-5">
                     <p>
                       <span>Bukti Kelulusan : </span>
-                      <a href="#">
+                      <a href="{{$datamhsmbkm->lokasi_filebuktilulus}}">
                         <button class="btn btn-outline-danger"><i class="bi bi-filetype-pdf me-2"></i></i> Download</button>
                       </a>
                     </p>
@@ -217,7 +220,7 @@
                   <div class="pe-5">
                     <p>
                       <span>Silabus : </span>
-                      <a href="#">
+                      <a href="{{$datamhsmbkm->lokasi_filesilabus}}">
                         <button class="btn btn-outline-danger"><i class="bi bi-filetype-pdf me-2"></i></i> Download</button>
                       </a>
                     </p>
@@ -225,8 +228,8 @@
                   <div class="pe-5">
                     <p>
                       <span>Konversi KRS : </span>
-                      <a href="#">
-                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i> Download</button>
+                      <a href="{{$datamhsmbkm->lokasi_filesilabus}}">
+                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i> untuk sementara yg dari mhs Download</button>
                       </a>
                     </p>
                   </div>
@@ -244,10 +247,16 @@
             <div class="row">
               <div class="col-sm">
                 <p><span class="fw-bold">AKSI : </span></p>
-                <a class="btn btn-outline-secondary" href="/mhsdibimbing"><i class="bi bi-arrow-90deg-left"></i></a>
-                <a class="btn btn-outline-success" href="#"><i class="bi bi-arrow-right-circle-fill me-2"></i>Proses</a>
-                <button class="btn btn-outline-danger"><i class="bi bi-trash3 me-2"></i>Hapus</button>
-
+                <form method="POST" id="form-field" action="/hapusmhsmbkm">
+                  <a class="btn btn-outline-secondary" href="/mhsdibimbing"><i class="bi bi-arrow-90deg-left"></i></a>
+                  @if($datamhsmbkm->statusmbkm==2)
+                  <a class="btn btn-outline-success" href="#"><i class="bi bi-arrow-right-circle-fill me-2"></i>Proses</a>
+                  @endif
+                  <input name="idmhsmbkm" type="text" hidden value="{{$datamhsmbkm->statusmbkm}}" required>
+                  <button id="submitbutton" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#hapusmbkmmodal">
+                    <i class="bi bi-trash3 me-2"></i>Hapus
+                  </button>
+                </form>
               </div>
             </div>
 
@@ -257,25 +266,39 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="hapusmbkmmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan Data MBKM</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Yakin untuk menghapus data MBKM ini? (Dokumen-dokumen yang terhubung ke mahasiswa ini akan ditolak.<br>
+        Mahasiswa ini harus mengirim kembali dokumen-dokumennya untuk mengikuti MBKM lagi.)
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+        <button type="button" id="sendhapus" class="btn btn-primary">Ya, Hapus</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  (function () {
-  'use strict'
-
   // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
-
+  var btnform = document.getElementById('submitbutton')
+  var modalhapus = document.getElementById('hapusmbkmmodal')
   // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
+  //ini memang harus btw... ga bisa dia klo ga ada  ( di awal fungsinya
+  $('#submitbutton').click(function(){
+     /* when the submit button in the modal is clicked, submit the form */
+    $('#hapusmbkmmodal').modal('show');
+  });
+  $('#sendhapus').click(function(){
+     /* when the submit button in the modal is clicked, submit the form */
+    $('#form-field').submit();
+  });
 </script>
 @endsection
