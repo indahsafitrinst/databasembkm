@@ -8,6 +8,7 @@ use App\Http\Controllers\PermohonanMBKMController;
 use App\Http\Controllers\MahasiswaMBKMController;
 use App\Http\Controllers\DaftarMhsMBKMController;
 use App\Http\Controllers\KonversiNilaiController;
+use App\Http\Controllers\KrsController;
 
 
 //controller 1
@@ -78,6 +79,9 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/profildsn', function () {
       return view('profildsn');
   });
+  Route::get('/krs',[KrsController::class,'tampilkanProfil']);
+
+  Route::get('/krs/ubah/{nim}',[KrsController::class,'ubahkrs']);
 });
 
 
