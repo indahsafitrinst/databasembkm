@@ -141,6 +141,7 @@
                 Nim             : {{$krs[0]->nim}}<br>
                 Semester        : {{$krs[0]->semester}}<br>
                 SKS Maksimum    : {{$krs[0]->sks_maks}}<br>
+                Dosen Pembimbing: {{$krs[0]->nama_dosen}}<br>
             </p>
           </div>
           <div class="card-body">
@@ -155,6 +156,8 @@
                 <th width="120px">KODE</th>
                 <th width="250px">MATA KULIAH</th>
                 <th width="250px">SKS</th>
+
+
               </tr>
               <?php $j ?>
               <?php $i = 1 ?>
