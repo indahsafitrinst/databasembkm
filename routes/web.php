@@ -12,7 +12,7 @@ use App\Http\Controllers\DokumenKirimController;
 use App\Http\Controllers\MahasiswaDibimbingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengumumanController;
-
+use App\Http\Controllers\KhsController;
 //controller 1
 use App\Http\Controllers\KrsController;
 //controller 2
@@ -55,6 +55,13 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/khs', function () {
       return view('halkhs');
   });
+
+  // Route::get('/khsbaru', function () {
+  //     return view('halkhsbaru');
+  // });
+
+  Route::get('/khs',[KhsController::class,'tampilkanKhs']);
+
 
 
   //End halaman khs mahasiswa
