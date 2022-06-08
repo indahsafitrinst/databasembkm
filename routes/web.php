@@ -23,7 +23,7 @@ use App\Http\Controllers\KrsController;
 //controller 4
 
 //controller 5
-
+use App\Http\Controllers\DaftarMitraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,5 +171,9 @@ Route::get('/errodsnpage', function() {
 
 
 //DAFTAR MITRA
-
+Route::resource('mitra', DaftarMitraController::class);
+Route::get('/mitra/edit/{kode_mitra}', [DaftarMitraController::class, 'edit']);
+Route::post('/mitra/update',[DaftarMitraController::class, 'update']);
+Route::get('/mitra/delete/{kode_mitra}',[DaftarMitraController::class, 'delete']);
+Route::get('/mitra/search', [DaftarMitraController::class, 'search'])->name('search');
 //END DAFTAR MITRA
