@@ -24,7 +24,7 @@
       </a>
       <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+        <span>Dokumen Konversi KRS</span>
       </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>
@@ -116,7 +116,7 @@
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>
@@ -130,57 +130,58 @@
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Dokumen yang Saya Kirim</span>
+    <span class="h1">Dokumen Penerimaan Konversi KRS</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
     <div class="row mb-3">
       <div class="col">
         <div class="card">
           <div class="card-body">
+            @if(isset($cek))
+            <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek}}</p>
+            @elseif(isset($cek2))
+            <p id="cek" class="p-2 bg-warning bg-opacity-50">{{$cek2}}</p>
+            @endif
             <table class="table table-bordered">
               <tr>
                 <th width="20px">No.</th>
                 <th width="250px">JENIS DOKUMEN</th>
                 <th width="120px">NIM PENERIMA</th>
                 <th width="350px">NAMA MAHASISWA MBKM</th>
+                <th width="350px">NAMA MITRA</th>
+                <th width="350px">NAMA PROGRAM</th>
                 <th wdith="200px">WAKTU DIUPLOAD</th>
                 <th width="50px">Dokumen</th>
               </tr>
+              <?php $i = 0;?>
+              @foreach($docsdikirim as $datadocs)
               <tr class="rowclickable">
-                <td>1</td>
+                <td><?php echo ++$i;?></td>
                 <td>Konversi KRS</td>
-                <td>1234567891</td>
-                <td>INSERT NAMA</td>
-                <td><small class="text-secondary">Thu 30 Feb WOASGSdsdg</small></td>
-                <td class="text-center">
-                  <button class="btn btn-primary m-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
-                    <i class="bi bi-file-earmark-arrow-down"></i>
-                  </button>
-                  <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
-                    <i class="bi bi-trash3"></i>
-                  </button>
+                <td>{{$datadocs->nim}}</td>
+                <td>{{$datadocs->nama}}</td>
+                <td>{{$datadocs->nama_mitra}}</td>
+                <td>{{$datadocs->nama_program}}</td>
+                <td>
+                  <small class="text-secondary">
+                    {{$datadocs->waktu_unggah}}
+                  </small>
                 </td>
-              </tr>
-              <tr class="rowclickable">
-                <td>1</td>
-                <td>Konversi KRS</td>
-                <td>1234567891</td>
-                <td>INSERT NAMA</td>
-                <td><small class="text-secondary">Thu 30 Feb WOASGSdsdg</small></td>
                 <td class="text-center">
-                  <button class="btn btn-primary m-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
+                  <a href="{{$datadocs->lokasi_filekonvkrsditerima}}" class="btn btn-primary m-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download">
                     <i class="bi bi-file-earmark-arrow-down"></i>
-                  </button>
+                  </a>
                   <span data-bs-toggle="modal"
                   data-bs-target="#modalhapus"
-                  dataid="ID DOKUMEN DISINI"
-                  datanamamhs="NAMA MHS DISINI">
+                  dataid="{{$datadocs->id_docsterimakrs}}"
+                  datanamamhs="{{$datadocs->nama}}">
                     <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
                       <i class="bi bi-trash3"></i>
                     </button>
                   </span>
                 </td>
               </tr>
+              @endforeach
             </table>
           </div>
         </div>
@@ -193,13 +194,14 @@
 <div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form method="POST" action="/hapusdocsterimakrs">
+        @csrf
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Hapus permohonan konversi nilai khs ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input class="inputid" type="text" id="inputid" value="">
+          <input name="iddocs" class="inputid" type="text" id="inputid" value="">
           <p id="namamhs" class=""></p>
         </div>
         <div class="modal-footer">
@@ -226,6 +228,9 @@
   areanama.innerHTML = "Apakah anda yakin ingin menghapus permohonan konversi nilai milik : " +
                           namamhs + "?";
 
-  })
+  });
+  $("#cek").show().delay(2000).fadeOut('slow', function(){
+    window.location.replace("/dkmndikirim");
+  });
 </script>
 @endsection

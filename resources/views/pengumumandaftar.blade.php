@@ -6,23 +6,23 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Permohonan Program MBKM</span>
       </a>
-      <a href="konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-postcard-fill me-3"></i>
         <span>Konversi Nilai Kartu Hasil Studi</span>
       </a>
-      <a href="mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Dokumen Dikirim</span>
       </a>
@@ -106,13 +106,13 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/profildsn">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>
@@ -129,118 +129,77 @@
     <span class="h1">Daftar Pengumuman</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
+    @if(isset($cek1))
+    <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek1}}</p>
+    @elseif(isset($cek2))
+    <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
+    @endif
+
+    @foreach($datapengumuman as $datapengumuman)
     <div class="row mb-3">
       <div class="col">
         <div class="card">
           <div class="card-header">
             <div class="d-flex">
-              <span class="h5 me-auto"><a href="/pengumumantampil" class="text-decoration-none text-dark">INSERT JUDUL</a></span>
-              <span class="text-secondary me-3"><small>20 April 200qwsblah baoobf</small></span>
+              <span class="me-auto">
+                <a href="/pengumumantampil/{{$datapengumuman->id_pengumuman}}" class="h5 text-decoration-none text-dark">
+                  {{$datapengumuman->judul}}
+                </a>
+                <span>- {{$datapengumuman->nama_dosen}}</span>
+              </span>
+              <span class="text-secondary me-3"><small>{{$datapengumuman->waktu}}</small></span>
               <div class="dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                   <i class="bi bi-three-dots"></i>
                 </button>
                 <ul class="dropdown-menu">
+                  @if(session('nip')==$datapengumuman->nip_penulis)
                   <li>
-                    <a class="dropdown-item" href="/daftarpengumuman/edit">Edit</a>
+                    <a class="dropdown-item" href="/daftarpengumuman/edit/{{$datapengumuman->id_pengumuman}}">Edit</a>
                   </li>
                   <li>
                     <button type="button" class="dropdown-item" data-bs-toggle="modal"
                     data-bs-target="#modalhapus"
-                    dataid="ID DISINI"
-                    datajudul="JUDUL DISINI">
+                    dataid="{{$datapengumuman->id_pengumuman}}"
+                    datajudul="{{$datapengumuman->judul}}">
                         Hapus
                     </button>
                   </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            INSERT ISI
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <div class="d-flex">
-              <span class="h5 me-auto">INSERT JUDUL</span>
-              <span class="text-secondary me-3"><small>20 April 200qwsblah baoobf</small></span>
-              <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                  <i class="bi bi-three-dots"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modaledit" dataid="ID DISINI">Edit</button>
-                  </li>
+                  @elseif(session('level') < 3)
                   <li>
                     <button type="button" class="dropdown-item" data-bs-toggle="modal"
                     data-bs-target="#modalhapus"
-                    dataid="ID DISINI"
-                    datajudul="JUDUL DISINI">
+                    dataid="{{$datapengumuman->id_pengumuman}}"
+                    datajudul="{{$datapengumuman->judul}}">
                         Hapus
                     </button>
                   </li>
+                  @endif
                 </ul>
               </div>
             </div>
           </div>
-          <div class="card-body">
-            INSERT ISI
+          <div class="card-body" id="isipengumuman">
+            {{strip_tags($datapengumuman->isi_pengumuman)}}
           </div>
         </div>
       </div>
     </div>
-    <div class="row mb-3">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <div class="d-flex">
-              <span class="h5 me-auto">INSERT JUDUL</span>
-              <span class="text-secondary me-3"><small>20 April 200qwsblah baoobf</small></span>
-              <div class="dropdown">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                  <i class="bi bi-three-dots"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modaledit" dataid="ID DISINI">Edit</button>
-                  </li>
-                  <li>
-                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                    data-bs-target="#modalhapus"
-                    dataid="ID DISINI"
-                    datajudul="JUDUL DISINI">
-                        Hapus
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            INSERT ISI
-          </div>
-        </div>
-      </div>
-    </div>
+    @endforeach
   </div>
 </div>
 
 <div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form action="/hapuspengumuman" method="POST">
+        @csrf
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Hapus Pengumuman ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input hidden class="inputid" type="text" id="inputid" value="">
+          <input name="idpengumuman" hidden class="inputid" type="text" id="inputid" value="">
           <p id="jdlpengumuman" class=""></p>
         </div>
         <div class="modal-footer">
@@ -267,6 +226,12 @@
   areajudul.innerHTML = "Apakah anda yakin ingin menghapus Pengumuman dengan judul : " +
                           judul + "?";
 
-  })
+  });
+  $("#isipengumuman").text(function(index, currentText) {
+    return currentText.substr(0, 190)+"...";
+  });
+  $("#cek").show().delay(3000).fadeOut('slow', function(){
+    window.location.replace("/daftarpengumuman");
+  });
 </script>
 @endsection

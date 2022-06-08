@@ -24,7 +24,7 @@
       </a>
       <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+        <span>Dokumen Konversi KRS</span>
       </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>
@@ -141,6 +141,16 @@
             <p class="h3">Proses Konversi Nilai</p>
           </div>
           <div class="card-body">
+            @if(isset($cek))
+            <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek}}<br>
+              Kembali ke daftar dalam 3 detik...
+            </p>
+            @elseif(isset($cek2))
+            <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}}<br>
+              Kembali de daftar dalam 3 detik...
+            </p>
+            @endif
+
             <div class="row mb-3">
               <div class="col-sm">
                 <p>
@@ -193,7 +203,7 @@
                     <p>
                       <span>Konversi KRS : </span>
                       <a href="{{$datadocs->lokasi_filekonvkrs}}">
-                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i> Download</button>
+                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i>ingat ini  masih dari yang mhs  bukan dari dosen. Download</button>
                       </a>
                     </p>
                   </div>
@@ -211,22 +221,32 @@
             <div class="row">
               <div class="col">
                 <p class="fw-bold">NILAI MATAKULIAH</p>
-                <form class="">
+                <form class="" action="/inserttokhs" method="POST">
+                  @csrf
+                  @php
+                    $i = 0
+                  @endphp
                   @foreach($datakrs as $datakrs)
+                  @php
+                    $i++
+                  @endphp
                   <div class="mb-3 row">
                     <div class="col-sm-2">
                       <label class="form-label" for="matkul1">{{$datakrs->nama_matakuliah}}: </label>
                     </div>
                     <div class="col-sm-4">
-                      <input name="" id="matkul1" type="text" class="form-control">
+                      <input hidden name="matkul[{{$i}}]" id="matkul1" type="text" class="form-control" value="{{$datakrs->kode_matakuliah}}">
+                      <input name="score[{{$i}}][]" id="matkul1" type="text" class="form-control" value="">
                     </div>
                   </div>
                   @endforeach
+                  <input type="text" name="idmbkm" hidden value="{{$datadocs->id_mhsmbkm}}">
+
                   <div class="mb-3 row">
                     <div class="col-sm">
                       <div class="d-flex flex-row-reverse">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-forward me-2"></i>Konversi Nilai</button>
-                        <button type="button" class="btn btn-danger me-auto">Batal</button>
+                        <a href="/konversinilaikhs" class="btn btn-danger me-auto">Batal</a>
                       </div>
                     </div>
                   </div>
@@ -258,6 +278,10 @@
         form.classList.add('was-validated')
       }, false)
     })
-  })()
+  })();
+
+  $("#cek").show().delay(3000).fadeOut('slow', function(){
+    window.location.replace("/konversinilaikhs");
+  });
 </script>
 @endsection
