@@ -6,7 +6,7 @@ use DB;
 use Illuminate\View\View;
 
 
-class NotifikasiComposer
+class NotifikasiDSNComposer
 {
 
     /**

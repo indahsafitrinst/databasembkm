@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\NotifikasiComposer;
+use App\Http\View\Composers\NotifikasiDSNComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
