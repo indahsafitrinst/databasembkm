@@ -22,13 +22,17 @@
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple active">
-        <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-table me-3"></i>
+        <span>Daftar Mahasiswa MBKM</span>
       </a>
-      <a href="#" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-door-closed me-3"></i>
-        <span>Logout</span>
+      <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-megaphone me-3"></i>
+        <span>Daftar Pengumuman</span>
+      </a>
+      <a href="daftarkrsmahasiswa" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+        <i class="bi bi-file-earmark-check me-3"></i>
+        <span>Daftar KRS Mahasiswa</span>
       </a>
     </div>
   </div>
@@ -102,13 +106,13 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/profildsn">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>
@@ -122,67 +126,107 @@
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Dokumen yang Saya Kirim</span>
+    <span class="h1">KARTU RANCANGAN STUDI MAHASISWA</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
     <div class="row mb-3">
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <p class="h3">Terakhir Dikirim</p>
+            <p class="h3">
+              Daftar KRS Mahasiswa
+            </p>
           </div>
           <div class="card-body">
-            <div class="row mb-3">
-              <div class="col">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex">
-                      <div class="flex-grow-1">
-                        <p>
-                          <span class="fw-bold">Jenis Dokumen : </span>
-                          Penerimaan Konversi KRS
-                        </p>
-                      </div>
-                      <div class="">
-                        <p class="text-secondary">
-                          <small>
-                            <span class="fw-bold">Diupload : </span>
-                            <span>Thu 30 Februari blah blah</span>
-                          </small>
-                        </p>
-                      </div>
-                    </div>
-                    <p>
-                      <span class="fw-bold">Dikirim untuk : </span>
-                      INSERT NAMA
-                    </p>
-                    <p>
-                      <span class="fw-bold">NIM: </span>
-                      INSERT NIM
-                    </p>
-
-                    <a>
-                      <button class="btn btn-primary">
-                        <i class="bi bi-file-earmark-arrow-down me-2"></i>Download Dokumen
-                      </button>
-                    </a>
-                  </div>
+            <form>
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <input type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
                 </div>
               </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col ">
-                <a href="dkmnall" class="text-decoration-none d-grid gap-2">
-                  <button class="btn btn-success btn-block">
-                    <i class="bi bi-table me-2"></i>Lihat daftar keseluruhan
-                  </button>
-                </a>
-              </div>
-            </div>
+            </form>
+            {{--@if(isset($cek))
+            <p id="cek" class="p-2 bg-success bg-opacity-75 text-white">{{$cek}}</p>
+            @endif--}}
+
+
+            <table class="table table-bordered">
+              <tr>
+                <th width="20px">No.</th>
+                <th width="120px">NIM</th>
+                <th width="250px">NAMA</th>
+                <th width="250px">PROGRAM STUDI</th>
+                <th width="200px">SEMESTER</th>
+                <th width="100px">SKS</th>
+                <th width="150px">DETAIL KRS</th>
+              </tr>
+             <?php $i = 0;?>
+            @foreach($krs as $datakrs)
+              <tr class="rowclickable">
+                <td><?php echo ++$i;?></td>
+                <td>{{$datakrs->nim}}</td>
+                <td>{{$datakrs->nama}}</td>
+                <td>{{$datakrs->nama_prodi}}</td>
+                <td>{{$datakrs->semester}}</td>
+                <td>{{$datakrs->sks_maks}}</td>
+                <td>
+                    <a href="daftarkrsmahasiswa/detailkrsmahasiswa/{{$datakrs->nim}}/{{$datakrs->semester}}"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-eye"></i>&nbsp;Lihat KRS</button></a>
+                </td>
+              </tr>
+            @endforeach
+            </table>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+<!-- MODAL HAPUS PERMOHONAN MBKM -->
+<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/hapuspermohonanmbkm" method="post">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Hapus Permohonan MBKM ini?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input name="idpermohonan" class="inputid" type="text" id="inputid" value="" hidden>
+          <p id="namamhs" class=""></p>
+          <p class="text-danger">(Mahasiswa harus memberikan lagi dokumen yang dibutuhkan untuk mengikuti MBKM kembali.)</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+          <button type="submit" class="btn btn-danger">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  var exampleModal = document.getElementById('modalhapus')
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+
+  var button = event.relatedTarget
+  //ambil data dari buttonv
+  var dataid = button.getAttribute('dataid')
+  var namamhs = button.getAttribute('datanamamhs')
+  //masukin ke form di modal
+  var areainput = document.getElementById("inputid")
+  areainput.value = dataid
+  //masukin sebgai teks biasa
+  var areanama = document.getElementById("namamhs");
+  areanama.innerHTML = "Apakah anda yakin ingin menghapus permohonan mbkm milik : " +
+                          namamhs + "?";
+
+  });
+  $("#cek").show().delay(2000).fadeOut();
+
+</script>
 @endsection

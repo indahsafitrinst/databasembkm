@@ -24,7 +24,7 @@
       </a>
       <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+        <span>Dokumen Konversi KRS</span>
       </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>

@@ -34,6 +34,11 @@
         <i class="bi bi-megaphone me-3"></i>
         <span>Daftar Pengumuman</span>
       </a>
+      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-file-earmark-check me-3"></i>
+        <span>Daftar KRS Mahasiswa</span>
+      </a>
+
     </div>
   </div>
 </nav>
@@ -146,8 +151,10 @@
                 </div>
               </div>
             </form>
-            @if(isset($cek))
-            <p id="cek" class="p-2 bg-warning bg-opacity-50">{{$cek}}</p>
+            @if(isset($cek1))
+            <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek1}}</p>
+            @elseif(isset($cek2))
+            <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
             @endif
             <table class="table table-bordered">
                 <tr>
@@ -176,11 +183,11 @@
                     @endif
                   </td>
                   <td class="text-center">
-                    <a>
-                      <button class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download Dokumen">
-                        <i class="bi bi-file-earmark-arrow-down"></i>
-                      </button>
+
+                    <a href="{{$dataknilai->lokasi_filekonvnilai}}" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download Dokumen">
+                      <i class="bi bi-file-earmark-arrow-down"></i>
                     </a>
+
                     @if($dataknilai->status==1)
                     <!-- <a href="/konversinilaikhs/proses/{{$dataknilai->id_dokumen}}"> -->
                     <a href="/konversinilaikhs/proses/{{$dataknilai->id_mhsmbkm}}">
@@ -198,12 +205,12 @@
                     </span>
                     @elseif($dataknilai->status==2)
                     <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      title="Lihat data mahasiswa MBKM">
+                      title="Lihat KHS mahasiswa MBKM">
                       <i class="bi bi-display"></i>
                     </a>
                     @elseif($dataknilai->status==3)
                     <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      title="Lihat data mahasiswa MBKM">
+                      title="Lihat KHS mahasiswa MBKM">
                       <i class="bi bi-display"></i>
                     </a>
                     <span data-bs-toggle="modal"
@@ -309,7 +316,7 @@
                           namamhshapus + "?";
 
   })
-  $("#cek").show().delay(2000).fadeOut('slow', function(){
+  $("#cek").show().delay(3000).fadeOut('slow', function(){
     window.location.replace("/konversinilaikhs");
   });
 

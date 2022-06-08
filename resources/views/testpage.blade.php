@@ -18,7 +18,7 @@
 
       5. kerjakan penerimaan konversi<br>
         - status seperti permohonan mbkm 1=belum diperiksa 2=udah 3=diterima
-        ****KITA DISINIIIIIII******
+
         - buat halaman isinya matkul-matkulnya abis tu disampingnya ada form untuk  masukin nilainya<br>
         (jujur masih belum gimana cara ngerjainnya ini dear god help me pls)
         ++++possible try
@@ -28,8 +28,19 @@
         - ambil data krs dari mhs bernim NIM
         - tampilkan mata-kuliahnya dan form untuk nilainya
         -
+
+
+        -oke buat trigger trigger yang make savepoint untuk biar klo ada nilai yang salah
+        terbuat dia bisa kembali ke savepoint yang sebelum nilai itu ditambahkan. mau pake raw swl terserahlah yang penting work.
+        -GOOD NEWS ADA FUNGSI DI LARAVEL UNTUK TRANSAKSI! USE THAT SHIT!
+
+
+
       6. kerjakan daftar dokumen yang dkmndikirim
+      ****KITA DISINIIIIIII******
       7. kerjakan daftar pengummuman
+
+
       8. kerjakan mahasiswa mhsdibimbing
 
       9. kerjakan filter level user

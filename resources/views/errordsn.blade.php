@@ -24,7 +24,7 @@
       </a>
       <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+        <span>Dokumen Konversi KRS</span>
       </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>
@@ -120,61 +120,27 @@
         </li>
       </ul>
     </div>
-
-
-
-
-
   </div>
 </nav>
 @endsection
 @section('maincontent')
 <div class="container-fluid">
-  <div class=""><span class="h1">Buat Pengumuman</span>
+  <!-- Title -->
+  <div class="pt-2">
+    <span class="display-5">Whoops...</span>
   </div>
-  <div class="container-fluid bg-info py-3 mt-3">
+  <div class="container-fluid bg-info py-5 mt-3">
     <div class="card">
-      <div class="card-body">
-        @if(isset($cek1))
-        <p id="cek1" class="p-2 bg-success bg-opacity-50">{{$cek1}}</p>
-        @elseif(isset($cek2))
-        <p id="cek2" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
+      <div class="card-body bg-danger bg-opacity-50">
+        @if(isset($cek))
+        <p class="h5">{{$cek}}</p>
         @endif
-        <form action="/tambahpengumuman" method="POST">
-          @csrf
-          <div class="mb-3">
-            <label for="judulpengumuman" class="form-label">Judul : </label>
-            <input name="judulpengumuman" id="judulpengumuman" type="text" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="isipengumuman" class="form-label">Isi Pengumuman : </label>
-            <textarea name="isipengumuman" class="form-control" id="isipengumuman"></textarea>
-          </div>
-          <div class="mb-3">
-            <div class="d-flex flex-row-reverse">
-              <button type="submit" class="btn btn-primary">Publikasi</button>
-              <a href="/dashboarddsn" class="btn btn-secondary me-auto">Kembali</a>
-            </div>
-          </div>
-        </form>
       </div>
     </div>
   </div>
+
 </div>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
-<script>
-  ClassicEditor
-            .create( document.querySelector( '#isipengumuman' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-</script>
-<script>
-  $("#cek1").show().delay(3000).fadeOut('slow', function(){
-    window.location.replace("/daftarpengumuman");
-  });
-  $("#cek2").show().delay(3000).fadeOut('slow', function(){
-    window.location.replace("/buatpengumuman");
-  });
-</script>
+  <!-- Title -->
+  <!--konten-->
+  <!--konten-->
 @endsection

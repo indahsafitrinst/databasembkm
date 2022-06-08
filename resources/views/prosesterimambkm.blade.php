@@ -24,7 +24,7 @@
       </a>
       <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+        <span>Dokumen Konversi KRS</span>
       </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>
@@ -142,7 +142,9 @@
           </div>
           <div class="card-body">
             @if(isset($cek))
-            <p id="cek" class="p-2 bg-success bg-opacity-75 text-white">{{$cek}}</p>
+            <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek}}</p>
+            @elseif(isset($cek2))
+            <p id="cek2" class="p-2 bg-danger bg-opacity-505">{{$cek2}}</p>
             @endif
             <div class="row mb-3">
               <div class="col-sm">
@@ -205,7 +207,7 @@
             </div>
             <div class="row">
               <div class="col">
-                <form id="form-field" method="POST" action="/terimapermohonanmbkm" class="needs-validation" novalidate>
+                <form id="form-field" method="POST" action="/terimapermohonanmbkm" class="needs-validation" enctype="multipart/form-data" novalidate>
                   @csrf
                   <input name="nim_mhsmbkm" type="text" value="{{$permmbkm->nim_mhs}}" hidden>
                   <input name="id_permohonan" type="text" value="{{$permmbkm->id_permohonan}}" hidden>
@@ -308,7 +310,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-          <button type="submit" class="btn btn-danger">Hapus</button>
+          <button type="submit" class="btn btn-danger">Ya, tolak</button>
         </div>
       </form>
     </div>
@@ -360,7 +362,7 @@
                           namamhs + "?";
 
   });
-  $("#cek").show().delay(2000).fadeOut('slow', function(){
+  $("#cek").show().delay(2500).fadeOut('slow', function(){
     window.location.replace("/permohonanmbkm");
   });
 
