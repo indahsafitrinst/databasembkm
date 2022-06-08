@@ -6,7 +6,7 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
@@ -30,7 +30,7 @@
         <i class="bi bi-table me-3"></i>
         <span>Daftar Mahasiswa MBKM</span>
       </a>
-      <a href="/mitra" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/mitra" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-table me-3"></i>
         <span>Daftar Mitra</span>
       </a>
@@ -52,7 +52,7 @@
       <span><small>Dosen</small></span>
     </a>
     <a class="nav-link tombolnavbar" href="#">Tentang Aplikasi</a>
-    <a class="nav-link tombolnavbar" href="/buatpengumuman"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
+    <a class="nav-link tombolnavbar" href="#"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -124,28 +124,111 @@
         </li>
       </ul>
     </div>
-
-
-
-
-
   </div>
 </nav>
 @endsection
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Dashboard</span>
+    <span class="h1">Daftar Mitra MBKM</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
-    <div class="card">
-      <div class="card-header">
-        <p class="h3">Pengumuman</p>
-      </div>
-      <div class="card-body">
-        Belum ada pengumuman...Silahkan lihat lain kali :[
+    <div class="row mb-3">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <p class="h3">Daftar Mitra</p>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <form action="{{ route('search') }}" method="GET">
+                  <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search nama mitra..." value="{{ old('cari') }}">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
+                  </form>
+                </div>
+              </div>
+            </form>
+            <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tambah">
+                <i class="bi bi-plus-square"></i> <a href="{{ route('mitra.create') }}" style="color:white"> Tambah </a>
+              </button>
+            <table class="table table-bordered">
+              <tr>
+                <th width="20px">No.</th>
+                <th width="250px">KODE MITRA</th>
+                <th width="250px">NAMA MITRA</th>
+                <th width="100px">AKSI</th>
+              </tr>
+              <?php 
+              $mitras = DB::table('tbl_mitra')->get();
+              $no = 1;
+              ?>
+              @foreach($mitras as $mitra)
+                <tr class="rowclickable">
+                <td>{{$no++ }}</td> 
+                <td>{{$mitra->kode_mitra}}</td>
+                <td>{{$mitra->nama_mitra}}</td>
+                <td class="text-center">
+                    <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><a href="/mitra/edit/{{ $mitra->kode_mitra }}" style="color:white"><i class="bi bi-pencil-square"></i></a>
+                      </button>
+                      <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('mitra.destroy', $mitra->kode_mitra) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus"><a href="{{ route('mitra.destroy', $mitra->kode_mitra) }}" style="color:white;"><i class="bi bi-trash3"></i></a> </button>
+                    </form>
+                  </td>
+                </td>
+              </tr>
+                </td>
+              </tr>
+              @endforeach
+            </table>
+          </div>
+        </div>
+        <br/>
       </div>
     </div>
   </div>
 </div>
+
+<!-- MODAL HAPUS DAFTAR MITRA -->
+<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Hapus Mitra?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input class="inputid" type="text" id="inputid" value="">
+          <p id="namamhs" class=""></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+          <button type="submit" class="btn btn-danger">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+//message with toastr
+    @if(session()-> has('success'))
+        
+        toastr.success('{{ session('success') }}', 'BERHASIL!'); 
+
+    @elseif(session()-> has('error'))
+
+        toastr.error('{{ session('error') }}', 'GAGAL!'); 
+        
+    @endif
+</script>
 @endsection

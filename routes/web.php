@@ -8,6 +8,7 @@ use App\Http\Controllers\PermohonanMBKMController;
 use App\Http\Controllers\MahasiswaMBKMController;
 use App\Http\Controllers\DaftarMhsMBKMController;
 use App\Http\Controllers\KonversiNilaiController;
+
 //controller 1
 
 //controller 2
@@ -17,8 +18,7 @@ use App\Http\Controllers\KonversiNilaiController;
 //controller 4
 
 //controller 5
-
-
+use App\Http\Controllers\DaftarMitraController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -140,5 +140,9 @@ Route::get('/testpage', function() {
 
 
 //DAFTAR MITRA
-
+Route::resource('mitra', DaftarMitraController::class);
+Route::get('/mitra/edit/{kode_mitra}', [DaftarMitraController::class, 'edit']);
+Route::post('/mitra/update',[DaftarMitraController::class, 'update']);
+Route::get('/mitra/delete/{kode_mitra}',[DaftarMitraController::class, 'delete']);
+Route::get('/mitra/search', [DaftarMitraController::class, 'search'])->name('search');
 //END DAFTAR MITRA

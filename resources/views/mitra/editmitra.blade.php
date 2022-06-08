@@ -1,58 +1,15 @@
 @extends('template.layouttempdsn')
-@section('sidebar')
-<nav id="mySidebar" class=" d-lg-block sidebar bg-white">
-  <div class="position-sticky">
-    <div class="list-group list-group-flush mx-3">
-      <div class="d-flex justify-content-end align-items-center">
-        <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
-      </div>
-      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple active">
-        <i class="bi bi-square-half me-3"></i>
-        <span>Dashboard</span>
-      </a>
-      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-card-checklist me-3 "></i>
-        <span>Permohonan Program MBKM</span>
-      </a>
-      <a href="konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-postcard-fill me-3"></i>
-        <span>Konversi Nilai Kartu Hasil Studi</span>
-      </a>
-      <a href="mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-people-fill me-3"></i>
-        <span>Mahasiswa Dibimbing</span>
-      </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
-      </a>
-      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-table me-3"></i>
-        <span>Daftar Mahasiswa MBKM</span>
-      </a>
-      <a href="/mitra" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-table me-3"></i>
-        <span>Daftar Mitra</span>
-      </a>
-      <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-megaphone me-3"></i>
-        <span>Daftar Pengumuman</span>
-      </a>
-    </div>
-  </div>
-</nav>
-@endsection
 @section('navbar')
 <nav class="navbar navbar-light bg-light fixed-top navbar-expand-lg">
   <div class="container-fluid">
     <i id="navbtn" onclick="openNav()" class="openbtn bi bi-list"></i>
     <a class="navbar-brand ms-3" href="#">
-      <img src="img/hehe.jfif" alt="" width="30" height="30">
+      <img src="{{asset('/img/hehe.jfif')}}" alt="" width="30" height="30">
       <span><strong>Portal MBKM</strong></span>
       <span><small>Dosen</small></span>
     </a>
     <a class="nav-link tombolnavbar" href="#">Tentang Aplikasi</a>
-    <a class="nav-link tombolnavbar" href="/buatpengumuman"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
+    <a class="nav-link tombolnavbar" href="#"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -106,7 +63,7 @@
         </li>
         <li class="nav-item dropdown d-flex flex-row justify-content-end">
           <a class="nav-link dropdown-toggle" href="#"id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img class="rounded-circle" src="img/hehe.jfif" alt="" width="30" height="30">
+            <img class="rounded-circle" src="{{asset('/img/hehe.jfif')}}" alt="" width="30" height="30">
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
@@ -124,28 +81,81 @@
         </li>
       </ul>
     </div>
-
-
-
-
-
   </div>
 </nav>
 @endsection
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Dashboard</span>
+    <span class="h1">Daftar Mitra</span>
   </div>
-  <div class="container-fluid bg-info py-3 mt-3">
-    <div class="card">
-      <div class="card-header">
-        <p class="h3">Pengumuman</p>
-      </div>
-      <div class="card-body">
-        Belum ada pengumuman...Silahkan lihat lain kali :[
+  <div class="container-fluid bg-info py-5 mt-5">
+    <div class="row justify-content-center">
+    <div class="row mb-6">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            @if(session('alert'))
+            <p class="text-danger">
+              {{session('alert')}}
+            </p>
+            @endif
+            @foreach($tbl_mitra as $m)
+                <form action="/mitra/update" method="POST" class="needs-validation" novalidate>
+                    {{ csrf_field() }}
+                <div class="form-group">
+                  <input type="hidden" class="form-control" name="kode_mitralama" value="{{ $m->kode_mitra }}" placeholder="Masukkan Kode Mitra" required>
+                  <div class="invalid-feedback">Harus masukkan Kode Mitra</div>
+                </div>
+                <div class="form-group">
+                  <label for="kode_mitra" class="form-label">Kode Mitra</label>
+                  <input type="text" class="form-control" name="kode_mitra" value="{{ $m->kode_mitra }}" placeholder="Masukkan Kode Mitra" required>
+                  <div class="invalid-feedback">Harus masukkan Kode Mitra</div>
+                </div>
+                <div class="form-group">
+                  <label for="nama_mitra" class="form-label">Nama Mitra</label>
+                  <input type="text" class="form-control" name="nama_mitra" value="{{ $m->nama_mitra }}" placeholder="Masukkan Nama Mitra" required>
+                  <div class="invalid-feedback">Harus masukkan Nama Mitra</div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <button class="btn btn-warning" value="Go Back"><a href="/mitra" style="color:white"> Kembali </a></button>   
+                </div>
+            </form>
+            @endforeach
+	
+          </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-@endsection
+
+
+<script>
+  (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
