@@ -62,7 +62,9 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/krs', function () {
       return view('halkrs');
   });
+  Route::get('/krs',[KrsController::class,'tampilkanProfil']);
 
+  Route::get('/krs/ubah/{nim}',[KrsController::class,'ubahkrs']);
 
   //END Halaman Krs Mahasiswa
 
@@ -76,17 +78,13 @@ Route::group(['middleware'=>['protectedPage']],function(){
       return view('pengajuankonvnilai');
   });
   Route::post('/merdekabelajar/ajukankonvnilai',[PengajuanController::class,'uploadPengajuanKonvNilai']);
+
+
   // UNTUK DOSEN DISINI
 
   Route::get('/profildsn', function () {
       return view('profildsn');
   });
-  Route::get('/krs',[KrsController::class,'tampilkanProfil']);
-
-  Route::get('/krs/ubah/{nim}',[KrsController::class,'ubahkrs']);
-});
-
-
   Route::get('/logindosen',[LoginController::class,'logincekdsn']);
   Route::post("dsnlogin",[LoginController::class,'dsnlogin']);
 
@@ -126,10 +124,9 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::post('/hapuspengumuman', [PengumumanController::class,'hapusPengumuman']);
   Route::get('/pengumumantampil/{key_idpengumuman}', [PengumumanController::class,'tampilPengumuman']);
 
+
 });
 
-
-//UNTUK DOSEN JUGA DISINI
 
 
 
