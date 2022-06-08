@@ -106,13 +106,13 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/profildsn">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/logout">
                 <i class="bi bi-box-arrow-left me-2"></i>Logout
               </a>
             </li>
@@ -151,13 +151,13 @@
                 <table class="table table-bordered">
                   <tr>
                     <th width="20px">No.</th>
-                    <th width="120px">NIM</th>
-                    <th width="200px">NAMA</th>
-                    <th width="200px">PROGRAM STUDI</th>
-                    <th width="75px">SEMESTER</th>
-                    <th wdith="250px">PROGRAM MBKM</th>
-                    <th width="250px">MITRA</th>
-                    <th width="100px">STATUS</th>
+                    <th width="">NIM</th>
+                    <th width="">NAMA</th>
+                    <th width="">PROGRAM STUDI</th>
+                    <th width="">SEMESTER</th>
+                    <th wdith="">PROGRAM MBKM</th>
+                    <th width="">MITRA</th>
+                    <th width="">STATUS</th>
                     <th width="50px">AKSI</th>
                   </tr>
                   @foreach($mhsmbkms as $mhsmbkm)
@@ -170,11 +170,11 @@
                     <td>{{$mhsmbkm->nama_program}}</td>
                     <td>{{$mhsmbkm->nama_mitra}}</td>
                     @if($mhsmbkm->statusmbkm==1)
-                    <td>Sedang menjalani perkuliahan</td>
+                    <td><p class="bg-success bg-opacity-50">Sedang menjalani perkuliahan</p></td>
                     @elseif($mhsmbkm->statusmbkm==2)
-                    <td>Menunggu konversi nilai</td>
+                    <td><p class="bg-warning bg-opacity-50">Menunggu konversi nilai</p></td>
                     @elseif($mhsmbkm->statusmbkm==3)
-                    <td>Telah menyelesaikan program MBKM</td>
+                    <td><p class="bg-primary bg-opacity-50">Telah menyelesaikan program MBKM</p></td>
                     @endif
                     <td class="text-center">
                       <a class="btn btn-outline-secondary mb-1" href="/mhsmbkm/{{$mhsmbkm->semester}}/{{$mhsmbkm->nim}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i class="bi bi-three-dots"></i></a>
@@ -182,7 +182,7 @@
                       data-bs-target="#modalhapus"
                       dataid="{{$mhsmbkm->id_mhsmbkm}}"
                       datanamamhs="{{$mhsmbkm->nama}}">
-                        <button class="btn btn-outline-danger mb-1" data-tooltip="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
+                        <button class="btn btn-danger mb-1" data-tooltip="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
                           <i class="bi bi-trash3"></i>
                         </button>
                       </span>
@@ -210,6 +210,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="/hapusmhsmbkm" method="POST">
+        @csrf
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Hapus permohonan konversi nilai khs ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -244,6 +245,6 @@
   areanama.innerHTML = "Apakah anda yakin ingin menghapus semua data MBKM terkait milik : " +
                           namamhs + "?";
 
-  })
+  });
 </script>
 @endsection

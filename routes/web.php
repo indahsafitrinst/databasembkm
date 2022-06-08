@@ -8,7 +8,10 @@ use App\Http\Controllers\PermohonanMBKMController;
 use App\Http\Controllers\MahasiswaMBKMController;
 use App\Http\Controllers\DaftarMhsMBKMController;
 use App\Http\Controllers\KonversiNilaiController;
-
+use App\Http\Controllers\DokumenKirimController;
+use App\Http\Controllers\MahasiswaDibimbingController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PengumumanController;
 
 //controller 1
 
@@ -78,63 +81,60 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/profildsn', function () {
       return view('profildsn');
   });
+
+
+  Route::get('/logindosen',[LoginController::class,'logincekdsn']);
+  Route::post("dsnlogin",[LoginController::class,'dsnlogin']);
+
+  Route::get('/dashboarddsn', [DashboardController::class,'dashboardDosen']);
+
+  Route::get('/permohonanmbkm', [PermohonanMBKMController::class,'tampilDataPermMBKM']);
+  Route::get('/permohonanmbkm/proses/{key_permmbkm}', [PermohonanMBKMController::class,'prosesPermMBKM']);
+  Route::post('/terimapermohonanmbkm', [PermohonanMBKMController::class,'terimaPermMBKM']);
+  Route::post('/hapuspermohonanmbkm', [PermohonanMBKMController::class,'hapusPermMBKM']);
+  Route::post('/tolakpermohonanmbkm', [PermohonanMBKMController::class,'tolakPermMBKM']);
+
+  Route::get('/mhsmbkm/{key_semester}/{key_nimmbkm}', [MahasiswaMBKMController::class,'tampilDataMhsMBKM']);
+  Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
+  Route::post('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
+
+
+  Route::get('/konversinilaikhs', [KonversiNilaiController::class,'daftarKonvNilai']);
+  Route::get('/konversinilaikhs/proses/{key_idmhsmbkm}', [KonversiNilaiController::class,'prosesKonvNilai']);
+  Route::post('/inserttokhs',[KonversiNilaiController::class,'insertToKhs']);
+  Route::post('/tolakkonvnilai', [KonversiNilaiController::class,'tolakKonvNilai']);
+  Route::post('/hapuskonvnilai', [KonversiNilaiController::class,'hapusKonvNilai']);
+
+  Route::get('/mhsdibimbing', [MahasiswaDibimbingController::class,'daftarMhsDbmbng']);
+
+
+  Route::get('/dkmndikirim', [DokumenKirimController::class,'getDocsTerkirim']);
+  Route::post('/hapusdocsterimakrs', [DokumenKirimController::class,'hapusDocsTerimaKRS']);
+
+
+  Route::post('/tambahpengumuman', [PengumumanController::class,'tambahPengumuman']);
+  Route::get('/buatpengumuman', function () {
+      return view('pengumumanbuat');
+  });
+  Route::get('/daftarpengumuman', [PengumumanController::class,'daftarPengumuman']);
+  Route::get('/daftarpengumuman/edit/{key_idpengumuman}', [PengumumanController::class,'editPengumuman']);
+  Route::post('/ubahpengumuman', [PengumumanController::class,'ubahPengumuman']);
+  Route::post('/hapuspengumuman', [PengumumanController::class,'hapusPengumuman']);
+  Route::get('/pengumumantampil/{key_idpengumuman}', [PengumumanController::class,'tampilPengumuman']);
+
 });
 
 
 //UNTUK DOSEN JUGA DISINI
 
-Route::get('/logindosen',[LoginController::class,'logincekdsn']);
-Route::post("dsnlogin",[LoginController::class,'dsnlogin']);
 
-Route::get('/dashboarddsn', function () {
-    return view('dashboarddosen');
-});
-
-Route::get('/permohonanmbkm', [PermohonanMBKMController::class,'tampilDataPermMBKM']);
-Route::get('/permohonanmbkm/proses/{key_permmbkm}', [PermohonanMBKMController::class,'prosesPermMBKM']);
-Route::post('/terimapermohonanmbkm', [PermohonanMBKMController::class,'terimaPermMBKM']);
-Route::post('/hapuspermohonanmbkm', [PermohonanMBKMController::class,'hapusPermMBKM']);
-Route::post('/tolakpermohonanmbkm', [PermohonanMBKMController::class,'tolakPermMBKM']);
-
-Route::get('/mhsmbkm/{key_semester}/{key_nimmbkm}', [MahasiswaMBKMController::class,'tampilDataMhsMBKM']);
-
-
-Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
-Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
-
-
-Route::get('/konversinilaikhs', [KonversiNilaiController::class,'daftarKonvNilai']);
-Route::get('/konversinilaikhs/proses/{key_idmhsmbkm}', [KonversiNilaiController::class,'prosesKonvNilai']);
-Route::post('/tolakkonvnilai', [KonversiNilaiController::class,'tolakKonvNilai']);
-Route::post('/hapuskonvnilai', [KonversiNilaiController::class,'hapusKonvNilai']);
-
-Route::get('/mhsdibimbing', function () {
-    return view('mhsdibimbing');
-});
-
-
-Route::get('/dkmndikirim', function () {
-    return view('dkmndikirim');
-});
-Route::get('/dkmnall', function () {
-    return view('dkmnall');
-});
-
-Route::get('/buatpengumuman', function () {
-    return view('pengumumanbuat');
-});
-Route::get('/daftarpengumuman/edit', function () {
-    return view('pengumumanedit');
-});
-Route::get('/daftarpengumuman', function () {
-    return view('pengumumandaftar');
-});
-Route::get('/pengumumantampil', function () {
-    return view('pengumumantampil');
-});
 
 Route::get('/testpage', function() {
   return view('testpage');
+});
+
+Route::get('/errodsnpage', function() {
+  return view('errordsn');
 });
 
 

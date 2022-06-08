@@ -18,7 +18,7 @@
         <i class="bi bi-postcard-fill me-3"></i>
         <span>Konversi Nilai Kartu Hasil Studi</span>
       </a>
-      <a href="/mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="/mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
@@ -126,11 +126,6 @@
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <a href="/mhsdibimbing" class="text-decoration-none">
-      <button class="btn btn-outline-primary mb-3">
-        <i class="bi bi-arrow-bar-left me-2 h3"></i>
-      </button>
-    </a>
     <span class="h1">Mahasiswa MBKM</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
@@ -141,6 +136,14 @@
             <p class="h3">Detail Mahasiswa</p>
           </div>
           <div class="card-body">
+            @if(isset($cek1))
+            <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek1}}</p>
+            @elseif(isset($cek2))
+            <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
+            @endif
+
+
+            @if(isset($datamhsmbkm))
             <div class="row mb-3">
               <div class="col-sm-6">
                 <p>
@@ -228,19 +231,21 @@
                   <div class="pe-5">
                     <p>
                       <span>Konversi KRS : </span>
-                      <a href="{{$datamhsmbkm->lokasi_filesilabus}}">
-                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i> untuk sementara yg dari mhs Download</button>
+                      <a href="{{$datamhsmbkm->lokasi_filekonvkrs}}">
+                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i>ingat ini masih dari mhs Download</button>
                       </a>
                     </p>
                   </div>
+                  @if(isset($datatranskripnilai))
                   <div class="pe-5">
                     <p>
                       <span>Transkrip Nilai : </span>
-                      <a href="#">
+                      <a href="{{$datatranskripnilai->lokasi_filekonvnilai}}">
                         <button class="btn btn-outline-danger"><i class="bi bi-filetype-pdf me-2"></i></i> Download</button>
                       </a>
                     </p>
                   </div>
+                  @endif
                 </div>
               </div>
             </div>
@@ -248,18 +253,18 @@
               <div class="col-sm">
                 <p><span class="fw-bold">AKSI : </span></p>
                 <form method="POST" id="form-field" action="/hapusmhsmbkm">
-                  <a class="btn btn-outline-secondary" href="/mhsdibimbing"><i class="bi bi-arrow-90deg-left"></i></a>
+                  @csrf
                   @if($datamhsmbkm->statusmbkm==2)
                   <a class="btn btn-outline-success" href="#"><i class="bi bi-arrow-right-circle-fill me-2"></i>Proses</a>
                   @endif
-                  <input name="idmhsmbkm" type="text" hidden value="{{$datamhsmbkm->statusmbkm}}" required>
+                  <input name="idmhsmbkm" type="text" hidden value="{{$datamhsmbkm->id_mhsmbkm}}" required>
                   <button id="submitbutton" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#hapusmbkmmodal">
                     <i class="bi bi-trash3 me-2"></i>Hapus
                   </button>
                 </form>
               </div>
             </div>
-
+            @endif
           </div>
         </div>
       </div>
@@ -273,13 +278,13 @@
         <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan Data MBKM</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body bg-danger bg-opacity-50">
         Yakin untuk menghapus data MBKM ini? (Dokumen-dokumen yang terhubung ke mahasiswa ini akan ditolak.<br>
         Mahasiswa ini harus mengirim kembali dokumen-dokumennya untuk mengikuti MBKM lagi.)
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-        <button type="button" id="sendhapus" class="btn btn-primary">Ya, Hapus</button>
+        <button type="button" id="sendhapus" class="btn btn-danger">Ya, Hapus</button>
       </div>
     </div>
   </div>
@@ -299,6 +304,10 @@
   $('#sendhapus').click(function(){
      /* when the submit button in the modal is clicked, submit the form */
     $('#form-field').submit();
+  });
+
+  $("#cek").show().delay(2000).fadeOut('slow', function(){
+    window.location.replace("/daftarmhsmbkm");
   });
 </script>
 @endsection

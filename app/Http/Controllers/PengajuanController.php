@@ -27,6 +27,7 @@ class pengajuanController extends Controller
         'lokasi_filebuktilulus'=>$lokasibuktilulus,
         'lokasi_filesilabus'=>$lokasisilabus,
         'lokasi_filekonvkrs'=>$lokasipermohonankonvkrs,
+        'semester_perm'=>session('semester'),
         'status'=>1,
         'waktu_unggah'=>Carbon::now()->toDateTimeString()
       ]);
@@ -44,7 +45,7 @@ class pengajuanController extends Controller
                       ->where('nim',session('nim'))
                       ->where('semester',session('semester'))
                       ->first();
-                      
+
 
 
       $inserttodb = DB::table('tbl_docskonvnilai')

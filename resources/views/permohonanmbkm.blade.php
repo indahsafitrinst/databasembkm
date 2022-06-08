@@ -24,7 +24,7 @@
       </a>
       <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
+        <span>Dokumen Konversi KRS</span>
       </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>
@@ -148,8 +148,10 @@
                 </div>
               </div>
             </form>
-            @if(isset($cek))
-            <p id="cek" class="p-2 bg-success bg-opacity-75 text-white">{{$cek}}</p>
+            @if(isset($cek1))
+            <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek1}}</p>
+            @elseif(isset($cek2))
+            <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
             @endif
 
 
@@ -158,7 +160,8 @@
                 <th width="20px">No.</th>
                 <th width="120px">NIM</th>
                 <th width="250px">NAMA</th>
-                <th width="250px">FAKULTAS</th>
+                <th width="150px">FAKULTAS</th>
+                <th width="75px">SEMESTER</th>
                 <th width="200px">WAKTU UPLOAD</th>
                 <th width="100px">STATUS</th>
                 <th width="150px">AKSI</th>
@@ -170,6 +173,7 @@
                 <td>{{$datapermmbkm->nim_mhs}}</td>
                 <td>{{$datapermmbkm->nama}}</td>
                 <td>{{$datapermmbkm->nama_prodi}}</td>
+                <td>{{$datapermmbkm->semester_perm}}</td>
                 <td><small class="text-secondary">{{$datapermmbkm->waktu_unggah}}</small></td>
                 <td>
                   @if($datapermmbkm->status == 1)
