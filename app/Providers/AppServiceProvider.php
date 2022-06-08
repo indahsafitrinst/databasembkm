@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-      View::composer(['profil','halkrs','halkhs','merdekabelajar','pengajuanmbkm','pengajuankonvnilai'],NotifikasiComposer::class);
+      View::composer(['profil','halkrs','halkhs','merdekabelajar','pengajuanmbkm','pengajuankonvnilai','ubahkrs'],NotifikasiComposer::class);
       View::composer([
         'profildsn',
         'daftarkonvnilai',
