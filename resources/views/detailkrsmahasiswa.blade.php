@@ -10,7 +10,7 @@
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Permohonan Program MBKM</span>
       </a>
@@ -22,10 +22,6 @@
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-file-earmark-check me-3"></i>
-        <span>Dokumen Dikirim</span>
-      </a>
       <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-table me-3"></i>
         <span>Daftar Mahasiswa MBKM</span>
@@ -34,7 +30,7 @@
         <i class="bi bi-megaphone me-3"></i>
         <span>Daftar Pengumuman</span>
       </a>
-      <a href="/daftarkrsmahasiswa" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/daftarkrsmahasiswa" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Daftar KRS Mahasiswa</span>
       </a>
@@ -130,7 +126,7 @@
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Permohonan MBKM</span>
+    <span class="h1">KARTU RANCANGAN STUDI MAHASISWA</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
     <div class="row mb-3">
@@ -138,96 +134,47 @@
         <div class="card">
           <div class="card-header">
             <p class="h3">
-              Daftar Permohonan MBKM
+              KRS Mahasiswa
+            </p><br>
+            <p>
+                Nama            : {{$krs[0]->nama}}<br>
+                Nim             : {{$krs[0]->nim}}<br>
+                Semester        : {{$krs[0]->semester}}<br>
+                SKS Maksimum    : {{$krs[0]->sks_maks}}<br>
             </p>
           </div>
           <div class="card-body">
-            <form>
-              <div class="mb-3">
-                <div class="d-flex flex-row">
-                  <input type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
-                  <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-search"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-            @if(isset($cek))
+            {{--@if(isset($cek))
             <p id="cek" class="p-2 bg-success bg-opacity-75 text-white">{{$cek}}</p>
-            @endif
+            @endif--}}
 
 
             <table class="table table-bordered">
               <tr>
                 <th width="20px">No.</th>
-                <th width="120px">NIM</th>
-                <th width="250px">NAMA</th>
-                <th width="250px">FAKULTAS</th>
-                <th width="200px">WAKTU UPLOAD</th>
-                <th width="100px">STATUS</th>
-                <th width="150px">AKSI</th>
+                <th width="120px">KODE</th>
+                <th width="250px">MATA KULIAH</th>
+                <th width="250px">SKS</th>
               </tr>
-              <?php $i = 0;?>
-              @foreach($permmbkm as $datapermmbkm)
-              <tr class="rowclickable">
-                <td><?php echo ++$i;?></td>
-                <td>{{$datapermmbkm->nim_mhs}}</td>
-                <td>{{$datapermmbkm->nama}}</td>
-                <td>{{$datapermmbkm->nama_prodi}}</td>
-                <td><small class="text-secondary">{{$datapermmbkm->waktu_unggah}}</small></td>
+              <?php $j ?>
+              <?php $i = 1 ?>
+              @for($j=0; $j<=count($krs)-1; $j++)
+              <tr>
                 <td>
-                  @if($datapermmbkm->status == 1)
-                  <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
-                  @elseif($datapermmbkm->status == 2)
-                  <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
-                  @elseif($datapermmbkm->status == 3)
-                  <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
-                  @endif
-
+                    {{$i++}}
                 </td>
-                <td class="text-center">
-                  <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  title="Download Dokumen">
 
-                      <i class="bi bi-file-earmark-arrow-down"></i>
-                    </button>
-                  </a>
-                  @if($datapermmbkm->status==1)
-                  <a href="/permohonanmbkm/proses/{{$datapermmbkm->id_permohonan}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Proses permintaan konversi nilai">
-                    <i class="bi bi-caret-right-square-fill"></i>
-                  </a>
-                  <span data-bs-toggle="modal"
-                  data-bs-target="#modalhapus"
-                  dataid="{{$datapermmbkm->id_permohonan}}"
-                  datanamamhs="{{$datapermmbkm->nama}}">
-                    <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
-                      <i class="bi bi-trash3"></i></i>
-                    </button>
-                  </span>
-                  @elseif($datapermmbkm->status==2)
-                  <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Lihat data mahasiswa MBKM">
-                    <i class="bi bi-display"></i>
-                  </a>
-                  @else
-                  <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Lihat data mahasiswa MBKM">
-                    <i class="bi bi-display"></i>
-                  </a>
-                  <span data-bs-toggle="modal"
-                  data-bs-target="#modalhapus"
-                  dataid="{{$datapermmbkm->id_permohonan}}"
-                  datanamamhs="{{$datapermmbkm->nama}}">
-                    <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
-                      <i class="bi bi-trash3"></i></i>
-                    </button>
-                  </span>
-                  @endif
-
+                <td>
+                    {{$krs[$j]->kode_matakuliah}}
+                </td>
+                <td>
+                    {{$krs[$j]->nama_matakuliah}}
+                </td>
+                <td>
+                    {{$krs[$j]->sks}}
                 </td>
               </tr>
-              @endforeach
+              @endfor
             </table>
           </div>
         </div>

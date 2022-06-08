@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -44,7 +44,7 @@ class pengajuanController extends Controller
                       ->where('nim',session('nim'))
                       ->where('semester',session('semester'))
                       ->first();
-                      
+
 
 
       $inserttodb = DB::table('tbl_docskonvnilai')

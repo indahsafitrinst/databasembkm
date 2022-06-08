@@ -34,6 +34,11 @@
         <i class="bi bi-megaphone me-3"></i>
         <span>Daftar Pengumuman</span>
       </a>
+      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-file-earmark-check me-3"></i>
+        <span>Daftar KRS Mahasiswa</span>
+      </a>
+
     </div>
   </div>
 </nav>

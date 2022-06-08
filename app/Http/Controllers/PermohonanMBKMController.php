@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class PermohonanMBKMController extends Controller
 {
     public function tampilDataPermMBKM(){
-      $permmbkm =DB::table('daftar_permohonan_mbkm')
+      $permmbkm = DB::table('daftar_permohonan_mbkm')
                 ->orderBy('status', 'asc')
                 ->get();
 
