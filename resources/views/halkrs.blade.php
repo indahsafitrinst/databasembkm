@@ -94,18 +94,17 @@
   <div class="">
     <span class="h1">Kartu Rencana Studi</span>
   </div>
-
   <div class="container-fluid bg-info py-5 mt-3">
     <div class="row">
       <div class="col">
         <div class="card mb-3">
           <div class="card-body">
-            <p><span class="fw-bold">NAMA</span> : INSERT NAME</p>
-            <p><span class="fw-bold">NIM</span> : 201402066</p>
-            <p><span class="fw-bold">SEMESTER</span> : INSERT SEMESTER</p>
-            <p><span class="fw-bold">SKS MAKSIMUM</span> : insert sks maks</p>
-            <p><span class="fw-bold">DOSEN PEMBIMBING AKADEMIK</span> : awaa</p>
-          </div>
+            <p><span class="fw-bold">NAMA</span> : {{$profils->nama}} </p>
+            <p><span class="fw-bold">NIM</span> :  {{$profils->nim}}</p>
+            <p><span class="fw-bold">SEMESTER</span> :{{$profils->semester}}</p>
+            <p><span class="fw-bold">SKS MAKSIMUM</span> :{{$profils->sks_maks}}</p>
+            <p><span class="fw-bold">DOSEN PEMBIMBING AKADEMIK</span> :{{$profils->nama_dosen}}</p>
+         </div>
         </div>
       </div>
       <div class="col">
@@ -116,21 +115,24 @@
             <th>MATA KULIAH</th>
             <th>SKS</th>
           </tr>
+           <?php $i = 0;?>
+           @foreach($krs as $krs)
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><?php echo ++$i;?></td>
+            <td>{{$krs->kode_matakuliah}}</td>
+            <td>{{$krs->nama_matakuliah}}</td>
+            <td>{{$krs->sks}}</td>
           </tr>
+          @endforeach
           <tr>
             <td colspan="3">Total</td>
-            <td>idk</td>
+            <td>{{$sks->total}}</td>
           </tr>
         </table>
       </div>
     </div>
     <div class="col d-flex justify-content-end">
-      <a href="#" class="btn btn-success me-2"><i class="bi bi-pencil-square me-2"></i>Ubah</a>
+      <a href="/krs/ubah/{{$profils->nim}}" class="btn btn-success me-2"><i class="bi bi-pencil-square me-2"></i>Ubah</a>
       <button class="btn btn-secondary me-2"><i class="bi bi-printer me-2"></i>Print</button>
     </div>
   </div>

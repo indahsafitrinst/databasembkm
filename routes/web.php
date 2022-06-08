@@ -14,7 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengumumanController;
 
 //controller 1
-
+use App\Http\Controllers\KrsController;
 //controller 2
 
 //controller 3
@@ -81,6 +81,10 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/profildsn', function () {
       return view('profildsn');
   });
+  Route::get('/krs',[KrsController::class,'tampilkanProfil']);
+
+  Route::get('/krs/ubah/{nim}',[KrsController::class,'ubahkrs']);
+});
 
 
   Route::get('/logindosen',[LoginController::class,'logincekdsn']);
