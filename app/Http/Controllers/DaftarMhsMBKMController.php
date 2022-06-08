@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class DaftarMhsMBKMController extends Controller
@@ -11,5 +11,5 @@ class DaftarMhsMBKMController extends Controller
 
       return view('daftarmhsmbkm')->with('mhsmbkms',$getalldata);
     }
-    
+
 }

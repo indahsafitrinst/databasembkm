@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DaftarKRSMahasiswa;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PengajuanController;
@@ -117,9 +118,18 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/mhsdibimbing', [MahasiswaDibimbingController::class,'daftarMhsDbmbng']);
 
 
+  Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
+  Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
+  Route::get('/daftarkrsmahasiswa', [DaftarKRSMahasiswa::class,'daftarKRSMahasiswa']);
+  Route::get('/daftarkrsmahasiswa/detailkrsmahasiswa/{id}/{semester}', [DaftarKRSMahasiswa::class,'detailKRSMahasiswa']);
+
+
+  // route daftar krs mahasiswwa
+  //Route::get('/daftarkrsmahasiswa', [DaftarKRSmahasiswaController::class,'tampilDaftarKRSmahasiswa']);
+  // selesai
+
   Route::get('/dkmndikirim', [DokumenKirimController::class,'getDocsTerkirim']);
   Route::post('/hapusdocsterimakrs', [DokumenKirimController::class,'hapusDocsTerimaKRS']);
-
 
   Route::post('/tambahpengumuman', [PengumumanController::class,'tambahPengumuman']);
   Route::get('/buatpengumuman', function () {
@@ -152,6 +162,9 @@ Route::get('/errodsnpage', function() {
 
 
 //DAFTAR KRS Mahasiswa
+// Route::get('/daftarkrsmahasiswa', function () {
+//     return view('daftarkrsmahasiswa');
+// });
 
 //END DAFTAR KRS MAHASISWA
 
