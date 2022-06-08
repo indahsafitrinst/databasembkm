@@ -91,67 +91,92 @@
 @section('maincontent')
 <div class="container-fluid">
   <!-- Title -->
-  <div class="">
-    @if(session()->has('success'))
-    <div class="alert alert-success">
-        {{ session()->get('success') }}
-    </div>
-    @elseif(session()->has('error'))
-    <div class="alert alert-danger">
-        {{ session()->get('error') }}
-    </div>
-    @elseif(session()->has('success2'))
-    <div class="alert alert-success">
-        {{ session()->get('success2') }}
-    </div>
-    @endif
-    <span class="h1">Kartu Rencana Studi</span>
+  @if(session()->has('error'))
+  <div class="alert alert-danger">
+      {{ session()->get('error') }}
   </div>
-  <div class="container-fluid bg-info py-5 mt-3">
-    <div class="row">
+  @endif
+  <div id=msg></div>
+  <div class="container-fluid bg-info py-3 mt-3">
+    <div class="row mb-3">
       <div class="col">
-        <div class="card mb-3">
+        <div class="card">
+          <div class="card-header">
+            <p class="h3">
+              Daftar Matakuliah
+            </p>
+          </div>
           <div class="card-body">
-            <p><span class="fw-bold">NAMA</span> : {{$profils->nama}} </p>
-            <p><span class="fw-bold">NIM</span> :  {{$profils->nim}}</p>
-            <p><span class="fw-bold">SEMESTER</span> :{{$profils->semester}}</p>
-            <p><span class="fw-bold">SKS MAKSIMUM</span> :{{$profils->sks_maks}}</p>
-            <p><span class="fw-bold">DOSEN PEMBIMBING AKADEMIK</span> :{{$profils->nama_dosen}}</p>
-         </div>
+            <form name="form1" class="" action="/update" method="get">
+                {{ csrf_field() }}
+            <table class="table table-bordered">
+              <tr>
+                <th>No.</th>
+                <th>Kode Matakuliah</th>
+                <th>Nama Matakuliah</th>
+                <th>SKS</th>
+                <th>Aksi</th>
+              </tr>
+              <?php $i = 0;?>
+              @foreach($matakuliah as $mk)
+              <tr class="rowclickable">
+                <td><?php echo ++$i;?></td>
+                <td>{{$mk->kode_matakuliah}}</td>
+                <td>{{$mk->nama_matakuliah}}</td>
+                <td><input type="hidden" name="sks[]" value="{{$mk->sks}}">{{$mk->sks}}</td>
+                <td><input type="checkbox" name="kode_matakuliah[]" value="{{$mk->kode_matakuliah}}"></td>
+              </tr>
+              @endforeach
+            </table>
+                <div class="col d-flex justify-content-end">
+                  <input type="submit" name="kirim" value="Tambah" class="btn btn-success me-2">
+                </div>
+          </form>
+                <div class="col d-flex justify-content-end">
+                  <a href="/krs"><button class="btn btn-danger mt-2 me-2">Kembali</button></a>
+                </div>
+          </div>
         </div>
       </div>
-      <div class="col">
-        <table class="table table-striped table-bordered">
-          <tr>
-            <th>No.</th>
-            <th style="width: 75px;">KODE MATAKULIAH</th>
-            <th>MATA KULIAH</th>
-            <th>SKS</th>
-          </tr>
-           <?php $i = 0;?>
-           @foreach($krs as $krs)
-          <tr>
-            <td><?php echo ++$i;?></td>
-            <td>{{$krs->kode_matakuliah}}</td>
-            <td>{{$krs->nama_matakuliah}}</td>
-            <td>{{$krs->sks}}</td>
-          </tr>
-          @endforeach
-          <tr>
-            <td colspan="3">Total</td>
-            <td>{{$sks->total}}</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="col d-flex justify-content-end">
-      <a href="/krs/hapus" class="btn btn-danger me-2" onclick="return confirm('Yakin ingin hapus?');"><i class="bi bi-pencil-square me-2"></i>Hapus</a>
-      <a href="/krs/ubah/{{$profils->nim}}" class="btn btn-success me-2"><i class="bi bi-pencil-square me-2"></i>Ubah</a>
-      <button class="btn btn-secondary me-2"><i class="bi bi-printer me-2"></i>Print</button>
     </div>
   </div>
 
 </div>
+<!-- <script type="text/javascript">
+function chkcontrol(j) {
+var sum=0;
+for(var i=0; i < document.form1.sks[i].length; i++){
+
+if(document.form1.sks[i].checked){
+sum = sum + parseInt(document.form1.sks[i].value);
+}
+document.getElementById("msg").innerHTML="Sum :"+ sum;
+
+if(sum >10){
+sum = sum - parseInt(document.form1.sks[j].value);
+document.form1.sks[j].checked = false ;
+alert("Sum of the selection can't be more than 10")
+//return false;
+}
+document.getElementById("msg").innerHTML="Sum :"+ sum;
+}
+}
+</script> -->
+<!-- <script type="text/javascript">
+function chkcontrol()
+  var sum=0;
+  for(var i=0;i<document.form1.sks.length;i++){
+    if(document.form1.sks[i].checked){
+      sum = sum + parseInt(document.form1.sks[i].value);
+    }
+    document.getElementById("msg").innerHTML="Sum :"+ sum;
+  }
+
+  if(sum>24){
+    alert("Sum of the selection can't be more than 10")
+  }
+
+</script> -->
   <!-- Title -->
   <!--konten-->
   <!--konten-->

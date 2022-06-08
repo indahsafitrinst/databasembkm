@@ -71,6 +71,10 @@ Route::group(['middleware'=>['protectedPage']],function(){
 
   Route::get('/krs/ubah/{nim}',[KrsController::class,'ubahkrs']);
 
+  Route::get('/krs/hapus',[KrsController::class,'hapuskrs']);
+
+  Route::get('/update',[KrsController::class,'update']);
+
   //END Halaman Krs Mahasiswa
 
   Route::get('/merdekabelajar',[MerdekaBelajarController::class,'statusMBKMchecking']);
