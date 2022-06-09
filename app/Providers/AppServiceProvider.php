@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-      View::composer(['profil','halkrs','halkhs','merdekabelajar','pengajuanmbkm','pengajuankonvnilai','ubahkrs'],NotifikasiComposer::class);
+      View::composer(['profil','dashboardmhs','halkrs','halkhs','merdekabelajar','pengajuanmbkm','pengajuankonvnilai','ubahkrs'],NotifikasiComposer::class);
       View::composer([
         'profildsn',
         'daftarkonvnilai',
@@ -43,7 +43,9 @@ class AppServiceProvider extends ServiceProvider
         'pengumumantampil',
         'permohonanmbkm',
         'prosesterimakonvnilai',
-        'prosesterimambkm'
+        'prosesterimambkm',
+        'daftarkrsmahasiswa',
+        'detailkrsmahasiswa'
       ],NotifikasiDSNComposer::class);
 
     }

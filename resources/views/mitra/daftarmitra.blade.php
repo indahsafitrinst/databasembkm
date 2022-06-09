@@ -32,7 +32,7 @@
       </a>
       <a href="/mitra" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-table me-3"></i>
-        <span>Daftar Mitra</span>
+        <span> Daftar Mitra </span>
       </a>
       <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-megaphone me-3"></i>
@@ -149,18 +149,18 @@
           </div>
            @endif 
           <div class="card-body">
-            <form>
+            <!--<form>
               <div class="mb-3">
                 <div class="d-flex flex-row">
-                  <!--<form action="{{ route('search') }}" method="GET">
+                  <form action="{{ route('search') }}" method="GET">
                   <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search nama mitra..." value="{{ old('cari') }}">
                   <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                   </button>
-                  </form>-->
+                  </form>
                 </div>
               </div>
-            </form>
+            </form>-->
             <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tambah">
                 <i class="bi bi-plus-square"></i> <a href="{{ route('mitra.create') }}" style="color:white"> Tambah </a>
               </button>

@@ -9,19 +9,19 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="dashboard" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="/dashboard" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="khs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/khs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Kartu Hasil Studi</span>
       </a>
-      <a href="krs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/krs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-postcard-fill me-3"></i>
         <span>Kartu Rencana Studi</span>
       </a>
-      <a href="merdekabelajar" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/merdekabelajar" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-award-fill me-3"></i>
         <span>Merdeka Belajar</span>
       </a>

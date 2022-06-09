@@ -10,10 +10,19 @@ class KhsController extends Controller
     if(session()->has('nim')){
       $nim = session()->get('nim');
     }
+
+      // $semester = DB::table('tbl_khs')->where('semester',$semester)->get();
+
       $profil = DB::table('tbl_khs')
                 ->join('tbl_mahasiswa', 'tbl_khs.nim','=','tbl_mahasiswa.nim')
                 ->where('tbl_khs.nim','=',$nim)
                 ->first();
+
+      $datakhs = DB::table('tbl_khs')
+                ->join('tbl_mahasiswa','tbl_khs.nim','=','tbl_mahasiswa.nim')
+                ->join('tbl_matakuliah','tbl_khs.kode_matakuliah','=','tbl_matakuliah.kode_matakuliah')
+                ->where('tbl_mahasiswa.nim','=',$nim)
+                ->get();
 
       $khs = DB::table('tbl_khs')
                 ->join('tbl_mahasiswa','tbl_khs.nim','=','tbl_mahasiswa.nim')
@@ -40,11 +49,12 @@ class KhsController extends Controller
                 // return view('halkrs',['profils'=>$profil]);
     }
 
-    public function ubahkrs($nim){
+    public function showKhs($nim){
+      if(session()->has('nim')){
+        $nim = session()->get('nim');
+      }
 
-      $matakuliah = DB::table('tbl_matakuliah')->get();
 
-      return view('ubahkrs')->with('matakuliah',$matakuliah);
 
     }
 
