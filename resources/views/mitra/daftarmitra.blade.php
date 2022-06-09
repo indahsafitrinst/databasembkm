@@ -149,18 +149,18 @@
           </div>
            @endif 
           <div class="card-body">
-            <form>
+            <!--<form>
               <div class="mb-3">
                 <div class="d-flex flex-row">
-                  <!--<form action="{{ route('search') }}" method="GET">
+                  <form action="{{ route('search') }}" method="GET">
                   <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search nama mitra..." value="{{ old('cari') }}">
                   <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                   </button>
-                  </form>-->
+                  </form>
                 </div>
               </div>
-            </form>
+            </form>-->
             <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tambah">
                 <i class="bi bi-plus-square"></i> <a href="{{ route('mitra.create') }}" style="color:white"> Tambah </a>
               </button>
