@@ -95,6 +95,14 @@
   <div class="alert alert-danger">
       {{ session()->get('error') }}
   </div>
+  @elseif(session()->has('warning'))
+  <div class="alert alert-danger">
+      {{ session()->get('warning') }}
+  </div>
+  @elseif(session()->has('error2'))
+  <div class="alert alert-danger">
+      {{ session()->get('error2') }}
+  </div>
   @endif
   <div id=msg></div>
   <div class="container-fluid bg-info py-3 mt-3">
@@ -118,13 +126,13 @@
                 <th>SKS</th>
                 <th>Aksi</th>
               </tr>
-              <?php $i = 0;?>
-              @foreach($matakuliah as $mk)
+              <?php $i=0; ?>
               <tr class="rowclickable">
-                <td><?php echo ++$i;?></td>
+                @foreach($matakuliah as $mk)
+                <td><?php $i++ ?></td>
                 <td>{{$mk->kode_matakuliah}}</td>
                 <td>{{$mk->nama_matakuliah}}</td>
-                <td><input type="hidden" name="sks[]" value="{{$mk->sks}}">{{$mk->sks}}</td>
+                <td>{{$mk->sks}}</td>
                 <td><input type="checkbox" name="kode_matakuliah[]" value="{{$mk->kode_matakuliah}}"></td>
               </tr>
               @endforeach

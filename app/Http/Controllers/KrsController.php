@@ -56,25 +56,88 @@ class KrsController extends Controller
     }
 
     public function update(Request $request){
+      DB::beginTransaction();
       if(session()->has('nim')){
         $nim = session()->get('nim');
       }
-      // $kd_matkul = $request->input('kode_matakuliah');
       $k=1;
+      $sksmahasiswa = 0;
+      $sum = 0;
+      $matkul = $request->input('kode_matakuliah');
+
+      $sksmaks = DB::table('tbl_mahasiswa')->where('nim',$nim)->first();
+
+      $sksmahasiswa += (int)$sksmaks->sks_maks;
+
       if($request->has('kode_matakuliah')) {
-      for($i=0;$i<count($request->kode_matakuliah);$i++)
-      {
-        $tbl_krs =[
-          'nim'             =>$nim,
-          'kode_matakuliah' =>$request->kode_matakuliah[$i],
-          'semester'        =>5,
-        ];
-        DB::table('tbl_krs')->insert($tbl_krs);
+        foreach($matkul as $matkul){
+          $sks = DB::table('tbl_matakuliah')
+          ->where('kode_matakuliah',$matkul)
+          ->first();
+
+          $sum += (int)$sks->sks;
+        }
+        if($sum>$sksmahasiswa){
+          return back()->with('error2','Jumlah SKS Yang Anda Ambil Melebih Batas');
+        }
+        for($i=0;$i<count($request->kode_matakuliah);$i++)
+        {
+          $tbl_krs =[
+            'nim'             =>$nim,
+            'kode_matakuliah' =>$request->kode_matakuliah[$i],
+            'semester'        =>5,
+          ];
+          DB::table('tbl_krs')->insert($tbl_krs);
+          DB::commit();
+        }
+          return redirect('/krs')->with('success2','Berhasil ditambah');
+        }else{
+          DB::rollBack();
+          return back()->with('error','Tidak ada matakuliah yang dipilih');
+        }
       }
-      return redirect('/krs')->with('success2','Berhasil ditambah');
-    }else{
-      return back()->with('error','Tidak ada matakuliah yang dipilih');
-    }
     }
 
-  }
+      // if($sum>=$sksmaks)
+      // {
+      //   return back()->with('error2','Total SKS Yang Diambil Melebihi Batas');
+      // }
+      // if($request->has('kode_matakuliah')) {
+      //   for($i=1;$i<count($request->kode_matakuliah);$i++)
+      //     {
+      //       $tbl_krs =[
+      //         'nim'             =>$nim,
+      //         'kode_matakuliah' =>$request->kode_matakuliah[$i],
+      //         'semester'        =>5,
+      //         ];
+      //         if($sum>=$sksmaks){
+      //           return back()->with('error2','Jumlah SKS yang diambil melebih batas');
+      //         }else{
+      //       DB::table('tbl_krs')->insert($tbl_krs);
+      //       DB::commit();
+      //     }
+      //     }
+      //       return redirect('/krs')->with('success2','Berhasil ditambah');
+      // }else{
+      //   DB::rollback();
+      //   return back()->with('error','Tidak ada matakuliah yang dipilih');
+      // }
+
+
+
+
+      // foreach ($request->input('sks') as $attrKey => $val) {
+      //   foreach ($request->input('kode_matakuliah.'. $attrKey) as $attr_valkey => $value) {
+      //     if(!isset($value)){
+      //       DB::rollBack();
+      //       return redirect()->back()->with('warning','Ada kesalahan');
+      //     }
+
+          // $group = $request->input('sks');
+          //   foreach($group as $key => $nilai){
+          //     $sum += $nilai;
+          //   }
+          //   echo $sum;
+      //   }
+      //
+      // }
