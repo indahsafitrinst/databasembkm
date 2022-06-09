@@ -101,7 +101,7 @@
         <label for="semselect" class="form-label h5">Pilih semester : </label>
         <select id="#" class="">
           <option>...</option>
-          <option>1</option>
+          <option href="halkrsbaru">1</option>
           <option>2</option>
           <option>3</option>
           <option>4</option>
@@ -113,7 +113,54 @@
     </form>
   </div>
 
+  <div class="container-fluid bg-info py-5 mt-3">
+    <div class="row">
+      <div class="col">
+        <div class="card mb-2">
+          <div class="card-body">
+            <p><span class="fw-bold">NAMA</span> : {{$profils->nama}} </p>
+            <p><span class="fw-bold">NIM</span> :  {{$profils->nim}}</p>
+         </div>
+        </div>
+      </div>
+      <div class="col">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>No.</th>
+            <th style="width: 75px;">KODE MATAKULIAH</th>
+            <th>MATA KULIAH</th>
+            <th>SKS</th>
+            <th>Nilai</th>
+          </tr>
+           <?php $i = 0;?>
+           @foreach($khs as $khs)
+          <tr>
+            <td><?php echo ++$i;?></td>
+            <td>{{$khs->kode_matakuliah}}</td>
+            <td>{{$khs->nama_matakuliah}}</td>
+            <td>{{$khs->sks}}</td>
+            <td>{{$khs->nilai}}</td>
+          </tr>
+          @endforeach
+          <tr>
+            <td colspan="3">Total</td>
+            <td>{{$sks->total}}</td>
+          </tr>
+          <tr>
+            <td colspan="3">IP Semester</td>
+            <td>{{$ip->ip_semester}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <button class="btn btn-secondary me-2"><i class="bi bi-printer me-2"></i>Print</button>
+    </div>
+  </div>
 </div>
+
+
+
   <!-- Title -->
   <!--konten-->
   <!--konten-->

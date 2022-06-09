@@ -35,10 +35,46 @@ class KrsController extends Controller
 
     public function ubahkrs($nim){
 
-      $matakuliah = DB::table('tbl_matakuliah')->get();
-      
-      return view('ubahkrs')->with('matakuliah',$matakuliah);
+      $getkrs = DB::table('tbl_krs')->where('nim',$nim)->get();
 
+      $matakuliah = DB::table('tbl_matakuliah')->get();
+
+      return view('ubahkrs')->with('matakuliah',$matakuliah)->with('getkrs',$getkrs);
+
+    }
+
+    public function hapuskrs(){
+      if(session()->has('nim')){
+        $nim = session()->get('nim');
+      }
+      if(DB::table('tbl_krs')->where('nim',$nim)->exists()){
+        DB::table('tbl_krs')->where('nim',$nim)->delete();
+        return redirect('/krs')->with('success','Berhasil dihapus');
+      }else{
+        return redirect('/krs')->with('error','Tabel Anda Kosong');
+      }
+    }
+
+    public function update(Request $request){
+      if(session()->has('nim')){
+        $nim = session()->get('nim');
+      }
+      // $kd_matkul = $request->input('kode_matakuliah');
+      $k=1;
+      if($request->has('kode_matakuliah')) {
+      for($i=0;$i<count($request->kode_matakuliah);$i++)
+      {
+        $tbl_krs =[
+          'nim'             =>$nim,
+          'kode_matakuliah' =>$request->kode_matakuliah[$i],
+          'semester'        =>5,
+        ];
+        DB::table('tbl_krs')->insert($tbl_krs);
+      }
+      return redirect('/krs')->with('success2','Berhasil ditambah');
+    }else{
+      return back()->with('error','Tidak ada matakuliah yang dipilih');
+    }
     }
 
   }

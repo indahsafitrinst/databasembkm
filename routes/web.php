@@ -13,7 +13,7 @@ use App\Http\Controllers\DokumenKirimController;
 use App\Http\Controllers\MahasiswaDibimbingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengumumanController;
-
+use App\Http\Controllers\KhsController;
 //controller 1
 use App\Http\Controllers\KrsController;
 //controller 2
@@ -23,7 +23,7 @@ use App\Http\Controllers\KrsController;
 //controller 4
 
 //controller 5
-
+use App\Http\Controllers\DaftarMitraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +61,11 @@ Route::group(['middleware'=>['protectedPage']],function(){
       return view('halkhs');
   });
 
+  Route::get('/khsbaru', function () {
+      return view('halkhsbaru');
+  });
 
+  Route::get('/khsbaru',[KhsController::class,'tampilkanKhs']);
   //End halaman khs mahasiswa
   // Halaman krsmahasiswa
   Route::get('/krs', function () {
@@ -70,6 +74,10 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/krs',[KrsController::class,'tampilkanProfil']);
 
   Route::get('/krs/ubah/{nim}',[KrsController::class,'ubahkrs']);
+
+  Route::get('/krs/hapus',[KrsController::class,'hapuskrs']);
+
+  Route::get('/update',[KrsController::class,'update']);
 
   //END Halaman Krs Mahasiswa
 
@@ -166,5 +174,9 @@ Route::get('/errodsnpage', function() {
 
 
 //DAFTAR MITRA
-
+Route::resource('mitra', DaftarMitraController::class);
+Route::get('/mitra/edit/{kode_mitra}', [DaftarMitraController::class, 'edit']);
+Route::post('/mitra/update',[DaftarMitraController::class, 'update']);
+Route::get('/mitra/delete/{kode_mitra}',[DaftarMitraController::class, 'delete']);
+Route::get('/mitra/search', [DaftarMitraController::class, 'search'])->name('search');
 //END DAFTAR MITRA
