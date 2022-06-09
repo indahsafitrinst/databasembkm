@@ -139,6 +139,15 @@
           <div class="card-header">
             <p class="h3">Daftar Mitra</p>
           </div>
+          @if(session()->has('success'))
+          <div class="alert alert-success">
+              {{ session()->get('success') }}
+          </div>
+          @elseif(session()-> has('error'))
+          <div class="alert alert-danger">
+              {{ session()->get('error') }}
+          </div>
+           @endif 
           <div class="card-body">
             <form>
               <div class="mb-3">
