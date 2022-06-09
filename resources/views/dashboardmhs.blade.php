@@ -47,45 +47,28 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+            @if($newnotif>0)
+            <span class="badge rounded-pill badge-notification bg-danger">{{$newnotif}}</span>
+            @endif
           </a>
           <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
+            @foreach ($notifcatch as $notifcatch)
             <li>
               <a class="dropdown-item" href="#">
                 <div class="card small">
+                  @if ($notifcatch->status==1)
                   <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
                   </div>
+                  @else
+                  <div class="card-body bg-secondary">
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
+                  </div>
+                  @endif
                 </div>
               </a>
             </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+            @endforeach
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -96,7 +79,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="profil">
+              <a class="dropdown-item" href="/profil">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>

@@ -43,6 +43,10 @@ Route::get('/loginmhs',[LoginController::class,'logincekmhs']);
 Route::get('/',[LoginController::class,'logincekmhs']);
 Route::post("mhslogin",[LoginController::class,'mhslogin']);
 Route::get('/logout',[LoginController::class,'logout']);
+Route::get('/logindosen',[LoginController::class,'logincekdsn']);
+Route::post("dsnlogin",[LoginController::class,'dsnlogin']);
+
+
 
 Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/dashboard', function () {
@@ -94,8 +98,7 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/profildsn', function () {
       return view('profildsn');
   });
-  Route::get('/logindosen',[LoginController::class,'logincekdsn']);
-  Route::post("dsnlogin",[LoginController::class,'dsnlogin']);
+
 
   Route::get('/dashboarddsn', [DashboardController::class,'dashboardDosen']);
 

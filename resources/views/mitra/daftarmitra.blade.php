@@ -32,7 +32,7 @@
       </a>
       <a href="/mitra" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-table me-3"></i>
-        <span>Daftar Mitra</span>
+        <span> Daftar Mitra </span>
       </a>
       <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-megaphone me-3"></i>
@@ -139,8 +139,17 @@
           <div class="card-header">
             <p class="h3">Daftar Mitra</p>
           </div>
+          @if(session()->has('success'))
+          <div class="alert alert-success">
+              {{ session()->get('success') }}
+          </div>
+          @elseif(session()-> has('error'))
+          <div class="alert alert-danger">
+              {{ session()->get('error') }}
+          </div>
+           @endif 
           <div class="card-body">
-            <form>
+            <!--<form>
               <div class="mb-3">
                 <div class="d-flex flex-row">
                   <form action="{{ route('search') }}" method="GET">
@@ -151,7 +160,7 @@
                   </form>
                 </div>
               </div>
-            </form>
+            </form>-->
             <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tambah">
                 <i class="bi bi-plus-square"></i> <a href="{{ route('mitra.create') }}" style="color:white"> Tambah </a>
               </button>
@@ -216,19 +225,5 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script>
-//message with toastr
-    @if(session()-> has('success'))
-        
-        toastr.success('{{ session('success') }}', 'BERHASIL!'); 
 
-    @elseif(session()-> has('error'))
-
-        toastr.error('{{ session('error') }}', 'GAGAL!'); 
-        
-    @endif
-</script>
 @endsection

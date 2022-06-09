@@ -6,23 +6,23 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/dashboarddsn" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Permohonan Program MBKM</span>
       </a>
-      <a href="konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/konversinilaikhs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-postcard-fill me-3"></i>
         <span>Konversi Nilai Kartu Hasil Studi</span>
       </a>
-      <a href="mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/mhsdibimbing" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Dokumen Konversi KRS</span>
       </a>
@@ -52,7 +52,7 @@
       <span><small>Dosen</small></span>
     </a>
     <a class="nav-link tombolnavbar" href="#">Tentang Aplikasi</a>
-    <a class="nav-link tombolnavbar" href="#"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
+    <a class="nav-link tombolnavbar" href="/buatpengumuman"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -61,45 +61,28 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+            @if($newnotif>0)
+            <span class="badge rounded-pill badge-notification bg-danger">{{$newnotif}}</span>
+            @endif
           </a>
           <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
+            @foreach ($notifcatch as $notifcatch)
             <li>
               <a class="dropdown-item" href="#">
                 <div class="card small">
+                  @if ($notifcatch->status==1)
                   <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
                   </div>
+                  @else
+                  <div class="card-body bg-secondary">
+                    <span class="tekskecil">{{$notifcatch->isi_notif}}</span>
+                  </div>
+                  @endif
                 </div>
               </a>
             </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="card small">
-                  <div class="card-body">
-                    <span class="tekskecil">INI NOTIFIKASI</span>
-                  </div>
-                </div>
-              </a>
-            </li>
+            @endforeach
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -110,7 +93,7 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="/profil">
                 <i class="bi bi-person-badge me-2"></i>Profil
               </a>
             </li>
@@ -124,6 +107,11 @@
         </li>
       </ul>
     </div>
+
+
+
+
+
   </div>
 </nav>
 @endsection
