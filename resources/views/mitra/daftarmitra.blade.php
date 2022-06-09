@@ -152,12 +152,12 @@
             <form>
               <div class="mb-3">
                 <div class="d-flex flex-row">
-                  <form action="{{ route('search') }}" method="GET">
+                  <!--<form action="{{ route('search') }}" method="GET">
                   <input type="text" name="search" id="search" class="form-control me-2" placeholder="Search nama mitra..." value="{{ old('cari') }}">
                   <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                   </button>
-                  </form>
+                  </form>-->
                 </div>
               </div>
             </form>
