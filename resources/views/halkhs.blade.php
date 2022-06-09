@@ -123,7 +123,7 @@
          </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col" id="khs">
         <table class="table table-striped table-bordered">
           <tr>
             <th>No.</th>
