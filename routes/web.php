@@ -65,8 +65,8 @@ Route::group(['middleware'=>['protectedPage']],function(){
   // Route::get('/khsbaru', function () {
   //     return view('halkhsbaru');
   // });
-
-  Route::get('/khs',[KhsController::class,'tampilkanKhs']);
+  Route::get('/khs',[KhsController::class,'tampilkankhsMhs']);
+  // Route::get('/khs/',[KhsController::class,'tampilkanKhs']);
   Route::get('/khs/{semester}',[KhsController::class,'tampilkanKhsSemester']);
   //End halaman khs mahasiswa
   // Halaman krsmahasiswa
@@ -170,7 +170,7 @@ Route::get('/errodsnpage', function() {
 //DAFTAR KHS Mahasiswa
 Route::get('/daftarkhsmahasiswa', [DaftarKHSMhsController::class,'daftarKHSMhs']);
 Route::get('/khsmhsmbkm/{key_semester}/{key_nimmbkm}', [DaftarKHSMhsController::class,'tampilKhs']);
-Route::get('/daftarkhsmahasiswa/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
+Route::get('/khs/mbkm/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
 Route::get('/daftarkhsmahasiswa/search', [DaftarKHSMhsController::class,'search']);
 //END DAFTAR KHS MAHASISWA
 
@@ -188,5 +188,5 @@ Route::resource('mitra', DaftarMitraController::class);
 Route::get('/mitra/edit/{kode_mitra}', [DaftarMitraController::class, 'edit']);
 Route::post('/mitra/update',[DaftarMitraController::class, 'update']);
 Route::get('/mitra/delete/{kode_mitra}',[DaftarMitraController::class, 'delete']);
-Route::get('/mitra/search', [DaftarMitraController::class, 'search'])->name('search');
+Route::get('admin/mitra/search', [DaftarMitraController::class,'searchMitra']);
 //END DAFTAR MITRA

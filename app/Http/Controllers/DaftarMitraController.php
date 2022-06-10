@@ -6,6 +6,7 @@ use App\Models\Mitra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DaftarMitraController extends Controller
 {    
@@ -111,12 +112,15 @@ class DaftarMitraController extends Controller
           return redirect()->route('mitra.index')->with(['error' => 'Data Gagal Dihapus!']);
       }
   }
-  public function search(Request $request)
-    {
-        $cari = $request->cari;
-        $mitra = DB::table('tbl_mitra')->where('nama_mitra', 'like', "%" . $cari . "%");
-        return view('mitra.daftarmitra', ['tbl_mitra' => $mitra]);
-    }
+  public function searchMitra(Request $req){
+
+    $search = DB::table('tbl_mitra')
+              ->where('nama_mitra','LIKE','%'.$req->searchinput.'%')
+              ->orwhere('kode_mitra','LIKE','%'.$req->searchinput.'%')
+              ->get();
+    return view('mitra.searchmitra', ['datasearch'=>$search]);
+
+  }
   } 
 
 
