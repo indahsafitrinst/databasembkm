@@ -57,15 +57,16 @@ Route::group(['middleware'=>['protectedPage']],function(){
   });
 
   // Halaman khs mahasiswa
-  Route::get('/khs', function () {
-      return view('halkhs');
-  });
+  // Route::get('/khs', function () {
+  //     return view('halkhs');
+  // });
 
-  Route::get('/khsbaru', function () {
-      return view('halkhsbaru');
-  });
+  // Route::get('/khsbaru', function () {
+  //     return view('halkhsbaru');
+  // });
 
-  Route::get('/khsbaru',[KhsController::class,'tampilkanKhs']);
+  Route::get('/khs',[KhsController::class,'tampilkanKhs']);
+  Route::get('/khs/{semester}',[KhsController::class,'tampilkanKhsSemester']);
   //End halaman khs mahasiswa
   // Halaman krsmahasiswa
   Route::get('/krs', function () {

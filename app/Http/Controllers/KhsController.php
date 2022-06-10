@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 
 class KhsController extends Controller
 {
+
   public function tampilkanKhs(){
     if(session()->has('nim')){
       $nim = session()->get('nim');
     }
-
-      // $semester = DB::table('tbl_khs')->where('semester',$semester)->get();
-
-      $profil = DB::table('tbl_khs')
+      $profils = DB::table('tbl_khs')
                 ->join('tbl_mahasiswa', 'tbl_khs.nim','=','tbl_mahasiswa.nim')
                 ->where('tbl_khs.nim','=',$nim)
                 ->first();
@@ -45,17 +43,65 @@ class KhsController extends Controller
                 ->first();
 
 
-      return view('halkhs')->with('profils',$profil)->with('khs',$khs)->with('sks',$sks)->with('ip',$ip);
+      return view('halkhs')->with('profils',$profils)->with('khs',$khs)->with('sks',$sks)->with('ip',$ip);
                 // return view('halkrs',['profils'=>$profil]);
+
+  }
+
+  public function tampilkanKhsSemester($semester){
+    if(session()->has('nim')){
+      $nim = session()->get('nim');
     }
+      $profils = DB::table('tbl_khs')
+                ->join('tbl_mahasiswa', 'tbl_khs.nim','=','tbl_mahasiswa.nim')
+                ->where('tbl_khs.nim','=',$nim)
+                ->first();
 
-    public function showKhs($nim){
-      if(session()->has('nim')){
-        $nim = session()->get('nim');
-      }
+      $datakhs = DB::table('tbl_khs')
+                ->join('tbl_mahasiswa','tbl_khs.nim','=','tbl_mahasiswa.nim')
+                ->join('tbl_matakuliah','tbl_khs.kode_matakuliah','=','tbl_matakuliah.kode_matakuliah')
+                ->where('tbl_mahasiswa.nim','=',$nim)
+                ->get();
+
+      $khs = DB::table('tbl_khs')
+                ->join('tbl_mahasiswa','tbl_khs.nim','=','tbl_mahasiswa.nim')
+                ->join('tbl_matakuliah','tbl_khs.kode_matakuliah','=','tbl_matakuliah.kode_matakuliah')
+                ->where('tbl_mahasiswa.nim','=',$nim)
+                ->get();
+
+      $sks = DB::table('tbl_khs')
+                ->join('tbl_mahasiswa','tbl_khs.nim','=','tbl_mahasiswa.nim')
+                ->join('tbl_matakuliah','tbl_khs.kode_matakuliah','=','tbl_matakuliah.kode_matakuliah')
+                ->where('tbl_mahasiswa.nim','=',$nim)
+                ->select(DB::raw("SUM(sks) as total"))
+                ->first();
+
+      $ip = DB::table('tbl_khs')
+                ->join('tbl_mahasiswa','tbl_khs.nim','=','tbl_mahasiswa.nim')
+                ->join('tbl_matakuliah','tbl_khs.kode_matakuliah','=','tbl_matakuliah.kode_matakuliah')
+                ->where('tbl_mahasiswa.nim','=',$nim)
+                ->select(DB::raw("SUM(tbl_matakuliah.sks*tbl_khs.nilai) / SUM(tbl_matakuliah.sks) AS ip_semester"))
+                ->first();
+
+
+      return view('halkhs')->with('profils',$profils)->with('khs',$khs)->with('sks',$sks)->with('ip',$ip);
+                // return view('halkrs',['profils'=>$profil]);
+
+  }
+
+  public function tampilkanPembantu(){
+    // return "TESTING: ".$semester;
+
+
+  }
 
 
 
-    }
+    // public function showSemester(){
+    //   if(session()->has('nim')){
+    //     $nim = session()->get('nim');
+    // }
+    //
+    // if (DB::tbl('tbl_khs')->where('nim',$nim))
 
   }

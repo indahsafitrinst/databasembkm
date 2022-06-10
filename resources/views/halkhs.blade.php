@@ -1,4 +1,13 @@
 @extends ('template.layouttemp')
+
+<script type="text/javascript">
+function gotopage(selfval){
+var value = selfval.options[selfval.selectedIndex].value;
+
+window.location.href="/khs/"+value;
+}
+</script>
+
 @section('title')
 <title>Kartu Hasil Studi</title>
 @endsection
@@ -9,19 +18,19 @@
       <div class="d-flex justify-content-end align-items-center">
         <i href="javascript:void(0)" class="bi bi-x-square closebtn btn btn-sm " onclick="closeNav()"></i>
       </div>
-      <a href="/dashboard" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="dashboard" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
-      <a href="/khs" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="khs" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Kartu Hasil Studi</span>
       </a>
-      <a href="/krs" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="krs" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-postcard-fill me-3"></i>
         <span>Kartu Rencana Studi</span>
       </a>
-      <a href="/merdekabelajar" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="merdekabelajar" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-award-fill me-3"></i>
         <span>Merdeka Belajar</span>
       </a>
@@ -99,15 +108,15 @@
     <form>
       <div class="mb-3">
         <label for="semselect" class="form-label h5">Pilih semester : </label>
-        <select id="#" class="">
-          <option>...</option>
-          <option href="halkrsbaru">1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
+        <select id="semesters" class="" onchange="gotopage(this)">
+          <option value="">Select</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
         </select>
       </div>
     </form>
