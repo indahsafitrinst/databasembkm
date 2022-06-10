@@ -127,10 +127,6 @@ class PermohonanMBKMController extends Controller
 
     }
 
-
-
-
-
     public function hapusPermMBKM(Request $req){
       DB::beginTransaction();
       $hapusperm = DB::table('tbl_permohonanmbkm')
@@ -148,5 +144,15 @@ class PermohonanMBKMController extends Controller
         DB::rollBack();
         return view('permohonanmbkm')->with('permmbkm',$permmbkm)->with('cek2', 'Permohonan gagal dihapus!');
       }
+    }
+
+    public function searchPermMBKM(Request $req){
+
+      $search = DB::table('daftar_permohonan_mbkm')
+                ->where('nama','LIKE','%'.$req->searchinput.'%')
+                ->orwhere('nim_mhs','LIKE','%'.$req->searchinput.'%')
+                ->get();
+      return view('permohonanmbkmsearch', ['datasearch'=>$search]);
+
     }
 }

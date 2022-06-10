@@ -61,6 +61,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bell"></i>
+            @if(isset($newnotif))
             @if($newnotif>0)
             <span class="badge rounded-pill badge-notification bg-danger">{{$newnotif}}</span>
             @endif
@@ -83,6 +84,7 @@
               </a>
             </li>
             @endforeach
+            @endif
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -158,68 +160,76 @@
                 <th width="100px">STATUS</th>
                 <th width="150px">AKSI</th>
               </tr>
-              <?php $i = 0;?>
-              @foreach($permmbkm as $datapermmbkm)
-              <tr class="rowclickable">
-                <td><?php echo ++$i;?></td>
-                <td>{{$datapermmbkm->nim_mhs}}</td>
-                <td>{{$datapermmbkm->nama}}</td>
-                <td>{{$datapermmbkm->nama_prodi}}</td>
-                <td>{{$datapermmbkm->semester_perm}}</td>
-                <td><small class="text-secondary">{{$datapermmbkm->waktu_unggah}}</small></td>
-                <td>
-                  @if($datapermmbkm->status == 1)
-                  <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
-                  @elseif($datapermmbkm->status == 2)
-                  <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
-                  @elseif($datapermmbkm->status == 3)
-                  <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
-                  @endif
+              @if(count($datasearch)>0)
+                <?php $i = 0;?>
+                @foreach($datasearch as $datapermmbkm)
+                <tr class="rowclickable">
+                  <td><?php echo ++$i;?></td>
+                  <td>{{$datapermmbkm->nim_mhs}}</td>
+                  <td>{{$datapermmbkm->nama}}</td>
+                  <td>{{$datapermmbkm->nama_prodi}}</td>
+                  <td>{{$datapermmbkm->semester_perm}}</td>
+                  <td><small class="text-secondary">{{$datapermmbkm->waktu_unggah}}</small></td>
+                  <td>
+                    @if($datapermmbkm->status == 1)
+                    <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
+                    @elseif($datapermmbkm->status == 2)
+                    <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
+                    @elseif($datapermmbkm->status == 3)
+                    <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
+                    @endif
 
-                </td>
-                <td class="text-center">
-                  <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                  title="Download Dokumen">
+                  </td>
+                  <td class="text-center">
+                    <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Download Dokumen">
 
-                      <i class="bi bi-file-earmark-arrow-down"></i>
-                    </button>
-                  </a>
-                  @if($datapermmbkm->status==1)
-                  <a href="/permohonanmbkm/proses/{{$datapermmbkm->id_permohonan}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Proses permintaan konversi nilai">
-                    <i class="bi bi-caret-right-square-fill"></i>
-                  </a>
-                  <span data-bs-toggle="modal"
-                  data-bs-target="#modalhapus"
-                  dataid="{{$datapermmbkm->id_permohonan}}"
-                  datanamamhs="{{$datapermmbkm->nama}}">
-                    <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
-                      <i class="bi bi-trash3"></i></i>
-                    </button>
-                  </span>
-                  @elseif($datapermmbkm->status==2)
-                  <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Lihat data mahasiswa MBKM">
-                    <i class="bi bi-display"></i>
-                  </a>
-                  @else
-                  <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    title="Lihat data mahasiswa MBKM">
-                    <i class="bi bi-display"></i>
-                  </a>
-                  <span data-bs-toggle="modal"
-                  data-bs-target="#modalhapus"
-                  dataid="{{$datapermmbkm->id_permohonan}}"
-                  datanamamhs="{{$datapermmbkm->nama}}">
-                    <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
-                      <i class="bi bi-trash3"></i></i>
-                    </button>
-                  </span>
-                  @endif
+                        <i class="bi bi-file-earmark-arrow-down"></i>
+                      </button>
+                    </a>
+                    @if($datapermmbkm->status==1)
+                    <a href="/permohonanmbkm/proses/{{$datapermmbkm->id_permohonan}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      title="Proses permintaan konversi nilai">
+                      <i class="bi bi-caret-right-square-fill"></i>
+                    </a>
+                    <span data-bs-toggle="modal"
+                    data-bs-target="#modalhapus"
+                    dataid="{{$datapermmbkm->id_permohonan}}"
+                    datanamamhs="{{$datapermmbkm->nama}}">
+                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
+                        <i class="bi bi-trash3"></i></i>
+                      </button>
+                    </span>
+                    @elseif($datapermmbkm->status==2)
+                    <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      title="Lihat data mahasiswa MBKM">
+                      <i class="bi bi-display"></i>
+                    </a>
+                    @else
+                    <a href="/mhsmbkm/{{$datapermmbkm->semester_perm}}/{{$datapermmbkm->nim_mhs}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                      title="Lihat data mahasiswa MBKM">
+                      <i class="bi bi-display"></i>
+                    </a>
+                    <span data-bs-toggle="modal"
+                    data-bs-target="#modalhapus"
+                    dataid="{{$datapermmbkm->id_permohonan}}"
+                    datanamamhs="{{$datapermmbkm->nama}}">
+                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus dari daftar">
+                        <i class="bi bi-trash3"></i></i>
+                      </button>
+                    </span>
+                    @endif
 
+                  </td>
+                </tr>
+                @endforeach
+              @else
+              <tr>
+                <td colspan="8">
+                  Tidak ada hasil pencarian...
                 </td>
               </tr>
-              @endforeach
+              @endif
             </table>
           </div>
         </div>
