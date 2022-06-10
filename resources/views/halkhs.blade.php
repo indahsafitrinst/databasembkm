@@ -127,8 +127,8 @@ window.location.href="/khs/"+value;
       <div class="col">
         <div class="card mb-2">
           <div class="card-body">
-            <p><span class="fw-bold">NAMA</span> : {{$profils->nama}} </p>
-            <p><span class="fw-bold">NIM</span> :  {{$profils->nim}}</p>
+            <p><span class="fw-bold">NIM</span> : {{$nim}}</p>
+            <p><span class="fw-bold">NAMA</span> : {{$nama}} </p>
          </div>
         </div>
       </div>
@@ -142,22 +142,28 @@ window.location.href="/khs/"+value;
             <th>Nilai</th>
           </tr>
            <?php $i = 0;?>
-           @foreach($khs as $khs)
+           @php ($totalSKS = 0)
+           @php ($totalIP = 0)
+           @php ($totalNilai = 0)
+           @foreach($khsmhs as $baris)
           <tr>
             <td><?php echo ++$i;?></td>
-            <td>{{$khs->kode_matakuliah}}</td>
-            <td>{{$khs->nama_matakuliah}}</td>
-            <td>{{$khs->sks}}</td>
-            <td>{{$khs->nilai}}</td>
+            <td>{{$baris->kode_matakuliah}}</td>
+            <td>{{$baris->nama_matakuliah}}</td>
+            <td>{{$baris->sks}}</td>
+            <td>{{$baris->nilai}}</td>
           </tr>
+          @php ($totalSKS = $totalSKS + $baris->sks)
+          @php ($totalNilai = $totalNilai + $baris->nilai)
           @endforeach
+          @php ($totalIP = ($baris->nilai * $baris->sks)  / $totalSKS))
           <tr>
             <td colspan="3">Total</td>
-            <td>{{$sks->total}}</td>
+            <td  colspan="2">{{$totalSKS}}</td>
           </tr>
           <tr>
             <td colspan="3">IP Semester</td>
-            <td>{{$ip->ip_semester}}</td>
+            <td  colspan="2">{{$totalIP}}</td>
           </tr>
         </table>
       </div>
