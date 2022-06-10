@@ -14,6 +14,7 @@ use App\Http\Controllers\MahasiswaDibimbingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KhsController;
+use App\Http\Controllers\DaftarKHSMhsController;
 //controller 1
 use App\Http\Controllers\KrsController;
 //controller 2
@@ -164,7 +165,10 @@ Route::get('/errodsnpage', function() {
 
 
 //DAFTAR KHS Mahasiswa
-
+Route::get('/daftarkhsmahasiswa', [DaftarKHSMhsController::class,'daftarKHSMhs']);
+Route::get('/khsmhsmbkm/{key_semester}/{key_nimmbkm}', [DaftarKHSMhsController::class,'tampilKhs']);
+Route::get('/daftarkhsmahasiswa/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
+Route::get('/daftarkhsmahasiswa/search', [DaftarKHSMhsController::class,'search']);
 //END DAFTAR KHS MAHASISWA
 
 
