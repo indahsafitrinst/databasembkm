@@ -144,7 +144,7 @@
            @endif 
           <div class="card-body">
             <div class="card-body">
-              <form action="admin/mitra/search" method="get">
+              <form action="/admin/mitra/search" method="get">
                 <div class="mb-3">
                   <div class="d-flex flex-row">
                     <input name="searchinput" type="text" class="form-control me-2" placeholder="Search Kode Mitra/Nama Mitra...">
