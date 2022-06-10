@@ -120,6 +120,7 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::post('/inserttokhs',[KonversiNilaiController::class,'insertToKhs']);
   Route::post('/tolakkonvnilai', [KonversiNilaiController::class,'tolakKonvNilai']);
   Route::post('/hapuskonvnilai', [KonversiNilaiController::class,'hapusKonvNilai']);
+  Route::get('/konversinilaikhs/search', [KonversiNilaiController::class,'searchKonvNilai']);
 
   Route::get('/mhsdibimbing', [MahasiswaDibimbingController::class,'daftarMhsDbmbng']);
 

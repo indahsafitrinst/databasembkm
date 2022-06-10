@@ -164,4 +164,11 @@ class KonversiNilaiController extends Controller
         ])->with('cek2','Terjadi kesalahan saat memasukkan nilai ke KHS!');
     }
   }
+
+  public function searchKonvNilai(Request $req){
+    // $search = DB::table('tbl_docskonvnilai')
+    //             ->join('semua_mhs_mbkm', 'tbl_docskonvnilai.id_mhsmbkm','=','semua_mhs_mbkm.id_mhsmbkm')
+    //             ->where();
+
+  }
 }
