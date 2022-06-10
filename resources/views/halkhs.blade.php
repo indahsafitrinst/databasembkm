@@ -141,10 +141,12 @@ window.location.href="/khs/"+value;
             <th>SKS</th>
             <th>Nilai</th>
           </tr>
+          @if ($khsmhs->count() > 0)
            <?php $i = 0;?>
            @php ($totalSKS = 0)
            @php ($totalIP = 0)
            @php ($totalNilai = 0)
+           @php ($totalNilaiIP = 0)
            @foreach($khsmhs as $baris)
           <tr>
             <td><?php echo ++$i;?></td>
@@ -154,17 +156,20 @@ window.location.href="/khs/"+value;
             <td>{{$baris->nilai}}</td>
           </tr>
           @php ($totalSKS = $totalSKS + $baris->sks)
-          @php ($totalNilai = $totalNilai + $baris->nilai)
+          @php ($totalNilai = $totalNilai + ($baris->nilai * $baris->sks))
           @endforeach
-          @php ($totalIP = ($baris->nilai * $baris->sks)  / $totalSKS))
+          @if ($totalNilaiIP >= 0)
+          @php ($totalNilaiIP = $totalNilai / $totalSKS )
+          @endif
           <tr>
-            <td colspan="3">Total</td>
+            <td colspan="3">Total SKS</td>
             <td  colspan="2">{{$totalSKS}}</td>
           </tr>
           <tr>
             <td colspan="3">IP Semester</td>
-            <td  colspan="2">{{$totalIP}}</td>
+            <td  colspan="2">{{$totalNilaiIP}}</td>
           </tr>
+          @endif
         </table>
       </div>
     </div>
