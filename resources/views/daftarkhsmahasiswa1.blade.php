@@ -3,7 +3,7 @@
 function gotopage(selfval){
 var value = selfval.options[selfval.selectedIndex].value;
 
-window.location.href="/daftarkhsmahasiswa/"+value;
+window.location.href="/khs/mbkm/"+value;
 }
 </script>
 

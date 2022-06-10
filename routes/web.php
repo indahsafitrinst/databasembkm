@@ -166,7 +166,7 @@ Route::get('/errodsnpage', function() {
 //DAFTAR KHS Mahasiswa
 Route::get('/daftarkhsmahasiswa', [DaftarKHSMhsController::class,'daftarKHSMhs']);
 Route::get('/khsmhsmbkm/{key_semester}/{key_nimmbkm}', [DaftarKHSMhsController::class,'tampilKhs']);
-Route::get('/daftarkhsmahasiswa/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
+Route::get('/khs/mbkm/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
 Route::get('/daftarkhsmahasiswa/search', [DaftarKHSMhsController::class,'search']);
 //END DAFTAR KHS MAHASISWA
 
