@@ -52,4 +52,16 @@ class DokumenKirimController extends Controller
         DB::rollBack();
       }
     }
+
+    public function searchDocsTerkirim(Request $req){
+      $search = DB::table('tbl_terimapermmbkm')
+                  ->join('semua_mhs_mbkm_alldata','tbl_terimapermmbkm.id_mhsmbkm','=','semua_mhs_mbkm_alldata.id_mhsmbkm')
+                  ->where('semua_mhs_mbkm_alldata.nim','LIKE','%'.$req->searchinput.'%')
+                  ->orWhere('semua_mhs_mbkm_alldata.nama','LIKE','%'.$req->searchinput.'%')
+                  ->where(function ($query){
+                    $query->where('nip_dosenpemeriksa',session('nip'));
+                    })->get();
+
+      return view('dkmndikirim', ['docsdikirim'=>$search]);
+    }
 }

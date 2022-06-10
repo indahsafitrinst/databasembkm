@@ -129,10 +129,10 @@
             <p class="h3">Daftar Permintaan Konversi Nilai</p>
           </div>
           <div class="card-body">
-            <form action="/konversinilaimhs/search" method="get">
+            <form action="/konversinilaikhs/search" method="get">
               <div class="mb-3">
                 <div class="d-flex flex-row">
-                  <input type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <input name="searchinput" type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
                   <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                   </button>

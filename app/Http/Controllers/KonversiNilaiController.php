@@ -166,9 +166,13 @@ class KonversiNilaiController extends Controller
   }
 
   public function searchKonvNilai(Request $req){
-    // $search = DB::table('tbl_docskonvnilai')
-    //             ->join('semua_mhs_mbkm', 'tbl_docskonvnilai.id_mhsmbkm','=','semua_mhs_mbkm.id_mhsmbkm')
-    //             ->where();
+    $search = DB::table('tbl_docskonvnilai')
+                ->join('semua_mhs_mbkm', 'tbl_docskonvnilai.id_mhsmbkm','=','semua_mhs_mbkm.id_mhsmbkm')
+                ->where('nama','LIKE','%'.$req->searchinput.'%')
+                ->orWhere('nim','LIKE','%'.$req->searchinput.'%')
+                ->get();
+
+    return view('daftarkonvnilaisearch',['datakonvnilai'=>$search]);          
 
   }
 }

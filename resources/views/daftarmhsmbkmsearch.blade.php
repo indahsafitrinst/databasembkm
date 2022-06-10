@@ -26,13 +26,17 @@
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Dokumen Dikirim</span>
       </a>
-      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple active">
         <i class="bi bi-table me-3"></i>
         <span>Daftar Mahasiswa MBKM</span>
       </a>
-      <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple active">
+      <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-megaphone me-3"></i>
         <span>Daftar Pengumuman</span>
+      </a>
+      <a href="daftarkrsmahasiswa" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-file-earmark-check me-3"></i>
+        <span>Daftar KRS Mahasiswa</span>
       </a>
     </div>
   </div>
@@ -103,110 +107,98 @@
         </li>
       </ul>
     </div>
-
-
-
-
-
   </div>
 </nav>
 @endsection
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Pengumuman</span>
+    <span class="h1">Mahasiswa MBKM</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
-    <div class="card">
-      <div class="card-header">
-        <p class="h3">Daftar Pengumuman</p>
-      </div>
-      <div class="card-body">
-        <form action="/daftarpengumuman/search" method="get">
-          <div class="mb-3">
-            <div class="d-flex flex-row">
-              <input name="searchinput" type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
-              <button type="submit" class="btn btn-primary">
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
+    <div class="row">
+      <div class="col-sm">
+        <div class="card">
+          <div class="card-header">
+            <p class="h3">
+              Daftar Mahasiswa MBKM
+            </p>
           </div>
-        </form>
-        @if(isset($cek1))
-        <p id="cek" class="p-2 bg-success bg-opacity-50">{{$cek1}}</p>
-        @elseif(isset($cek2))
-        <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
-        @endif
-
-        @foreach($datapengumuman as $datapengumuman)
-        <div class="row mb-3">
-          <div class="col">
-            <div class="card">
-              <div class="card-header">
-                <div class="d-flex">
-                  <span class="me-auto">
-                    <a href="/pengumumantampil/{{$datapengumuman->id_pengumuman}}" class="h5 text-decoration-none text-dark">
-                      {{$datapengumuman->judul}}
-                    </a>
-                    <span>- {{$datapengumuman->nama_dosen}}</span>
-                  </span>
-                  <span class="text-secondary me-3"><small>{{$datapengumuman->waktu}}</small></span>
-                  <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                      <i class="bi bi-three-dots"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                      @if(session('nip')==$datapengumuman->nip_penulis)
-                      <li>
-                        <a class="dropdown-item" href="/daftarpengumuman/edit/{{$datapengumuman->id_pengumuman}}">Edit</a>
-                      </li>
-                      <li>
-                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#modalhapus"
-                        dataid="{{$datapengumuman->id_pengumuman}}"
-                        datajudul="{{$datapengumuman->judul}}">
-                            Hapus
-                        </button>
-                      </li>
-                      @elseif(session('level') < 3)
-                      <li>
-                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#modalhapus"
-                        dataid="{{$datapengumuman->id_pengumuman}}"
-                        datajudul="{{$datapengumuman->judul}}">
-                            Hapus
-                        </button>
-                      </li>
-                      @endif
-                    </ul>
-                  </div>
+          <div class="card-body">
+            <form action="/daftarmhsmbkm/search" method="get">
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <input name="searchinput" type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
                 </div>
               </div>
-              <div class="card-body" id="isipengumuman">
-                {{strip_tags($datapengumuman->isi_pengumuman)}}
-              </div>
-            </div>
+            </form>
+            <table class="table table-bordered">
+              <tr>
+                <th width="20px">No.</th>
+                <th width="">NIM</th>
+                <th width="">NAMA</th>
+                <th width="">PROGRAM STUDI</th>
+                <th width="">SEMESTER</th>
+                <th wdith="">PROGRAM MBKM</th>
+                <th width="">MITRA</th>
+                <th width="">STATUS</th>
+                <th width="50px">AKSI</th>
+              </tr>
+              @foreach($mhsmbkms as $mhsmbkm)
+              <tr class="rowclickable">
+                <td>1</td>
+                <td>{{$mhsmbkm->nim}}</td>
+                <td>{{$mhsmbkm->nama}}</td>
+                <td>{{$mhsmbkm->nama_prodi}}</td>
+                <td>{{$mhsmbkm->semester}}</td>
+                <td>{{$mhsmbkm->nama_program}}</td>
+                <td>{{$mhsmbkm->nama_mitra}}</td>
+                @if($mhsmbkm->statusmbkm==1)
+                <td><p class="bg-success bg-opacity-50">Sedang menjalani perkuliahan</p></td>
+                @elseif($mhsmbkm->statusmbkm==2)
+                <td><p class="bg-warning bg-opacity-50">Menunggu konversi nilai</p></td>
+                @elseif($mhsmbkm->statusmbkm==3)
+                <td><p class="bg-primary bg-opacity-50">Telah menyelesaikan program MBKM</p></td>
+                @endif
+                <td class="text-center">
+                  <a class="btn btn-outline-secondary mb-1" href="/mhsmbkm/{{$mhsmbkm->semester}}/{{$mhsmbkm->nim}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i class="bi bi-three-dots"></i></a>
+                  <span data-bs-toggle="modal"
+                  data-bs-target="#modalhapus"
+                  dataid="{{$mhsmbkm->id_mhsmbkm}}"
+                  datanamamhs="{{$mhsmbkm->nama}}">
+                    <button class="btn btn-danger mb-1" data-tooltip="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+              @endforeach
+            </table>
           </div>
         </div>
-        @endforeach
-        <!-- HERE -->
       </div>
     </div>
   </div>
 </div>
 
+<!-- MODAL HAPUS PERMINTAAN KONV NILAI -->
 <div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="/hapuspengumuman" method="POST">
+      <form action="/hapusmhsmbkm" method="POST">
         @csrf
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Hapus Pengumuman ini?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Hapus permohonan konversi nilai khs ini?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input name="idpengumuman" hidden class="inputid" type="text" id="inputid" value="">
-          <p id="jdlpengumuman" class=""></p>
+          <input name="idmhsmbkm" class="inputid" type="text" id="inputid" value="">
+          <p id="namamhs" class=""></p>
+          <p class="text-danger">(Data yang telah dihapus tidak bisa diakses lagi.
+            Jika mahasiswa ingin mengikuti program mbkm, mahasiswa harus memasukan kembali dokumen-dokumen dari awal.)</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
@@ -223,21 +215,15 @@
   var button = event.relatedTarget
   //ambil data dari buttonv
   var dataid = button.getAttribute('dataid')
-  var judul = button.getAttribute('datajudul')
+  var namamhs = button.getAttribute('datanamamhs')
   //masukin ke form di modal
   var areainput = document.getElementById("inputid")
   areainput.value = dataid
   //masukin sebgai teks biasa
-  var areajudul = document.getElementById("jdlpengumuman");
-  areajudul.innerHTML = "Apakah anda yakin ingin menghapus Pengumuman dengan judul : " +
-                          judul + "?";
+  var areanama = document.getElementById("namamhs");
+  areanama.innerHTML = "Apakah anda yakin ingin menghapus semua data MBKM terkait milik : " +
+                          namamhs + "?";
 
-  });
-  $("#isipengumuman").text(function(index, currentText) {
-    return currentText.substr(0, 190)+"...";
-  });
-  $("#cek").show().delay(3000).fadeOut('slow', function(){
-    window.location.replace("/daftarpengumuman");
   });
 </script>
 @endsection

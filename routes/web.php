@@ -124,8 +124,9 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/konversinilaikhs/search', [KonversiNilaiController::class,'searchKonvNilai']);
 
   Route::get('/mhsdibimbing', [MahasiswaDibimbingController::class,'daftarMhsDbmbng']);
+  Route::get('/mhsdibimbing/search', [MahasiswaDibimbingController::class,'searchMhsDbmbng']);
 
-
+  Route::get('/daftarmhsmbkm/search', [DaftarMhsMBKMController::class,'searchDaftarMhsMBKM']);
   Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
   Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
   Route::get('/daftarkrsmahasiswa', [DaftarKRSMahasiswa::class,'daftarKRSMahasiswa']);
@@ -137,6 +138,7 @@ Route::group(['middleware'=>['protectedPage']],function(){
   // selesai
 
   Route::get('/dkmndikirim', [DokumenKirimController::class,'getDocsTerkirim']);
+  Route::get('/dkmndikirim/search', [DokumenKirimController::class,'searchDocsTerkirim']);
   Route::post('/hapusdocsterimakrs', [DokumenKirimController::class,'hapusDocsTerimaKRS']);
 
   Route::post('/tambahpengumuman', [PengumumanController::class,'tambahPengumuman']);
@@ -148,6 +150,7 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::post('/ubahpengumuman', [PengumumanController::class,'ubahPengumuman']);
   Route::post('/hapuspengumuman', [PengumumanController::class,'hapusPengumuman']);
   Route::get('/pengumumantampil/{key_idpengumuman}', [PengumumanController::class,'tampilPengumuman']);
+  Route::get('/daftarpengumuman/search', [PengumumanController::class,'searchPengumuman']);
 
 
 });

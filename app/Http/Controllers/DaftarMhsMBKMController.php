@@ -12,4 +12,12 @@ class DaftarMhsMBKMController extends Controller
       return view('daftarmhsmbkm')->with('mhsmbkms',$getalldata);
     }
 
+    public function searchDaftarMhsMBKM(Request $req){
+      $search =  DB::table('semua_mhs_mbkm')
+                  ->where('nim','LIKE','%'.$req->searchinput.'%')
+                  ->orWhere('nama','LIKE','%'.$req->searchinput.'%')
+                  ->get();
+
+      return view('daftarmhsmbkmsearch')->with('mhsmbkms',$search);
+    }
 }

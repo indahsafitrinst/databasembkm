@@ -22,7 +22,7 @@
         <i class="bi bi-people-fill me-3"></i>
         <span>Mahasiswa Dibimbing</span>
       </a>
-      <a href="dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
+      <a href="/dkmndikirim" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Dokumen Dikirim</span>
       </a>
@@ -124,6 +124,16 @@
             <p class="h3">Daftar Mahasiswa MBKM yang dibimbing</p>
           </div>
           <div class="card-body">
+            <form action="/mhsdibimbing/search" method="get">
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <input name="searchinput" type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
             <table class="table table-bordered">
               <tr>
                 <th width="20px">No.</th>

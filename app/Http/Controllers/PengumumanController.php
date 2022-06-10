@@ -98,4 +98,14 @@ class PengumumanController extends Controller
 
       return view('pengumumantampil',['dataptampil'=>$getdata]);
     }
+
+    public function searchPengumuman(Request $req){
+      $search = DB::table('tbl_pengumuman')
+                  ->join('tbl_dosen','tbl_pengumuman.nip_penulis','=','tbl_dosen.nip')
+                  ->where('tbl_pengumuman.judul','LIKE','%'.$req->searchinput.'%')
+                  ->orWhere('tbl_dosen.nama_dosen','LIKE','%'.$req->searchinput.'%')
+                  ->get();
+
+      return view('pengumumandaftar',['datapengumuman'=>$search]);
+    }
 }

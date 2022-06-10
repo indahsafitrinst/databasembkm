@@ -62,6 +62,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bell"></i>
+            @if(isset($newnotif))
             @if($newnotif>0)
             <span class="badge rounded-pill badge-notification bg-danger">{{$newnotif}}</span>
             @endif
@@ -84,6 +85,7 @@
               </a>
             </li>
             @endforeach
+            @endif
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
           </ul>
@@ -129,10 +131,10 @@
             <p class="h3">Daftar Permintaan Konversi Nilai</p>
           </div>
           <div class="card-body">
-            <form>
+            <form action="/konversinilaikhs/search" method="get">
               <div class="mb-3">
                 <div class="d-flex flex-row">
-                  <input type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <input name="searchinput" type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
                   <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                   </button>
@@ -154,64 +156,73 @@
                   <th width="100px">STATUS</th>
                   <th width="150px">AKSI</th>
                 </tr>
-                @foreach($datakonvnilai as $dataknilai)
-                <tr class="rowclickable">
-                  <td>1</td>
-                  <td>{{$dataknilai->nim}}</td>
-                  <td>{{$dataknilai->nama}}</td>
-                  <td>{{$dataknilai->nama_prodi}}</td>
-                  <td>{{$dataknilai->waktu_unggah}}</td>
-                  <td>
-                    @if($dataknilai->status == 1)
-                    <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
-                    @elseif($dataknilai->status == 2)
-                    <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
-                    @elseif($dataknilai->status == 3)
-                    <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
-                    @endif
+                @if(count($datakonvnilai)>0)
+                  <?php $i = 0;?>
+                  @foreach($datakonvnilai as $dataknilai)
+                  <tr class="rowclickable">
+                    <td><?php echo ++$i;?></td>
+                    <td>{{$dataknilai->nim}}</td>
+                    <td>{{$dataknilai->nama}}</td>
+                    <td>{{$dataknilai->nama_prodi}}</td>
+                    <td>{{$dataknilai->waktu_unggah}}</td>
+                    <td>
+                      @if($dataknilai->status == 1)
+                      <span class="text-warning"><i class="bi bi-circle me-2"></i>Belum diperiksa</span>
+                      @elseif($dataknilai->status == 2)
+                      <span class="text-success"><i class="bi bi-check-circle me-2"></i>Telah diterima</span>
+                      @elseif($dataknilai->status == 3)
+                      <span class="text-danger"><i class="bi bi-dash-circle me-2"></i>Ditolak</span>
+                      @endif
+                    </td>
+                    <td class="text-center">
+
+                      <a href="{{$dataknilai->lokasi_filekonvnilai}}" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download Dokumen">
+                        <i class="bi bi-file-earmark-arrow-down"></i>
+                      </a>
+
+                      @if($dataknilai->status==1)
+                      <!-- <a href="/konversinilaikhs/proses/{{$dataknilai->id_dokumen}}"> -->
+                      <a href="/konversinilaikhs/proses/{{$dataknilai->id_mhsmbkm}}">
+                        <button class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Proses permintaan konversi nilai">
+                          <i class="bi bi-caret-right-square-fill"></i>
+                        </button>
+                      </a>
+                      <span data-bs-toggle="modal"
+                      data-bs-target="#modaltolak"
+                      dataid="{{$dataknilai->id_dokumen}}"
+                      datanamamhs="{{$dataknilai->nama}}">
+                        <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tolak konversi nilai">
+                          <i class="bi bi-dash-circle"></i>
+                        </button>
+                      </span>
+                      @elseif($dataknilai->status==2)
+                      <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Lihat KHS mahasiswa MBKM">
+                        <i class="bi bi-display"></i>
+                      </a>
+                      @elseif($dataknilai->status==3)
+                      <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Lihat KHS mahasiswa MBKM">
+                        <i class="bi bi-display"></i>
+                      </a>
+                      <span data-bs-toggle="modal"
+                      data-bs-target="#modalhapus"
+                      datahapusid="{{$dataknilai->id_dokumen}}"
+                      datanamamhshapus="{{$dataknilai->nama}}">
+                        <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus konversi nilai">
+                          <i class="bi bi-trash3"></i></i>
+                        </button>
+                      </span>
+                      @endif
+                  </tr>
+                  @endforeach
+                @else
+                <tr>
+                  <td colspan="8">
+                    Tidak ada hasil pencarian...
                   </td>
-                  <td class="text-center">
-
-                    <a href="{{$dataknilai->lokasi_filekonvnilai}}" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Download Dokumen">
-                      <i class="bi bi-file-earmark-arrow-down"></i>
-                    </a>
-
-                    @if($dataknilai->status==1)
-                    <!-- <a href="/konversinilaikhs/proses/{{$dataknilai->id_dokumen}}"> -->
-                    <a href="/konversinilaikhs/proses/{{$dataknilai->id_mhsmbkm}}">
-                      <button class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Proses permintaan konversi nilai">
-                        <i class="bi bi-caret-right-square-fill"></i>
-                      </button>
-                    </a>
-                    <span data-bs-toggle="modal"
-                    data-bs-target="#modaltolak"
-                    dataid="{{$dataknilai->id_dokumen}}"
-                    datanamamhs="{{$dataknilai->nama}}">
-                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tolak konversi nilai">
-                        <i class="bi bi-dash-circle"></i>
-                      </button>
-                    </span>
-                    @elseif($dataknilai->status==2)
-                    <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      title="Lihat KHS mahasiswa MBKM">
-                      <i class="bi bi-display"></i>
-                    </a>
-                    @elseif($dataknilai->status==3)
-                    <a href="/mhsmbkm/{{$dataknilai->semester}}/{{$dataknilai->nim}}" class="btn btn-success disabled" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                      title="Lihat KHS mahasiswa MBKM">
-                      <i class="bi bi-display"></i>
-                    </a>
-                    <span data-bs-toggle="modal"
-                    data-bs-target="#modalhapus"
-                    datahapusid="{{$dataknilai->id_dokumen}}"
-                    datanamamhshapus="{{$dataknilai->nama}}">
-                      <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus konversi nilai">
-                        <i class="bi bi-trash3"></i></i>
-                      </button>
-                    </span>
-                    @endif
                 </tr>
-                @endforeach
+                @endif
             </table>
           </div>
         </div>

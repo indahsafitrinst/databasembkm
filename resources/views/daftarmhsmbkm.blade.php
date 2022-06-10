@@ -118,78 +118,70 @@
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-    <span class="h1">Daftar Mahasiswa MBKM</span>
+    <span class="h1">Mahasiswa MBKM</span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
     <div class="row">
       <div class="col-sm">
         <div class="card">
           <div class="card-header">
-            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-              <button class="nav-link active" id="nav-mhsmbkmall-tab" data-bs-toggle="tab" data-bs-target="#nav-mhsmbkmall" type="button" role="tab" aria-controls="nav-home" aria-selected="true">
-                Semua Mahasiswa MBKM
-              </button>
-              <button class="nav-link" id="nav-mhsmbkmselesai-tab" data-bs-toggle="tab" data-bs-target="#nav-mhsmbkmselesai" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-                Selesai
-              </button>
-              <button class="nav-link" id="nav-mhsmbkmongoing-tab" data-bs-toggle="tab" data-bs-target="#nav-mhsmbkmongoing" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
-                Sedang Berlangsung
-              </button>
-            </div>
+            <p class="h3">
+              Daftar Mahasiswa MBKM
+            </p>
           </div>
           <div class="card-body">
-            <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="nav-mhsmbkmall" role="tabpanel" aria-labelledby="nav-mhsmbkmall-tab">
-                <table class="table table-bordered">
-                  <tr>
-                    <th width="20px">No.</th>
-                    <th width="">NIM</th>
-                    <th width="">NAMA</th>
-                    <th width="">PROGRAM STUDI</th>
-                    <th width="">SEMESTER</th>
-                    <th wdith="">PROGRAM MBKM</th>
-                    <th width="">MITRA</th>
-                    <th width="">STATUS</th>
-                    <th width="50px">AKSI</th>
-                  </tr>
-                  @foreach($mhsmbkms as $mhsmbkm)
-                  <tr class="rowclickable">
-                    <td>1</td>
-                    <td>{{$mhsmbkm->nim}}</td>
-                    <td>{{$mhsmbkm->nama}}</td>
-                    <td>{{$mhsmbkm->nama_prodi}}</td>
-                    <td>{{$mhsmbkm->semester}}</td>
-                    <td>{{$mhsmbkm->nama_program}}</td>
-                    <td>{{$mhsmbkm->nama_mitra}}</td>
-                    @if($mhsmbkm->statusmbkm==1)
-                    <td><p class="bg-success bg-opacity-50">Sedang menjalani perkuliahan</p></td>
-                    @elseif($mhsmbkm->statusmbkm==2)
-                    <td><p class="bg-warning bg-opacity-50">Menunggu konversi nilai</p></td>
-                    @elseif($mhsmbkm->statusmbkm==3)
-                    <td><p class="bg-primary bg-opacity-50">Telah menyelesaikan program MBKM</p></td>
-                    @endif
-                    <td class="text-center">
-                      <a class="btn btn-outline-secondary mb-1" href="/mhsmbkm/{{$mhsmbkm->semester}}/{{$mhsmbkm->nim}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i class="bi bi-three-dots"></i></a>
-                      <span data-bs-toggle="modal"
-                      data-bs-target="#modalhapus"
-                      dataid="{{$mhsmbkm->id_mhsmbkm}}"
-                      datanamamhs="{{$mhsmbkm->nama}}">
-                        <button class="btn btn-danger mb-1" data-tooltip="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
-                          <i class="bi bi-trash3"></i>
-                        </button>
-                      </span>
-                    </td>
-                  </tr>
-                  @endforeach
-                </table>
+            <form action="/daftarmhsmbkm/search" method="get">
+              <div class="mb-3">
+                <div class="d-flex flex-row">
+                  <input name="searchinput" type="text" class="form-control me-2" placeholder="Search NIM/Nama...">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                  </button>
+                </div>
               </div>
-              <div class="tab-pane fade" id="nav-mhsmbkmselesai" role="tabpanel" aria-labelledby="nav-mhsmbkmselesai-tab">
-                waaaaaaaaaaa
-              </div>
-              <div class="tab-pane fade" id="nav-mhsmbkmongoing" role="tabpanel" aria-labelledby="nav-mhsmbkmongoing-tab">
-                ANJENG
-              </div>
-            </div>
+            </form>
+            <table class="table table-bordered">
+              <tr>
+                <th width="20px">No.</th>
+                <th width="">NIM</th>
+                <th width="">NAMA</th>
+                <th width="">PROGRAM STUDI</th>
+                <th width="">SEMESTER</th>
+                <th wdith="">PROGRAM MBKM</th>
+                <th width="">MITRA</th>
+                <th width="">STATUS</th>
+                <th width="50px">AKSI</th>
+              </tr>
+              @foreach($mhsmbkms as $mhsmbkm)
+              <tr class="rowclickable">
+                <td>1</td>
+                <td>{{$mhsmbkm->nim}}</td>
+                <td>{{$mhsmbkm->nama}}</td>
+                <td>{{$mhsmbkm->nama_prodi}}</td>
+                <td>{{$mhsmbkm->semester}}</td>
+                <td>{{$mhsmbkm->nama_program}}</td>
+                <td>{{$mhsmbkm->nama_mitra}}</td>
+                @if($mhsmbkm->statusmbkm==1)
+                <td><p class="bg-success bg-opacity-50">Sedang menjalani perkuliahan</p></td>
+                @elseif($mhsmbkm->statusmbkm==2)
+                <td><p class="bg-warning bg-opacity-50">Menunggu konversi nilai</p></td>
+                @elseif($mhsmbkm->statusmbkm==3)
+                <td><p class="bg-primary bg-opacity-50">Telah menyelesaikan program MBKM</p></td>
+                @endif
+                <td class="text-center">
+                  <a class="btn btn-outline-secondary mb-1" href="/mhsmbkm/{{$mhsmbkm->semester}}/{{$mhsmbkm->nim}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail"><i class="bi bi-three-dots"></i></a>
+                  <span data-bs-toggle="modal"
+                  data-bs-target="#modalhapus"
+                  dataid="{{$mhsmbkm->id_mhsmbkm}}"
+                  datanamamhs="{{$mhsmbkm->nama}}">
+                    <button class="btn btn-danger mb-1" data-tooltip="tooltip" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </span>
+                </td>
+              </tr>
+              @endforeach
+            </table>
           </div>
         </div>
       </div>
