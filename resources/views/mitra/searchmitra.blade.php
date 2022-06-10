@@ -124,7 +124,7 @@
 @section('maincontent')
 <div class="container-fluid">
   <div class="">
-            <span class="h1">Daftar Mitra MBKM</span>
+            <span class="h1"> Daftar Mitra MBKM </span>
   </div>
   <div class="container-fluid bg-info py-3 mt-3">
     <div class="row mb-3">

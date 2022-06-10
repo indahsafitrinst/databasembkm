@@ -119,7 +119,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Edit</button>
-                    <button class="btn btn-warning" value="Go Back"><a href="/mitra" style="color:white"> Kembali </a></button>   
+                    <input class="btn btn-warning" type="button" value="Kembali" onclick="history.back(-1)" />
                 </div>
             </form>
             @endforeach
