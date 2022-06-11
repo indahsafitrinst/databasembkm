@@ -51,7 +51,9 @@ class AppServiceProvider extends ServiceProvider
         'prosesterimakonvnilai',
         'prosesterimambkm',
         'daftarkrsmahasiswa',
-        'detailkrsmahasiswa'
+        'detailkrsmahasiswa',
+        'daftarkhsmahasiswa',
+        'daftarkhsmahasiswa1'
       ],NotifikasiDSNComposer::class);
 
     }

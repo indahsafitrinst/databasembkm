@@ -57,7 +57,7 @@ class DaftarKHSMhsController extends Controller
 
       public function search(Request $req)
         {
-
+          DB::statement("SET SQL_MODE=''");
           $search = DB::table('khs_mhs_mbkm_3')
                     ->where('nama','LIKE','%'.$req->searchinput.'%')
                     ->orwhere('nim','LIKE','%'.$req->searchinput.'%')

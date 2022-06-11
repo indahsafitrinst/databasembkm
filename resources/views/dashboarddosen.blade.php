@@ -10,6 +10,10 @@
         <i class="bi bi-square-half me-3"></i>
         <span>Dashboard</span>
       </a>
+      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
+        <i class="bi bi-table me-3"></i>
+        <span>Daftar Mahasiswa MBKM</span>
+      </a>
       <a href="/permohonanmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-card-checklist me-3 "></i>
         <span>Permohonan Program MBKM</span>
@@ -26,10 +30,7 @@
         <i class="bi bi-file-earmark-check me-3"></i>
         <span>Dokumen Dikirim</span>
       </a>
-      <a href="/daftarmhsmbkm" class="list-group-item list-group-item-action my-2 py-2 ripple">
-        <i class="bi bi-table me-3"></i>
-        <span>Daftar Mahasiswa MBKM</span>
-      </a>
+
       <a href="/daftarpengumuman" class="list-group-item list-group-item-action my-2 py-2 ripple">
         <i class="bi bi-megaphone me-3"></i>
         <span>Daftar Pengumuman</span>
@@ -52,7 +53,10 @@
       <span><small>Dosen</small></span>
     </a>
     <a class="nav-link tombolnavbar" href="#">Tentang Aplikasi</a>
+    <a class="nav-link tombolnavbar" href="/daftarkrsmahasiswa"><i class="bi bi-person-lines-fill me-2"></i>Daftar KRS</a>
+    <a class="nav-link tombolnavbar" href="/daftarkhsmahasiswa"><i class="bi bi-postcard me-2"></i>Daftar KHS</a>
     <a class="nav-link tombolnavbar" href="/buatpengumuman"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -107,11 +111,6 @@
         </li>
       </ul>
     </div>
-
-
-
-
-
   </div>
 </nav>
 @endsection
