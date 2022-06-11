@@ -62,6 +62,6 @@ class DaftarKHSMhsController extends Controller
                     ->where('nama','LIKE','%'.$req->searchinput.'%')
                     ->orwhere('nim','LIKE','%'.$req->searchinput.'%')
                     ->get();
-          return $search;
+          return view('daftarkhsmahasiswa1', ['khsmhsmbkms'=>$search]);
       }
     }
