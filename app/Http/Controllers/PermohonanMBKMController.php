@@ -9,9 +9,18 @@ use Carbon\Carbon;
 class PermohonanMBKMController extends Controller
 {
     public function tampilDataPermMBKM(){
-      $permmbkm = DB::table('daftar_permohonan_mbkm')
-                ->orderBy('status', 'asc')
-                ->get();
+
+      if(session('level')==1){
+        $permmbkm = DB::table('daftar_permohonan_mbkm')
+                  ->orderBy('status', 'asc')
+                  ->get();
+      }else{
+        $permmbkm = DB::table('daftar_permohonan_mbkm')
+                  ->where('nip_dosenpa',session('nip'))
+                  ->orderBy('status', 'asc')
+                  ->get();
+      }
+
 
       return view('permohonanmbkm',['permmbkm'=>$permmbkm]);
 
@@ -37,14 +46,12 @@ class PermohonanMBKMController extends Controller
       //masukan ke tbl_mhsmbkm
       $newdata = DB::table('tbl_mhsmbkm')
                   ->insert([
-                    'nim'=>$req->nim_mhsmbkm,
+                    'id_permohonanmbkm'=>$req->id_permohonan,
                     'kode_mitra'=>$req->kodemitra,
                     'id_jenismbkm'=>$req->idjenismbkm,
                     'nama_program'=>$req->namaprogram,
                     'statusmbkm'=>1,
-                    'nip_dosenprodi'=>session('nip'),
-                    'semester'=>$getsemester->semester,
-                    'id_permohonanmbkm'=>$req->id_permohonan
+                    'nip_dosenprodi'=>session('nip')
                   ]);
 
       //end masukan ke tbl mhsmbkm
@@ -85,6 +92,13 @@ class PermohonanMBKMController extends Controller
       $jenismbkm = DB::table('tbl_jenismbkm')->get();
       //end dapatakan kembali data untuk halaman prosesterimambkm
       if($newdata&&$log&&$updatepermohonan){
+        $notifmhs = DB::table('tbl_notifikasi')
+                    ->insert([
+                      'nim'=>$req->nim_mhsmbkm,
+                      'isi_notif'=>'Permohonan MBKM anda telah diterima!',
+                      'waktu'=>Carbon::now()->toDateTimeString()
+                    ]);
+
         DB::commit();
         return view('prosesterimambkm')
         ->with('permmbkm',$permmbkm)
@@ -118,6 +132,13 @@ class PermohonanMBKMController extends Controller
                     'objek_old'=>$req->idpermohonan,
                     'waktu'=>Carbon::now()->toDateTimeString()
                   ]);
+      $getnimnotif = DB::table('daftar_permohonan_mbkm')->where('id_permohonan', $req->idpermohonan)->first();
+      $notifmhs = DB::table('tbl_notifikasi')
+                  ->insert([
+                    'nim'=>$getnimnotif->nim_mhs,
+                    'isi_notif'=>'Permohonan MBKM anda telah diterima!',
+                    'waktu'=>Carbon::now()->toDateTimeString()
+                  ]);
 
       $permmbkm =DB::table('daftar_permohonan_mbkm')->where('id_permohonan', $req->idpermohonan)->where('status', 3)
                 ->first();
@@ -138,6 +159,13 @@ class PermohonanMBKMController extends Controller
 
 
       if($hapusperm==true){
+        $logdata = DB::table('tbl_log')
+                    ->insert([
+                      'pelaku'=>session('nip'),
+                      'aksi'=>"Menghapus Permohonan MBKM",
+                      'objek_old'=>$req->idpermohonan,
+                      'waktu'=>Carbon::now()->toDateTimeString()
+                    ]);
         DB::commit();
         return view('permohonanmbkm')->with('permmbkm',$permmbkm)->with('cek1','Permohonan berhasil dihapus!');
       }else{
@@ -147,11 +175,24 @@ class PermohonanMBKMController extends Controller
     }
 
     public function searchPermMBKM(Request $req){
+      if(session('level')==1){
+        $search = DB::table('daftar_permohonan_mbkm')
+                  ->where('nama','LIKE','%'.$req->searchinput.'%')
+                  ->orwhere('nim_mhs','LIKE','%'.$req->searchinput.'%')
+                  ->get();
+      }else{
+        $search = DB::table('daftar_permohonan_mbkm')
+                  ->where(function ($query) use ($req){
+                    $query->where('nip_dosenpa',session('nip'))
+                          ->where('nama','LIKE','%'.$req->searchinput.'%');
+                    })
+                  ->orWhere(function ($query) use ($req){
+                    $query->where('nip_dosenpa',session('nip'))
+                          ->where('nama','LIKE','%'.$req->searchinput.'%');
+                    })
+                  ->get();
+      }
 
-      $search = DB::table('daftar_permohonan_mbkm')
-                ->where('nama','LIKE','%'.$req->searchinput.'%')
-                ->orwhere('nim_mhs','LIKE','%'.$req->searchinput.'%')
-                ->get();
       return view('permohonanmbkmsearch', ['datasearch'=>$search]);
 
     }

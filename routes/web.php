@@ -89,18 +89,29 @@ Route::group(['middleware'=>['protectedPage']],function(){
   });
   Route::post('/merdekabelajar/ajukanpermmbkm',[PengajuanController::class,'uploadPengajuan']);
 
-  Route::get('/merdekabelajar/pengajuankonvnilai', function () {
-      return view('pengajuankonvnilai');
-  });
+  Route::get('/merdekabelajar/pengajuankonvnilai', [PengajuanController::class,'dataHiddenKonvNilai']);
   Route::post('/merdekabelajar/ajukankonvnilai',[PengajuanController::class,'uploadPengajuanKonvNilai']);
 
 
   // UNTUK DOSEN DISINI
 
+
+
+
+});
+
+
+
+
+Route::get('/testpage', function() {
+  return view('testpage');
+});
+
+
+Route::group(['middleware'=>['protectedDosenPage']],function(){
   Route::get('/profildsn', function () {
       return view('profildsn');
   });
-
 
   Route::get('/dashboarddsn', [DashboardController::class,'dashboardDosen']);
 
@@ -126,9 +137,9 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/mhsdibimbing', [MahasiswaDibimbingController::class,'daftarMhsDbmbng']);
   Route::get('/mhsdibimbing/search', [MahasiswaDibimbingController::class,'searchMhsDbmbng']);
 
-  Route::get('/daftarmhsmbkm/search', [DaftarMhsMBKMController::class,'searchDaftarMhsMBKM']);
-  Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM']);
-  Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM']);
+  Route::get('/daftarmhsmbkm/search', [DaftarMhsMBKMController::class,'searchDaftarMhsMBKM'])->middleware('superiordsn');
+  Route::get('/daftarmhsmbkm', [DaftarMhsMBKMController::class,'daftarMhsMBKM'])->middleware('superiordsn');
+  Route::get('/hapusmhsmbkm', [MahasiswaMBKMController::class,'hapusDataMhsMBKM'])->middleware('superiordsn');
   Route::get('/daftarkrsmahasiswa', [DaftarKRSMahasiswa::class,'daftarKRSMahasiswa']);
   Route::get('/daftarkrsmahasiswa/detailkrsmahasiswa/{id}/{semester}', [DaftarKRSMahasiswa::class,'detailKRSMahasiswa']);
 
@@ -141,52 +152,43 @@ Route::group(['middleware'=>['protectedPage']],function(){
   Route::get('/dkmndikirim/search', [DokumenKirimController::class,'searchDocsTerkirim']);
   Route::post('/hapusdocsterimakrs', [DokumenKirimController::class,'hapusDocsTerimaKRS']);
 
-  Route::post('/tambahpengumuman', [PengumumanController::class,'tambahPengumuman']);
+  Route::post('/tambahpengumuman', [PengumumanController::class,'tambahPengumuman'])->middleware('superiordsn');
   Route::get('/buatpengumuman', function () {
       return view('pengumumanbuat');
-  });
-  Route::get('/daftarpengumuman', [PengumumanController::class,'daftarPengumuman']);
-  Route::get('/daftarpengumuman/edit/{key_idpengumuman}', [PengumumanController::class,'editPengumuman']);
-  Route::post('/ubahpengumuman', [PengumumanController::class,'ubahPengumuman']);
-  Route::post('/hapuspengumuman', [PengumumanController::class,'hapusPengumuman']);
+  })->middleware('superiordsn');
+  Route::get('/daftarpengumuman', [PengumumanController::class,'daftarPengumuman'])->middleware('superiordsn');
+  Route::get('/daftarpengumuman/edit/{key_idpengumuman}', [PengumumanController::class,'editPengumuman'])->middleware('superiordsn');
+  Route::post('/ubahpengumuman', [PengumumanController::class,'ubahPengumuman'])->middleware('superiordsn');
+  Route::post('/hapuspengumuman', [PengumumanController::class,'hapusPengumuman'])->middleware('superiordsn');
   Route::get('/pengumumantampil/{key_idpengumuman}', [PengumumanController::class,'tampilPengumuman']);
-  Route::get('/daftarpengumuman/search', [PengumumanController::class,'searchPengumuman']);
+  Route::get('/daftarpengumuman/search', [PengumumanController::class,'searchPengumuman'])->middleware('superiordsn');
+
+  Route::get('/errodsnpage', function() {
+    return view('errordsn');
+  });
 
 
+  //DAFTAR KHS Mahasiswa
+  Route::get('/daftarkhsmahasiswa', [DaftarKHSMhsController::class,'daftarKHSMhs']);
+  Route::get('/khsmhsmbkm/{key_semester}/{key_nimmbkm}', [DaftarKHSMhsController::class,'tampilKhs']);
+  Route::get('/khs/mbkm/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
+  Route::get('/daftarkhsmahasiswa/search', [DaftarKHSMhsController::class,'search']);
+  //END DAFTAR KHS MAHASISWA
+
+
+  //DAFTAR KRS Mahasiswa
+  // Route::get('/daftarkrsmahasiswa', function () {
+  //     return view('daftarkrsmahasiswa');
+  // });
+
+  //END DAFTAR KRS MAHASISWA
+
+
+  //DAFTAR MITRA
+  Route::resource('mitra', DaftarMitraController::class);
+  Route::get('/mitra/edit/{kode_mitra}', [DaftarMitraController::class, 'edit']);
+  Route::post('/mitra/update',[DaftarMitraController::class, 'update']);
+  Route::get('/mitra/delete/{kode_mitra}',[DaftarMitraController::class, 'delete']);
+  Route::get('admin/mitra/search', [DaftarMitraController::class,'searchMitra']);
+  //END DAFTAR MITRA
 });
-
-
-
-
-Route::get('/testpage', function() {
-  return view('testpage');
-});
-
-Route::get('/errodsnpage', function() {
-  return view('errordsn');
-});
-
-
-//DAFTAR KHS Mahasiswa
-Route::get('/daftarkhsmahasiswa', [DaftarKHSMhsController::class,'daftarKHSMhs']);
-Route::get('/khsmhsmbkm/{key_semester}/{key_nimmbkm}', [DaftarKHSMhsController::class,'tampilKhs']);
-Route::get('/khs/mbkm/{semester}',[DaftarKHSMhsController::class,'tampilKhsSemester']);
-Route::get('/daftarkhsmahasiswa/search', [DaftarKHSMhsController::class,'search']);
-//END DAFTAR KHS MAHASISWA
-
-
-//DAFTAR KRS Mahasiswa
-// Route::get('/daftarkrsmahasiswa', function () {
-//     return view('daftarkrsmahasiswa');
-// });
-
-//END DAFTAR KRS MAHASISWA
-
-
-//DAFTAR MITRA
-Route::resource('mitra', DaftarMitraController::class);
-Route::get('/mitra/edit/{kode_mitra}', [DaftarMitraController::class, 'edit']);
-Route::post('/mitra/update',[DaftarMitraController::class, 'update']);
-Route::get('/mitra/delete/{kode_mitra}',[DaftarMitraController::class, 'delete']);
-Route::get('admin/mitra/search', [DaftarMitraController::class,'searchMitra']);
-//END DAFTAR MITRA

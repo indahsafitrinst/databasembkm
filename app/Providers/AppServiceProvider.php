@@ -53,7 +53,13 @@ class AppServiceProvider extends ServiceProvider
         'daftarkrsmahasiswa',
         'detailkrsmahasiswa',
         'daftarkhsmahasiswa',
-        'daftarkhsmahasiswa1'
+        'daftarkhsmahasiswa1',
+        'detailkhsmhsmbkm',
+        'detailkrsmahasiswa',
+        'mitra.daftarmitra',
+        'mitra.editmitra',
+        'mitra.searchmitra',
+        'mitra.tambahmitra'
       ],NotifikasiDSNComposer::class);
 
     }

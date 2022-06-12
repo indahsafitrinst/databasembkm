@@ -47,6 +47,9 @@ class Kernel extends HttpKernel
         'protectedPage' => [
           \App\Http\Middleware\loginSessionCheck::class,
         ],
+        'protectedDosenPage' => [
+          \App\Http\Middleware\DosenLoginCheck::class,
+        ]
     ];
 
     /**
@@ -66,5 +69,6 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'superiordsn' => \App\Http\Middleware\DosenCheckLevel::class,
     ];
 }

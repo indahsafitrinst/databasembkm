@@ -10,7 +10,7 @@ class MahasiswaMBKMController extends Controller
       //get data mhsmbkm
       $showdata = DB::table('semua_mhs_mbkm_alldata')
                   ->where('nim',$key_nimmbkm)
-                  ->where('semester',$key_semester)
+                  ->where('semester_perm',$key_semester)
                   ->first();
       //cek dia ada file transkripnilai atau enggak
       $cektranskripnilai = DB::table('tbl_docskonvnilai')

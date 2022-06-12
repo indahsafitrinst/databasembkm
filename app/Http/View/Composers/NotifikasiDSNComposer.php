@@ -22,7 +22,6 @@ class NotifikasiDSNComposer
         //untuk badge
         $notifnew = DB::table('tbl_notifikasi')
         ->where('nip', session('nip'))
-        ->where('status', '=', 1)
         ->get();
 
 

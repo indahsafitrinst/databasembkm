@@ -16,7 +16,7 @@ class loginSessionCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!session()->has('nim') && !session()->has('nip')){
+        if(!session()->has('nim')){
           return redirect('/');
         }
         return $next($request);

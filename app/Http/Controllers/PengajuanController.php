@@ -31,6 +31,26 @@ class pengajuanController extends Controller
         'status'=>1,
         'waktu_unggah'=>Carbon::now()->toDateTimeString()
       ]);
+      $getdatadosenpa = DB::table('tbl_mahasiswa')
+                      ->join('tbl_dosen','tbl_mahasiswa.nip_dosenpa','=','tbl_dosen.nip')
+                      ->where('nim',session('nim'))
+                      ->first();
+      $getalldosenlevel1 = DB::table('tbl_dosen')->where('level',1)->get();
+
+      $notifdosenpa = DB::table('tbl_notifikasi')
+                  ->insert([
+                    'nip'=>$getdatadosenpa->nip,
+                    'isi_notif'=>'Permohonan MBKM baru telah masuk!',
+                    'waktu'=>Carbon::now()->toDateTimeString()
+                  ]);
+      foreach($getalldosenlevel1 as $notif){
+        DB::table('tbl_notifikasi')
+                    ->insert([
+                      'nip'=>$notif->nip,
+                      'isi_notif'=>'Permohonan MBKM baru telah masuk!',
+                      'waktu'=>Carbon::now()->toDateTimeString()
+                    ]);
+      }
 
       return redirect('/merdekabelajar');
 
@@ -42,8 +62,7 @@ class pengajuanController extends Controller
       $lokasikonvnilai = '/konvnilai/'.$filenamekonvnilai;
 
       $getidmhsmbkm = DB::table('tbl_mhsmbkm')
-                      ->where('nim',session('nim'))
-                      ->where('semester',session('semester'))
+                      ->where('id_permohonanmbkm',$req->id_permohonan)
                       ->first();
 
 
@@ -55,18 +74,50 @@ class pengajuanController extends Controller
                       'id_mhsmbkm'=>$getidmhsmbkm->id_mhsmbkm,
                       'waktu_unggah'=>Carbon::now()->toDateTimeString()
                     ]);
-      $updatedbmhsmbkm = DB::table('tbl_mhsmbkm')
-                          ->where('id_mhsmbkm',$getidmhsmbkm->id_mhsmbkm)
-                          ->update([
-                            'statusmbkm'=>2
-                          ]);
+      // $updatedbmhsmbkm = DB::table('tbl_mhsmbkm')
+      //                     ->where('id_mhsmbkm',$getidmhsmbkm->id_mhsmbkm)
+      //                     ->update([
+      //                       'statusmbkm'=>2
+      //                     ]);
 
-      if($inserttodb&&$updatedbmhsmbkm){
+      if($inserttodb){
+        $getdatadosenpa = DB::table('tbl_mahasiswa')
+                        ->join('tbl_dosen','tbl_mahasiswa.nip_dosenpa','=','tbl_dosen.nip')
+                        ->where('nim',session('nim'))
+                        ->first();
+        $getalldosenlevel1 = DB::table('tbl_dosen')->where('level',1)->get();
+
+        $notifdosenpa = DB::table('tbl_notifikasi')
+                    ->insert([
+                      'nip'=>$getdatadosenpa->nip,
+                      'isi_notif'=>'Permohonan konversi nilai baru telah masuk!',
+                      'waktu'=>Carbon::now()->toDateTimeString()
+                    ]);
+        foreach($getalldosenlevel1 as $notif){
+          DB::table('tbl_notifikasi')
+                      ->insert([
+                        'nip'=>$notif->nip,
+                        'isi_notif'=>'Permohonan konversi nilai baru telah masuk!',
+                        'waktu'=>Carbon::now()->toDateTimeString()
+                      ]);
+        }
+
+
         return redirect('/merdekabelajar');
       }else{
         return view('error')->with('error','Terjadi kesalahan saat mengupload dokumen.');
       }
 
+    }
+
+    public function dataHiddenKonvNilai(){
+      $getidperm = DB::table('tbl_permohonanmbkm')
+                    ->where('nim_mhs',session('nim'))
+                    ->where('semester_perm',session('semester'))
+                    ->where('status',2)
+                    ->first();
+
+      return view('pengajuankonvnilai', ['datahidden'=>$getidperm]);
     }
 
 }

@@ -21,7 +21,6 @@ class NotifikasiComposer
         $notifcatch = DB::table('tbl_notifikasi')->where('nim', session('nim'))->get();
         $notifnew = DB::table('tbl_notifikasi')
         ->where('nim', session('nim'))
-        ->where('status', '=', 1)
         ->get();
 
 

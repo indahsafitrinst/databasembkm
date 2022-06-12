@@ -36,9 +36,14 @@
     <a class="navbar-brand ms-3" href="#">
       <img src="img/hehe.jfif" alt="" width="30" height="30">
       <span><strong>Portal MBKM</strong></span>
-      <span><small>Mahasiswa</small></span>
+      <span><small>Dosen</small></span>
     </a>
     <a class="nav-link tombolnavbar" href="#">Tentang Aplikasi</a>
+    <a class="nav-link tombolnavbar" href="/daftarkrsmahasiswa"><i class="bi bi-person-lines-fill me-2"></i>Daftar KRS</a>
+    <a class="nav-link tombolnavbar" href="/daftarkhsmahasiswa"><i class="bi bi-postcard me-2"></i>Daftar KHS</a>
+    @if(session('level')==1)
+    <a class="nav-link tombolnavbar" href="/buatpengumuman"><i class="bi bi-megaphone-fill me-2"></i>Buat Pengumuman</a>
+    @endif
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,7 +52,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+            @if($newnotif>0)
+            <span class="badge rounded-pill badge-notification bg-danger">{{$newnotif}}</span>
+            @endif
           </a>
           <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
             @foreach ($notifcatch as $notifcatch)
@@ -111,6 +118,7 @@
             <p>Silahkan masukkan dokumen-dokumen sesuai dengan formnya.</p>
             <form class="needs-validation" novalidate method="post"  action="ajukankonvnilai" enctype="multipart/form-data">
               @csrf
+              <input type="hidden" name="id_permohonan" value="{{$datahidden->id_permohonan}}">
               <div class="row mb-3">
                 <div class="col">
                   <label class="form-label" for="transkripnilai">Transkrip nilai(.pdf) : </label>
