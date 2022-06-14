@@ -16,7 +16,7 @@ class KonversiNilaiController extends Controller
     }else{
       $getdata = DB::table('tbl_docskonvnilai')
                   ->join('semua_mhs_mbkm_alldata', 'tbl_docskonvnilai.id_mhsmbkm','=','semua_mhs_mbkm_alldata.id_mhsmbkm')
-                  ->join('tbl_mahasiswa','semua_mhs_mbkm.nim','=','tbl_mahasiswa.nim')
+                  ->join('tbl_mahasiswa','semua_mhs_mbkm_alldata.nim','=','tbl_mahasiswa.nim')
                   ->where('tbl_mahasiswa.nip_dosenpa',session('nip'))
                   ->get();
     }
@@ -122,6 +122,7 @@ class KonversiNilaiController extends Controller
 
     $datadocs = DB::table('semua_mhs_mbkm_alldata')
                   ->join('tbl_docskonvnilai','semua_mhs_mbkm_alldata.id_mhsmbkm','=','tbl_docskonvnilai.id_mhsmbkm')
+                  ->join('tbl_terimapermmbkm','semua_mhs_mbkm_alldata.id_mhsmbkm','=','tbl_terimapermmbkm.id_mhsmbkm')
                   ->where('tbl_docskonvnilai.id_mhsmbkm',$key_idmhsmbkm)
                   ->where('status',1)
                   ->first();

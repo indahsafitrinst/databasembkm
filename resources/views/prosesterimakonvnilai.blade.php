@@ -148,9 +148,9 @@
                   </div>
                   <div class="pe-5">
                     <p>
-                      <span>Konversi KRS : </span>
+                      <span>Konversi KRS (Dokumen dari dosen penerima): </span>
                       <a href="{{$datadocs->lokasi_filekonvkrs}}">
-                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i>ingat ini  masih dari yang mhs  bukan dari dosen. Download</button>
+                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i> Download</button>
                       </a>
                     </p>
                   </div>

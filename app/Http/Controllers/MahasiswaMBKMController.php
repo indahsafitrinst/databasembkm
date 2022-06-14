@@ -9,6 +9,7 @@ class MahasiswaMBKMController extends Controller
     public function tampilDataMhsMBKM($key_semester, $key_nimmbkm){
       //get data mhsmbkm
       $showdata = DB::table('semua_mhs_mbkm_alldata')
+                  ->join('tbl_terimapermmbkm','semua_mhs_mbkm_alldata.id_mhsmbkm','=','tbl_terimapermmbkm.id_mhsmbkm')
                   ->where('nim',$key_nimmbkm)
                   ->where('semester_perm',$key_semester)
                   ->first();
@@ -17,6 +18,7 @@ class MahasiswaMBKMController extends Controller
                             ->where('id_mhsmbkm',$showdata->id_mhsmbkm)
                             ->whereIn('status',[1,2])
                             ->first();
+
       if(!$showdata){//klo data mhsmbkmnya ga ada...
         return view('errordsn')->with('cek','Data Mahasiswa '.$key_nimmbkm.' pada semester '.$key_semester.' tidak ada...');
       }

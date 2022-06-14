@@ -88,8 +88,6 @@
             @elseif(isset($cek2))
             <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
             @endif
-
-
             @if(isset($datamhsmbkm))
             <div class="row mb-3">
               <div class="col-sm-6">
@@ -177,9 +175,9 @@
                   </div>
                   <div class="pe-5">
                     <p>
-                      <span>Konversi KRS : </span>
+                      <span>Konversi KRS (Dokumen dari dosen penerima): </span>
                       <a href="{{$datamhsmbkm->lokasi_filekonvkrs}}">
-                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i>ingat ini masih dari mhs Download</button>
+                        <button class="btn btn-outline-success"><i class="bi bi-file-spreadsheet-fill me-2"></i>Download</button>
                       </a>
                     </p>
                   </div>
