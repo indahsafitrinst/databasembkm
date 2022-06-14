@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\KhsController;
 use App\Http\Controllers\DaftarKHSMhsController;
+use App\Http\Controllers\DocumentsController;
 //controller 1
 use App\Http\Controllers\KrsController;
 //controller 2
@@ -192,3 +193,5 @@ Route::group(['middleware'=>['protectedDosenPage']],function(){
   Route::get('admin/mitra/search', [DaftarMitraController::class,'searchMitra']);
   //END DAFTAR MITRA
 });
+
+Route::get('/pdfviewer/{key_idpermohonan}', [DocumentsController::class,'getDocuments']);

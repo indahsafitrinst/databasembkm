@@ -100,8 +100,6 @@
             @elseif(isset($cek2))
             <p id="cek" class="p-2 bg-danger bg-opacity-50">{{$cek2}}</p>
             @endif
-
-
             <table class="table table-bordered">
               <tr>
                 <th width="20px">No.</th>
@@ -133,7 +131,7 @@
 
                 </td>
                 <td class="text-center">
-                  <a href="#" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                  <a href="/pdfviewer/{{$datapermmbkm->id_permohonan}}" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-placement="bottom"
                   title="Download Dokumen">
 
                       <i class="bi bi-file-earmark-arrow-down"></i>
