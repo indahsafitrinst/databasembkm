@@ -35,6 +35,7 @@
                 @endif
               </a>
               <ul class="dropdown-menu notifscroll  dropdown-menu-end" aria-labelledby="navbarSCrollingDropdown">
+                @if(isset($notifcatch))
                 @foreach ($notifcatch as $notifcatch)
                 <li>
                   <a class="dropdown-item" href="#">
@@ -46,6 +47,7 @@
                   </a>
                 </li>
                 @endforeach
+                @endif
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item text-primary" href="#">Tampilkan semua notifikasi</a></li>
               </ul>
