@@ -42,7 +42,7 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <p class="h3">Selamat datang di aplikasi Kampus Merdeka, Insert nama.</p>
+            <p class="h3">Selamat datang di aplikasi Kampus Merdeka.</p>
           </div>
           <div class="card-body">
             <div class="row">
