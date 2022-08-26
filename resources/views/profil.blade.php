@@ -46,7 +46,7 @@
           <div class="col">
             <p><span class="fw-bold">Nama : </span>{{session('nama')}}</p>
             <p><span class="fw-bold">NIM : </span>{{session('nim')}}</p>
-            <p><span class="fw-bold">Fakultas : </span>Ilmu Komputer dan Tekologi Informasi</p>
+            <p><span class="fw-bold">Fakultaasds : </span>Ilmu Komputer dan Tekologi Informasi</p>
             <p><span class="fw-bold">Jurusan : </span>{{session('nama_prodi')}}</p>
             <p><span class="fw-bold">Stambuk : </span>{{session('stambuk')}}</p>
             <p><span class="fw-bold">Semester : </span>3(Ganjil) T.A 2023/2024</p>
